@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Size Guide — Melancia Swimwear</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Page Loader ── */
+    .page-loader {
+      position: fixed; inset: 0; background: #fff;
+      z-index: 99999; display: flex; align-items: center;
+      justify-content: center; pointer-events: none;
+    }
+    .page-loader img {
+      width: 200px; max-width: 50vw;
+      animation: logoReveal 2.2s cubic-bezier(0.4,0,0.2,1) forwards;
+    }
+    @keyframes logoReveal {
+      0%   { opacity:0; transform:scale(0.88); }
+      25%  { opacity:1; transform:scale(1);    }
+      70%  { opacity:1; transform:scale(1);    }
+      100% { opacity:0; transform:scale(1.06); }
+    }
+    .page-loader.hide { animation: loaderOut 0.45s ease forwards; }
+    @keyframes loaderOut { to { opacity:0; visibility:hidden; } }
+
+    /* ── Size Guide Styles ── */
+    .sg-hero {
+      background: linear-gradient(135deg, var(--lavender-light) 0%, var(--coral-light) 100%);
+      padding: 72px 48px 60px;
+      text-align: center;
+    }
+    .sg-hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 10px; }
+    .sg-hero p { color: var(--mid); font-size: 1rem; max-width: 520px; margin: 0 auto; }
+
+    .sg-body {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 64px 48px 80px;
+    }
+
+    /* ── Tab switcher ── */
+    .sg-tabs {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 52px;
+      background: var(--light-gray);
+      border-radius: 50px;
+      padding: 6px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .sg-tab {
+      padding: 10px 28px;
+      border-radius: 50px;
+      border: none;
+      background: transparent;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--mid);
+      transition: all 0.2s;
+    }
+    .sg-tab.active {
+      background: var(--white);
+      color: var(--coral);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .sg-panel { display: none; }
+    .sg-panel.active { display: block; }
+
+    /* ── How to Measure ── */
+    .measure-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      margin-bottom: 64px;
+    }
+
+    .measure-diagram {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 380px;
+    }
+
+    .measure-steps h3 {
+      font-size: 1.3rem;
+      margin-bottom: 24px;
+    }
+
+    .measure-step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--coral);
+      color: white;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-content h4 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .step-content p {
+      font-size: 0.82rem;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    .measure-tip {
+      background: var(--lavender-light);
+      border-left: 3px solid var(--lavender-dark);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      font-size: 0.82rem;
+      color: var(--lavender-dark);
+      margin-top: 24px;
+      line-height: 1.6;
+    }
+
+    /* ── Size Table ── */
+    .size-table-wrap {
+      overflow-x: auto;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      margin-bottom: 48px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      background: var(--white);
+    }
+
+    thead {
+      background: var(--coral);
+      color: white;
+    }
+    thead th {
+      padding: 16px 20px;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    thead th:first-child { text-align: left; border-radius: 16px 0 0 0; }
+    thead th:last-child { border-radius: 0 16px 0 0; }
+
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--cream); }
+
+    tbody td {
+      padding: 14px 20px;
+      text-align: center;
+      color: var(--dark);
+    }
+    tbody td:first-child {
+      text-align: left;
+      font-weight: 600;
+      color: var(--coral);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .size-highlight {
+      background: var(--cream);
+    }
+    .size-highlight td:first-child {
+      position: relative;
+    }
+    .size-highlight td:first-child::after {
+      content: 'Most popular';
+      position: absolute;
+      top: 50%; right: 12px;
+      transform: translateY(-50%);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--lavender);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 50px;
+    }
+
+    .unit-toggle {
+      display: flex;
+      justify-content: flex-end;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .unit-btn {
+      padding: 6px 16px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--mid);
+      transition: all 0.2s;
+    }
+    .unit-btn.active { background: var(--coral); border-color: var(--coral); color: white; }
+
+    /* ── Fit Notes ── */
+    .fit-notes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .fit-note-card {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .fit-note-card h4 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--coral);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .fit-note-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .fit-note-card ul li {
+      font-size: 0.84rem;
+      color: var(--dark);
+      line-height: 1.6;
+      padding-left: 14px;
+      position: relative;
+    }
+    .fit-note-card ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--coral);
+      font-weight: 600;
+    }
+
+    /* ── Model info ── */
+    .model-info {
+      background: linear-gradient(135deg, var(--lavender-light), var(--coral-light));
+      border-radius: 20px;
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .model-info-text h3 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+      color: var(--dark);
+    }
+    .model-info-text p { font-size: 0.85rem; color: var(--mid); line-height: 1.7; }
+    .model-stats {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .model-stat {
+      text-align: center;
+    }
+    .model-stat strong {
+      display: block;
+      font-size: 1.4rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--coral);
+    }
+    .model-stat span { font-size: 0.75rem; color: var(--mid); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── CTA ── */
+    .sg-cta {
+      text-align: center;
+      padding: 48px 0 0;
+      border-top: 1px solid var(--border);
+    }
+    .sg-cta h3 { font-size: 1.4rem; margin-bottom: 8px; }
+    .sg-cta p { color: var(--mid); font-size: 0.9rem; margin-bottom: 24px; }
+    .sg-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sg-body { padding: 40px 20px 60px; }
+      .sg-hero { padding: 60px 20px 48px; }
+      .measure-section { grid-template-columns: 1fr; gap: 32px; }
+      .fit-notes { grid-template-columns: 1fr; }
+      .model-info { flex-direction: column; text-align: center; }
+      .model-stats { justify-content: center; }
+      .sg-tabs { width: 100%; justify-content: stretch; }
+      .sg-tab { flex: 1; text-align: center; padding: 10px 10px; font-size: 0.72rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Page Loader ── -->
+  <div class="page-loader" id="pageLoader">
+    <img src="images/Logo original colors.png" alt="Melancia" />
+  </div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    Free shipping on orders over $80 &nbsp;·&nbsp; New summer collection just dropped
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="images/Logo original colors.png" alt="Melancia" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href="#" title="Search" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+      <a href="#" title="Account" aria-label="Account">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+      </a>
+      <a href="#" title="Cart" aria-label="Cart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+      </a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main class="page-content">
+
+    <!-- Hero -->
+    <div class="sg-hero">
+      <span class="eyebrow">Find Your Perfect Fit</span>
+      <h1>Size Guide</h1>
+      <p>Every body is different. Use this guide to find your best Melancia fit — we want you to feel confident from the moment you put it on.</p>
+    </div>
+
+    <div class="sg-body">
+
+      <!-- Tab Switcher: Tops / Bottoms / One Pieces -->
+      <div class="sg-tabs" role="tablist">
+        <button class="sg-tab active" role="tab" data-panel="tops">Tops</button>
+        <button class="sg-tab" role="tab" data-panel="bottoms">Bottoms</button>
+        <button class="sg-tab" role="tab" data-panel="onepiece">One Pieces</button>
+      </div>
+
+      <!-- ══ TOPS PANEL ══ -->
+      <div class="sg-panel active" id="panel-tops">
+
+        <!-- How to measure -->
+        <div class="measure-section">
+          <div class="measure-diagram">
+            <!-- Body outline SVG with measurement lines -->
+            <svg viewBox="0 0 200 380" width="200" height="340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Body silhouette -->
+              <path d="M100 30 C85 30 75 42 75 55 C75 68 83 78 100 80 C117 78 125 68 125 55 C125 42 115 30 100 30Z" fill="#EAD9F8" stroke="#C9A8E8" stroke-width="1.5"/>
+              <!-- Neck -->
+              <rect x="93" y="78" width="14" height="14" rx="2" fill="#EAD9F8" stroke="#C9A8E8" stroke-width="1.5"/>
+              <!-- Torso -->
+              <path d="M70 92 C60 92 52 100 50 110 L44 150 C42 162 46 172 56 176 L72 180 L72 260 L128 260 L128 180 L144 176 C154 172 158 162 156 150 L150 110 C148 100 140 92 130 92 Z" fill="#EAD9F8" stroke="#C9A8E8" stroke-width="1.5"/>
+              <!-- Arms -->
+              <path d="M70 95 C62 95 54 102 50 115 L44 150" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M130 95 C138 95 146 102 150 115 L156 150" stroke="#C9A8E8" stroke-width="1.5"/>
+              <!-- Legs -->
+              <path d="M72 260 L65 340" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M128 260 L135 340" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M85 260 L80 340" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M115 260 L120 340" stroke="#C9A8E8" stroke-width="1.5"/>
+
+              <!-- BUST line -->
+              <line x1="30" y1="118" x2="170" y2="118" stroke="#F0856E" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <circle cx="30" cy="118" r="3" fill="#F0856E"/>
+              <circle cx="170" cy="118" r="3" fill="#F0856E"/>
+              <text x="174" y="122" font-family="sans-serif" font-size="10" fill="#F0856E" font-weight="600">Bust</text>
+
+              <!-- UNDERBUST line -->
+              <line x1="34" y1="138" x2="166" y2="138" stroke="#C9A8E8" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <circle cx="34" cy="138" r="3" fill="#C9A8E8"/>
+              <circle cx="166" cy="138" r="3" fill="#C9A8E8"/>
+              <text x="170" y="142" font-family="sans-serif" font-size="10" fill="#C9A8E8" font-weight="600">Band</text>
+
+              <!-- WAIST line -->
+              <line x1="38" y1="170" x2="162" y2="170" stroke="#F0856E" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <circle cx="38" cy="170" r="3" fill="#F0856E"/>
+              <circle cx="162" cy="170" r="3" fill="#F0856E"/>
+              <text x="166" y="174" font-family="sans-serif" font-size="10" fill="#F0856E" font-weight="600">Waist</text>
+            </svg>
+          </div>
+
+          <div class="measure-steps">
+            <h3>How to Measure for Tops</h3>
+
+            <div class="measure-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h4>Bust</h4>
+                <p>Measure around the fullest part of your chest, keeping the tape parallel to the ground. Breathe normally — don't pull the tape too tight.</p>
+              </div>
+            </div>
+
+            <div class="measure-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <h4>Band / Underbust</h4>
+                <p>Measure directly under your bust, where a bra band would sit. Keep the tape snug but comfortable.</p>
+              </div>
+            </div>
+
+            <div class="measure-step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <h4>Waist</h4>
+                <p>Measure around your natural waist — the narrowest part of your torso, usually just above your belly button.</p>
+              </div>
+            </div>
+
+            <div class="measure-tip">
+              <strong>Tip:</strong> Use a soft measuring tape and wear minimal or no clothing. Take measurements in front of a mirror to keep the tape level.
+            </div>
+          </div>
+        </div>
+
+        <!-- Unit toggle -->
+        <div class="unit-toggle">
+          <button class="unit-btn active" data-unit="in">Inches</button>
+          <button class="unit-btn" data-unit="cm">CM</button>
+        </div>
+
+        <!-- Size Table -->
+        <div class="size-table-wrap">
+          <table id="tops-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Bust</th>
+                <th>Band / Underbust</th>
+                <th>Waist</th>
+                <th>Cup (approx.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>XS</td>
+                <td class="val" data-in='32–33"' data-cm="81–84 cm">32–33"</td>
+                <td class="val" data-in='27–28"' data-cm="68–71 cm">27–28"</td>
+                <td class="val" data-in='25–26"' data-cm="63–66 cm">25–26"</td>
+                <td>A/B</td>
+              </tr>
+              <tr class="size-highlight">
+                <td>S</td>
+                <td class="val" data-in='34–35"' data-cm="86–89 cm">34–35"</td>
+                <td class="val" data-in='29–30"' data-cm="73–76 cm">29–30"</td>
+                <td class="val" data-in='27–28"' data-cm="68–71 cm">27–28"</td>
+                <td>B/C</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td class="val" data-in='36–37"' data-cm="91–94 cm">36–37"</td>
+                <td class="val" data-in='31–32"' data-cm="78–81 cm">31–32"</td>
+                <td class="val" data-in='29–30"' data-cm="73–76 cm">29–30"</td>
+                <td>C/D</td>
+              </tr>
+              <tr>
+                <td>L</td>
+                <td class="val" data-in='38–40"' data-cm="96–101 cm">38–40"</td>
+                <td class="val" data-in='33–35"' data-cm="83–89 cm">33–35"</td>
+                <td class="val" data-in='31–33"' data-cm="78–83 cm">31–33"</td>
+                <td>D/DD</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Fit Notes -->
+        <div class="fit-notes">
+          <div class="fit-note-card">
+            <h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Between sizes?
+            </h4>
+            <ul>
+              <li>If you're between XS and S, size up for more coverage</li>
+              <li>If you're between S and M, size down for a more supportive fit</li>
+              <li>For fuller busts, size up one for tops and down for bottoms</li>
+              <li>Triangle tops adjust via ties — most flexible for sizing</li>
+            </ul>
+          </div>
+          <div class="fit-note-card">
+            <h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Style Notes
+            </h4>
+            <ul>
+              <li>Bandeau styles fit tighter — size up if unsure</li>
+              <li>Halter tops are adjustable at the neck and back</li>
+              <li>Our padding is removable on all padded styles</li>
+              <li>All tops are designed to stay secure in the water</li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /tops panel -->
+
+      <!-- ══ BOTTOMS PANEL ══ -->
+      <div class="sg-panel" id="panel-bottoms">
+
+        <div class="measure-section">
+          <div class="measure-diagram">
+            <svg viewBox="0 0 200 380" width="200" height="340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Torso lower -->
+              <path d="M60 80 L60 160 C60 165 65 168 70 168 L130 168 C135 168 140 165 140 160 L140 80 Z" fill="#EAD9F8" stroke="#C9A8E8" stroke-width="1.5"/>
+              <!-- Hips -->
+              <path d="M55 160 C48 165 44 175 48 185 L60 220 L90 240 L110 240 L140 220 L152 185 C156 175 152 165 145 160 L130 168 L70 168 Z" fill="#EAD9F8" stroke="#C9A8E8" stroke-width="1.5"/>
+              <!-- Legs -->
+              <path d="M60 220 L50 340" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M140 220 L150 340" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M80 235 L75 340" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M120 235 L125 340" stroke="#C9A8E8" stroke-width="1.5"/>
+
+              <!-- WAIST line -->
+              <line x1="30" y1="100" x2="170" y2="100" stroke="#F0856E" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <circle cx="30" cy="100" r="3" fill="#F0856E"/>
+              <circle cx="170" cy="100" r="3" fill="#F0856E"/>
+              <text x="174" y="104" font-family="sans-serif" font-size="10" fill="#F0856E" font-weight="600">Waist</text>
+
+              <!-- HIP line -->
+              <line x1="26" y1="178" x2="174" y2="178" stroke="#C9A8E8" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <circle cx="26" cy="178" r="3" fill="#C9A8E8"/>
+              <circle cx="174" cy="178" r="3" fill="#C9A8E8"/>
+              <text x="178" y="182" font-family="sans-serif" font-size="10" fill="#C9A8E8" font-weight="600">Hips</text>
+            </svg>
+          </div>
+
+          <div class="measure-steps">
+            <h3>How to Measure for Bottoms</h3>
+
+            <div class="measure-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h4>Waist</h4>
+                <p>Measure around your natural waist — the narrowest part, usually 1–2 inches above your belly button. Keep the tape relaxed, not pulled tight.</p>
+              </div>
+            </div>
+
+            <div class="measure-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <h4>Hips</h4>
+                <p>Stand with feet together and measure around the fullest part of your hips and seat, usually about 8–9 inches below your natural waist.</p>
+              </div>
+            </div>
+
+            <div class="measure-tip">
+              <strong>Tip:</strong> For tie-side bottoms, the ties give extra flexibility — these work well for all hips. For Brazilian cut, we recommend sizing up if you prefer more coverage.
+            </div>
+          </div>
+        </div>
+
+        <!-- Unit toggle -->
+        <div class="unit-toggle">
+          <button class="unit-btn active" data-unit="in">Inches</button>
+          <button class="unit-btn" data-unit="cm">CM</button>
+        </div>
+
+        <div class="size-table-wrap">
+          <table id="bottoms-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Waist</th>
+                <th>Hips</th>
+                <th>US Jean Size (approx.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>XS</td>
+                <td class="val" data-in='24–25"' data-cm="61–63 cm">24–25"</td>
+                <td class="val" data-in='34–35"' data-cm="86–89 cm">34–35"</td>
+                <td>0 – 2</td>
+              </tr>
+              <tr class="size-highlight">
+                <td>S</td>
+                <td class="val" data-in='26–27"' data-cm="66–68 cm">26–27"</td>
+                <td class="val" data-in='36–37"' data-cm="91–94 cm">36–37"</td>
+                <td>4 – 6</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td class="val" data-in='28–30"' data-cm="71–76 cm">28–30"</td>
+                <td class="val" data-in='38–40"' data-cm="96–101 cm">38–40"</td>
+                <td>8 – 10</td>
+              </tr>
+              <tr>
+                <td>L</td>
+                <td class="val" data-in='31–33"' data-cm="78–83 cm">31–33"</td>
+                <td class="val" data-in='41–43"' data-cm="104–109 cm">41–43"</td>
+                <td>12 – 14</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="fit-notes">
+          <div class="fit-note-card">
+            <h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Coverage Guide
+            </h4>
+            <ul>
+              <li>Brazilian cut — minimal coverage, cheeky fit</li>
+              <li>Classic cut — moderate coverage, sits at hip</li>
+              <li>High-waist — full coverage, elongates legs</li>
+              <li>Tie-side — adjustable; great for all hip sizes</li>
+            </ul>
+          </div>
+          <div class="fit-note-card">
+            <h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Fit Tips
+            </h4>
+            <ul>
+              <li>Size up if you prefer fuller coverage in the back</li>
+              <li>High-waist styles run true to size</li>
+              <li>Brazilian styles can run small — size up if unsure</li>
+              <li>Fabric has light stretch — fits snugly but comfortably</li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /bottoms panel -->
+
+      <!-- ══ ONE PIECES PANEL ══ -->
+      <div class="sg-panel" id="panel-onepiece">
+
+        <div class="measure-section">
+          <div class="measure-diagram">
+            <svg viewBox="0 0 200 380" width="200" height="340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Full body silhouette -->
+              <ellipse cx="100" cy="48" rx="24" ry="26" fill="#EAD9F8" stroke="#C9A8E8" stroke-width="1.5"/>
+              <rect x="91" y="72" width="18" height="14" rx="3" fill="#EAD9F8" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M68 86 C56 86 46 96 44 110 L36 155 C33 170 39 182 52 186 L70 190 L70 270 L130 270 L130 190 L148 186 C161 182 167 170 164 155 L156 110 C154 96 144 86 132 86 Z" fill="#EAD9F8" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M70 270 L62 350" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M130 270 L138 350" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M84 270 L78 350" stroke="#C9A8E8" stroke-width="1.5"/>
+              <path d="M116 270 L122 350" stroke="#C9A8E8" stroke-width="1.5"/>
+
+              <!-- BUST -->
+              <line x1="26" y1="116" x2="174" y2="116" stroke="#F0856E" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <circle cx="26" cy="116" r="3" fill="#F0856E"/>
+              <text x="178" y="120" font-family="sans-serif" font-size="9" fill="#F0856E" font-weight="600">Bust</text>
+
+              <!-- WAIST -->
+              <line x1="30" y1="168" x2="170" y2="168" stroke="#C9A8E8" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <circle cx="30" cy="168" r="3" fill="#C9A8E8"/>
+              <text x="174" y="172" font-family="sans-serif" font-size="9" fill="#C9A8E8" font-weight="600">Waist</text>
+
+              <!-- HIPS -->
+              <line x1="26" y1="196" x2="174" y2="196" stroke="#F0856E" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <circle cx="26" cy="196" r="3" fill="#F0856E"/>
+              <text x="178" y="200" font-family="sans-serif" font-size="9" fill="#F0856E" font-weight="600">Hips</text>
+
+              <!-- Torso length arrow -->
+              <line x1="18" y1="86" x2="18" y2="270" stroke="#9B8EA0" stroke-width="1" stroke-dasharray="3 3"/>
+              <text x="2" y="182" font-family="sans-serif" font-size="8.5" fill="#9B8EA0" font-weight="600" transform="rotate(-90,10,182)">Torso</text>
+            </svg>
+          </div>
+
+          <div class="measure-steps">
+            <h3>How to Measure for One Pieces</h3>
+
+            <div class="measure-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h4>Bust</h4>
+                <p>Measure around the fullest part of your chest, keeping the tape parallel to the ground.</p>
+              </div>
+            </div>
+
+            <div class="measure-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <h4>Waist</h4>
+                <p>Measure your natural waist — the narrowest point of your torso, above your belly button.</p>
+              </div>
+            </div>
+
+            <div class="measure-step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <h4>Hips</h4>
+                <p>Measure around the fullest part of your hips and seat with feet together.</p>
+              </div>
+            </div>
+
+            <div class="measure-step">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <h4>Torso Length</h4>
+                <p>Measure from your shoulder (at the neck) straight down to your crotch. This is key for one-pieces to avoid pulling.</p>
+              </div>
+            </div>
+
+            <div class="measure-tip">
+              <strong>Tip:</strong> For one-pieces, torso length matters most. If you have a long torso, size up. If short, size down or look for adjustable strap styles.
+            </div>
+          </div>
+        </div>
+
+        <!-- Unit toggle -->
+        <div class="unit-toggle">
+          <button class="unit-btn active" data-unit="in">Inches</button>
+          <button class="unit-btn" data-unit="cm">CM</button>
+        </div>
+
+        <div class="size-table-wrap">
+          <table id="onepiece-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Bust</th>
+                <th>Waist</th>
+                <th>Hips</th>
+                <th>Torso Length</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>XS</td>
+                <td class="val" data-in='32–33"' data-cm="81–84 cm">32–33"</td>
+                <td class="val" data-in='24–25"' data-cm="61–63 cm">24–25"</td>
+                <td class="val" data-in='34–35"' data-cm="86–89 cm">34–35"</td>
+                <td class="val" data-in='25–26"' data-cm="63–66 cm">25–26"</td>
+              </tr>
+              <tr class="size-highlight">
+                <td>S</td>
+                <td class="val" data-in='34–35"' data-cm="86–89 cm">34–35"</td>
+                <td class="val" data-in='26–27"' data-cm="66–68 cm">26–27"</td>
+                <td class="val" data-in='36–37"' data-cm="91–94 cm">36–37"</td>
+                <td class="val" data-in='26–27"' data-cm="66–68 cm">26–27"</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td class="val" data-in='36–37"' data-cm="91–94 cm">36–37"</td>
+                <td class="val" data-in='28–30"' data-cm="71–76 cm">28–30"</td>
+                <td class="val" data-in='38–40"' data-cm="96–101 cm">38–40"</td>
+                <td class="val" data-in='27–28"' data-cm="68–71 cm">27–28"</td>
+              </tr>
+              <tr>
+                <td>L</td>
+                <td class="val" data-in='38–40"' data-cm="96–101 cm">38–40"</td>
+                <td class="val" data-in='31–33"' data-cm="78–83 cm">31–33"</td>
+                <td class="val" data-in='41–43"' data-cm="104–109 cm">41–43"</td>
+                <td class="val" data-in='28–30"' data-cm="71–76 cm">28–30"</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="fit-notes">
+          <div class="fit-note-card">
+            <h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              One Piece Tips
+            </h4>
+            <ul>
+              <li>Torso length is the most important measurement</li>
+              <li>Long torso? Size up or choose adjustable-strap styles</li>
+              <li>Short torso? Size down or choose styles with ruching</li>
+              <li>Plunge styles add visual length to the torso</li>
+            </ul>
+          </div>
+          <div class="fit-note-card">
+            <h4>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Fit Check
+            </h4>
+            <ul>
+              <li>Straps should lie flat without digging in</li>
+              <li>The crotch lining should sit flush — no pulling</li>
+              <li>Sides should be smooth with no gaping</li>
+              <li>You should be able to move freely — sit, bend, dive</li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /onepiece panel -->
+
+      <!-- Model Info -->
+      <div class="model-info">
+        <div class="model-info-text">
+          <h3>How our model is styled</h3>
+          <p>Our campaign model is wearing size S in tops and S in bottoms. Photos show the fit as it's designed — snug, supportive, and secure in the water.</p>
+        </div>
+        <div class="model-stats">
+          <div class="model-stat"><strong>5'8"</strong><span>Height</span></div>
+          <div class="model-stat"><strong>34"</strong><span>Bust</span></div>
+          <div class="model-stat"><strong>26"</strong><span>Waist</span></div>
+          <div class="model-stat"><strong>36"</strong><span>Hips</span></div>
+          <div class="model-stat"><strong>Size S</strong><span>Wearing</span></div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="sg-cta">
+        <h3>Still not sure?</h3>
+        <p>Our team is happy to help you find the perfect fit — just send us a message.</p>
+        <div class="sg-cta-btns">
+          <a href="shop.html" class="btn btn-primary">Shop Now</a>
+          <a href="contact.html" class="btn btn-outline">Ask Us</a>
+        </div>
+      </div>
+
+    </div><!-- /sg-body -->
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/Logo original colors.png" alt="Melancia" style="height:52px; width:auto; margin-bottom:12px;" />
+        <p>Swimwear designed for the free-spirited. Made with love, worn with confidence.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@YOUR_HANDLE" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.2 8.2 0 0 0 4.79 1.53V6.77a4.85 4.85 0 0 1-1.02-.08z"/></svg>
+          </a>
+          <a href="https://www.pinterest.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Pinterest">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html">New Arrivals</a></li>
+          <li><a href="shop.html">Sets</a></li>
+          <li><a href="shop.html">Tops</a></li>
+          <li><a href="shop.html">Bottoms</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="size-guide.html">Size Guide</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Returns</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Melancia Swimwear. All rights reserved.</span>
+      <span>Privacy Policy · Terms of Service</span>
+    </div>
+  </footer>
+
+  <script>
+    // Page Loader
+    const loader = document.getElementById('pageLoader');
+    setTimeout(() => {
+      loader.classList.add('hide');
+      setTimeout(() => loader.remove(), 450);
+    }, 2200);
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('is-open');
+      navLinks.classList.toggle('nav-open');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('is-open');
+        navLinks.classList.remove('nav-open');
+      });
+    });
+
+    // Nav scroll
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ── Tab switcher ──
+    document.querySelectorAll('.sg-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.sg-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.sg-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+      });
+    });
+
+    // ── Unit toggle (inches ↔ cm) ──
+    document.querySelectorAll('.unit-toggle').forEach(toggle => {
+      toggle.querySelectorAll('.unit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          // toggle active button within this toggle group
+          toggle.querySelectorAll('.unit-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const unit = btn.dataset.unit;
+          // find the parent panel and update all .val cells
+          const panel = toggle.closest('.sg-panel');
+          panel.querySelectorAll('td.val').forEach(cell => {
+            cell.textContent = cell.dataset[unit];
+          });
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

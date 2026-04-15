@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Melancia — Summer Swim</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Video Hero ── */
+    .hero-video-section {
+      padding: 20px 28px 20px;     /* 20px bottom gap before the category strip */
+      background: var(--white);
+    }
+
+    .hero-video-wrap {
+      position: relative;
+      width: 100%;
+      height: calc(90vh - 101px); /* 10% shorter than full viewport */
+      min-height: 430px;
+      border-radius: 24px;          /* the curved edges */
+      overflow: hidden;
+    }
+
+    /* The actual <video> (or fallback gradient) */
+    .hero-video-wrap video,
+    .hero-video-fallback {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* gradient fallback shown when no video is provided */
+    .hero-video-fallback {
+      background: linear-gradient(160deg, #C9A8E8 0%, #F0856E 50%, #EAD9F8 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* dark scrim so text reads well on any video */
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.08) 0%,
+        rgba(0,0,0,0.18) 40%,
+        rgba(0,0,0,0.50) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 52px 56px;
+    }
+
+    .hero-video-text {
+      max-width: 680px;
+    }
+
+    .hero-video-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.80);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .hero-video-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5.5vw, 5rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .hero-video-title em {
+      font-style: italic;
+      color: var(--coral-light);
+    }
+
+    .hero-video-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* pill CTA — white filled, just like honeyswim's "SHOP APRES SOLEIL" button */
+    .btn-hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 50px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      color: var(--dark);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .btn-hero-pill:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+    .btn-hero-pill.outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.65);
+    }
+    .btn-hero-pill.outline:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* scroll indicator inside the rounded card */
+    .hero-video-scroll {
+      position: absolute;
+      bottom: 28px; right: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+
+    @media (max-width: 768px) {
+      .hero-video-section { padding: 12px 12px 0; }
+      .hero-video-wrap { border-radius: 16px; height: 75vh; }
+      .hero-video-overlay { padding: 28px 24px; }
+      .hero-video-title { font-size: clamp(2rem, 8vw, 3rem); }
+    }
+
+    /* ── Page Loader ── */
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .page-loader img {
+      width: 200px;
+      max-width: 50vw;
+      animation: logoReveal 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    /* Logo: fades in, holds, then fades out */
+    @keyframes logoReveal {
+      0%   { opacity: 0; transform: scale(0.88); }
+      25%  { opacity: 1; transform: scale(1);    }
+      70%  { opacity: 1; transform: scale(1);    }
+      100% { opacity: 0; transform: scale(1.06); }
+    }
+
+    /* Whole overlay fades out after logo animation */
+    .page-loader.hide {
+      animation: loaderOut 0.45s ease forwards;
+    }
+
+    @keyframes loaderOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    /* ── rest of original placeholders ── */
+    .hero-img-ph { background: linear-gradient(160deg, #C9A8E8 0%, #F0856E 50%, #EAD9F8 100%); }
+    .col-ph-1 { background: linear-gradient(145deg, #F0856E, #EAD9F8); }
+    .col-ph-2 { background: linear-gradient(145deg, #C9A8E8, #F9C4B8); }
+    .col-ph-3 { background: linear-gradient(145deg, #F9C4B8, #C9A8E8); }
+    .col-ph-4 { background: linear-gradient(145deg, #EAD9F8, #F0856E); }
+    .about-ph { background: linear-gradient(145deg, #F0856E 0%, #C9A8E8 100%); }
+    .insta-1 { background: linear-gradient(135deg, #F0856E, #F9C4B8); }
+    .insta-2 { background: linear-gradient(135deg, #C9A8E8, #EAD9F8); }
+    .insta-3 { background: linear-gradient(135deg, #F9C4B8, #F0856E); }
+    .insta-4 { background: linear-gradient(135deg, #EAD9F8, #C9A8E8); }
+    .insta-5 { background: linear-gradient(135deg, #F0856E, #C9A8E8); }
+    .insta-6 { background: linear-gradient(135deg, #C9A8E8, #F0856E); }
+
+    /* Product placeholder colors */
+    .prod-ph-1 { background: linear-gradient(160deg, #C9A8E8 30%, #F0856E); }
+    .prod-ph-2 { background: linear-gradient(160deg, #F9C4B8 30%, #C9A8E8); }
+    .prod-ph-3 { background: linear-gradient(160deg, #EAD9F8 30%, #F9C4B8); }
+    .prod-ph-4 { background: linear-gradient(160deg, #F0856E 30%, #EAD9F8); }
+
+    .placeholder-label {
+      background: rgba(255,255,255,0.2);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Page Loader ── -->
+  <div class="page-loader" id="pageLoader">
+    <img src="images/Logo original colors.png" alt="Melancia" />
+  </div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    Free shipping on orders over $80 &nbsp;·&nbsp; New summer collection just dropped
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="images/Logo original colors.png" alt="Melancia" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href="#" title="Search" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+      <a href="#" title="Account" aria-label="Account">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+      </a>
+      <a href="#" title="Cart" aria-label="Cart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+      </a>
+    </div>
+    <button class="nav-hamburger" aria-label="Menu" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Page Content -->
+  <main class="page-content">
+
+    <!-- ── Video Hero ── -->
+    <section class="hero-video-section">
+      <div class="hero-video-wrap">
+
+        <video autoplay muted loop playsinline>
+          <source src="videos/MELANCIA-REEL-01.MOV" type="video/mp4">
+        </video>
+
+        <!-- Text + CTA overlay -->
+        <div class="hero-video-overlay">
+          <div class="hero-video-text">
+            <span class="hero-video-eyebrow">Summer Collection 2025</span>
+            <h1 class="hero-video-title">
+              Made for the<br><em>ocean,</em> the sun,<br>and you.
+            </h1>
+            <div class="hero-video-cta">
+              <a href="shop.html" class="btn-hero-pill">Shop New Arrivals</a>
+              <a href="#collections" class="btn-hero-pill outline">Explore Collections</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scroll hint -->
+        <div class="hero-video-scroll">
+          <span>Scroll</span>
+          <span>↓</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Category Strip ── -->
+    <div class="category-strip">
+      <a href="shop.html?filter=sets">Sets</a>
+      <a href="shop.html?filter=tops">Tops</a>
+      <a href="shop.html?filter=bottoms">Bottoms</a>
+      <a href="shop.html?filter=one-piece">One Pieces</a>
+      <a href="shop.html?filter=coverups">Cover-Ups</a>
+      <a href="shop.html?filter=new">New Arrivals</a>
+    </div>
+
+    <!-- ── Featured Products ── -->
+    <section class="section" id="featured">
+      <div class="section-header">
+        <span class="eyebrow">Just Dropped</span>
+        <h2>New Arrivals</h2>
+        <p>Our latest pieces — designed for sunshine, saltwater, and good vibes.</p>
+      </div>
+      <div class="product-grid">
+
+        <!-- Product 1 -->
+        <div class="product-card">
+          <div class="product-image">
+            <!-- Replace with: <img src="images/product-1.jpg" alt="Watermelon Set"> -->
+            <div class="product-image-placeholder prod-ph-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
+              <span class="placeholder-label">Product Photo</span>
+            </div>
+            <span class="product-badge new">New</span>
+            <button class="product-wishlist" aria-label="Wishlist">♡</button>
+            <div class="product-quick-add">+ Quick Add</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Watermelon Bliss Set</h3>
+            <p class="product-desc">Triangle top + high-waist bottom</p>
+            <div class="product-footer">
+              <span class="product-price">$89.00</span>
+              <div class="product-colors">
+                <span class="color-dot" style="background:#F0856E" title="Coral"></span>
+                <span class="color-dot" style="background:#C9A8E8" title="Lavender"></span>
+                <span class="color-dot" style="background:#F9C4B8" title="Blush"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+          <div class="product-image">
+            <div class="product-image-placeholder prod-ph-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
+              <span class="placeholder-label">Product Photo</span>
+            </div>
+            <span class="product-badge new">New</span>
+            <button class="product-wishlist" aria-label="Wishlist">♡</button>
+            <div class="product-quick-add">+ Quick Add</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Lavender Dream Top</h3>
+            <p class="product-desc">Bandeau with removable straps</p>
+            <div class="product-footer">
+              <span class="product-price">$48.00</span>
+              <div class="product-colors">
+                <span class="color-dot" style="background:#C9A8E8" title="Lavender"></span>
+                <span class="color-dot" style="background:#fff;border:1px solid #ddd" title="White"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+          <div class="product-image">
+            <div class="product-image-placeholder prod-ph-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
+              <span class="placeholder-label">Product Photo</span>
+            </div>
+            <button class="product-wishlist" aria-label="Wishlist">♡</button>
+            <div class="product-quick-add">+ Quick Add</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Sunset One-Piece</h3>
+            <p class="product-desc">Cut-out back, adjustable straps</p>
+            <div class="product-footer">
+              <span class="product-price">$95.00</span>
+              <div class="product-colors">
+                <span class="color-dot" style="background:#F0856E" title="Coral"></span>
+                <span class="color-dot" style="background:#2C2C2C" title="Black"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+          <div class="product-image">
+            <div class="product-image-placeholder prod-ph-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
+              <span class="placeholder-label">Product Photo</span>
+            </div>
+            <span class="product-badge sale">Sale</span>
+            <button class="product-wishlist" aria-label="Wishlist">♡</button>
+            <div class="product-quick-add">+ Quick Add</div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Blossom Bikini Bottom</h3>
+            <p class="product-desc">Brazilian cut, tonal stitch</p>
+            <div class="product-footer">
+              <span class="product-price">
+                <span class="original">$46.00</span>$32.00
+              </span>
+              <div class="product-colors">
+                <span class="color-dot" style="background:#F9C4B8" title="Blush"></span>
+                <span class="color-dot" style="background:#EAD9F8" title="Lilac"></span>
+                <span class="color-dot" style="background:#F0856E" title="Coral"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div style="text-align:center; margin-top:48px;">
+        <a href="shop.html" class="btn btn-outline">View All Products</a>
+      </div>
+    </section>
+
+    <!-- ── Collections ── -->
+    <section class="section" id="collections" style="background:var(--cream);">
+      <div class="section-header">
+        <span class="eyebrow">Shop By</span>
+        <h2>Our Collections</h2>
+      </div>
+      <div class="collection-grid">
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="collection-banner">
+            <div class="collection-banner-bg col-ph-1" style="height:100%;"></div>
+            <div class="collection-banner-overlay">
+              <h3>Summer Sets</h3>
+              <a href="shop.html" class="collection-banner-link">Shop Now →</a>
+            </div>
+          </div>
+          <div class="collection-banner">
+            <div class="collection-banner-bg col-ph-2" style="height:100%;"></div>
+            <div class="collection-banner-overlay">
+              <h3>Bottoms</h3>
+              <a href="shop.html" class="collection-banner-link">Shop Now →</a>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="collection-banner tall">
+            <div class="collection-banner-bg col-ph-3" style="height:100%;"></div>
+            <div class="collection-banner-overlay">
+              <h3>One Pieces</h3>
+              <a href="shop.html" class="collection-banner-link">Shop Now →</a>
+            </div>
+          </div>
+          <div class="collection-banner">
+            <div class="collection-banner-bg col-ph-4" style="height:100%;"></div>
+            <div class="collection-banner-overlay">
+              <h3>Cover-Ups</h3>
+              <a href="shop.html" class="collection-banner-link">Shop Now →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── About Strip ── -->
+    <section class="about-strip">
+      <div class="about-strip-image">
+        <!-- Replace with: <img src="images/about.jpg" alt="About Melancia"> -->
+        <div class="about-strip-image-placeholder about-ph">
+          <span style="font-size:3rem;">🍉</span>
+          <span class="placeholder-label">Add lifestyle photo here</span>
+          <small style="opacity:0.6; font-size:0.7rem;">images/about.jpg</small>
+        </div>
+      </div>
+      <div class="about-strip-content">
+        <span class="eyebrow">Our Story</span>
+        <h2>Born from the ocean, <em>made for you.</em></h2>
+        <p>
+          Melancia (Portuguese for watermelon) was born out of a love for the sea,
+          sun, and self-expression. We design swimwear that feels as free-spirited
+          as a summer day — bold yet feminine, playful yet refined.
+        </p>
+        <p>
+          Every piece is crafted with care: premium fabrics that hold their shape,
+          vibrant colors that don't fade, and fits that make you feel confident
+          from beach to brunch.
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <span class="about-feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 12c1.5 0 3-1 4.5-1s3 1 4.5 1 3-1 4.5-1 3 1 4.5 1"/><path d="M2 17c1.5 0 3-1 4.5-1s3 1 4.5 1 3-1 4.5-1 3 1 4.5 1"/><path d="M2 7c1.5 0 3-1 4.5-1s3 1 4.5 1 3-1 4.5-1 3 1 4.5 1"/></svg>
+            </span>
+            <div>
+              <h4>Chlorine-Resistant</h4>
+              <p>Built to last through pool and ocean</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <span class="about-feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            </span>
+            <div>
+              <h4>UV Protection</h4>
+              <p>UPF 50+ on select styles</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <span class="about-feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-2.763L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-2.79l-1.696-2.71"/><path d="m6 6 1.5 2.5M12 6l2.5-4"/><path d="M9.5 12l2.5-4 2.5 4"/><path d="M17.5 6.5 16 9"/></svg>
+            </span>
+            <div>
+              <h4>Eco Fabric</h4>
+              <p>Made from recycled materials</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <span class="about-feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
+            </span>
+            <div>
+              <h4>Inclusive Sizing</h4>
+              <p>XS – XL, all body types</p>
+            </div>
+          </div>
+        </div>
+        <a href="contact.html" class="btn btn-primary">Learn More</a>
+      </div>
+    </section>
+
+    <!-- ── Testimonials ── -->
+    <section class="testimonials-section">
+      <div class="section-header">
+        <span class="eyebrow">Reviews</span>
+        <h2>What Our Girls Are Saying</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"I wore the Watermelon Set on my trip to Tulum and got so many compliments. The fit is incredible — it actually stays put in the ocean!"</p>
+          <span class="testimonial-author">— Sofia M.</span>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Finally a brand that gets it right. The colors are exactly like the photos, the fabric is so soft, and the sizing is true-to-size. I'm obsessed."</p>
+          <span class="testimonial-author">— Valentina R.</span>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"The Lavender Dream top is my new favorite. It's so comfortable and the design is unique. Already ordering a second color!"</p>
+          <span class="testimonial-author">— Camila P.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Instagram ── -->
+    <section class="instagram-strip">
+      <div class="section-header">
+        <span class="eyebrow">@melanciaswim</span>
+        <h2>Find us on Instagram</h2>
+        <p>Tag us in your photos for a chance to be featured.</p>
+      </div>
+      <!-- Replace each .instagram-item-placeholder with <img src="images/insta-1.jpg"> etc. -->
+      <div class="instagram-grid">
+        <a href="https://www.instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" class="instagram-item">
+          <div class="instagram-item-placeholder insta-1"></div>
+          <div class="instagram-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></div>
+        </a>
+        <a href="https://www.instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" class="instagram-item">
+          <div class="instagram-item-placeholder insta-2"></div>
+          <div class="instagram-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></div>
+        </a>
+        <a href="https://www.instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" class="instagram-item">
+          <div class="instagram-item-placeholder insta-3"></div>
+          <div class="instagram-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></div>
+        </a>
+        <a href="https://www.instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" class="instagram-item">
+          <div class="instagram-item-placeholder insta-4"></div>
+          <div class="instagram-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></div>
+        </a>
+        <a href="https://www.instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" class="instagram-item">
+          <div class="instagram-item-placeholder insta-5"></div>
+          <div class="instagram-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></div>
+        </a>
+        <a href="https://www.instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" class="instagram-item">
+          <div class="instagram-item-placeholder insta-6"></div>
+          <div class="instagram-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── Newsletter ── -->
+    <section class="newsletter-section">
+      <h2>Get Early Access</h2>
+      <p>Be the first to know about new drops, exclusive deals, and summer inspo.</p>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" placeholder="Your email address" aria-label="Email" />
+        <button type="submit">Subscribe</button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/Logo original colors.png" alt="Melancia" style="height:52px; width:auto; margin-bottom:12px;" />
+        <p>Swimwear designed for the free-spirited. Made with love, worn with confidence.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@YOUR_HANDLE" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.2 8.2 0 0 0 4.79 1.53V6.77a4.85 4.85 0 0 1-1.02-.08z"/></svg>
+          </a>
+          <a href="https://www.pinterest.com/YOUR_HANDLE" target="_blank" rel="noopener" title="Pinterest" aria-label="Pinterest">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html">New Arrivals</a></li>
+          <li><a href="shop.html">Sets</a></li>
+          <li><a href="shop.html">Tops</a></li>
+          <li><a href="shop.html">Bottoms</a></li>
+          <li><a href="shop.html">One Pieces</a></li>
+          <li><a href="shop.html">Cover-Ups</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="size-guide.html">Size Guide</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="#">Stockists</a></li>
+          <li><a href="#">Sustainability</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Melancia Swimwear. All rights reserved.</span>
+      <span>Privacy Policy · Terms of Service</span>
+    </div>
+  </footer>
+
+  <script>
+    // ── Page Loader ──
+    const loader = document.getElementById('pageLoader');
+    // Logo animation is 2.2s — dismiss the overlay right after
+    setTimeout(() => {
+      loader.classList.add('hide');
+      setTimeout(() => loader.remove(), 450); // clean up from DOM after fade
+    }, 2200);
+
+    // ── Hamburger menu ──
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('is-open');
+      navLinks.classList.toggle('nav-open');
+    });
+    // Close menu when a link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('is-open');
+        navLinks.classList.remove('nav-open');
+      });
+    });
+
+    // Sticky nav shadow on scroll
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Wishlist toggle
+    document.querySelectorAll('.product-wishlist').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        btn.classList.toggle('active');
+        btn.textContent = btn.classList.contains('active') ? '♥' : '♡';
+      });
+    });
+  </script>
+
+</body>
+</html>
