@@ -1,7 +1,151 @@
 /* =============================================
-   MELANCIA — Brand Stylesheet
+   MELANCIA — Brand Stylesheet (Next.js)
    Colors: Coral #F0856E | Lavender #C9A8E8
    ============================================= */
+
+/* ── Shop product placeholder colors ── */
+.p1  { background: linear-gradient(160deg, #C9A8E8 20%, #F0856E); }
+.p2  { background: linear-gradient(160deg, #F9C4B8 20%, #C9A8E8); }
+.p3  { background: linear-gradient(160deg, #EAD9F8 20%, #F9C4B8); }
+.p4  { background: linear-gradient(160deg, #F0856E 20%, #EAD9F8); }
+.p5  { background: linear-gradient(160deg, #C9A8E8 20%, #F9C4B8); }
+.p6  { background: linear-gradient(160deg, #F9C4B8 20%, #F0856E); }
+.p7  { background: linear-gradient(160deg, #EAD9F8 20%, #C9A8E8); }
+.p8  { background: linear-gradient(160deg, #F0856E 20%, #F9C4B8); }
+.p9  { background: linear-gradient(160deg, #C9A8E8 20%, #EAD9F8); }
+.p10 { background: linear-gradient(160deg, #F9C4B8 20%, #EAD9F8); }
+.p11 { background: linear-gradient(160deg, #EAD9F8 20%, #F0856E); }
+.p12 { background: linear-gradient(160deg, #F0856E 20%, #C9A8E8); }
+
+.prod-ph-1 { background: linear-gradient(160deg, #C9A8E8 30%, #F0856E); }
+.prod-ph-2 { background: linear-gradient(160deg, #F9C4B8 30%, #C9A8E8); }
+.prod-ph-3 { background: linear-gradient(160deg, #EAD9F8 30%, #F9C4B8); }
+.prod-ph-4 { background: linear-gradient(160deg, #F0856E 30%, #EAD9F8); }
+
+.placeholder-label {
+  background: rgba(255,255,255,0.2);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ── Page Loader ── */
+.page-loader {
+  position: fixed; inset: 0; background: #fff;
+  z-index: 99999; display: flex; align-items: center;
+  justify-content: center; pointer-events: none;
+}
+.page-loader img {
+  width: 200px; max-width: 50vw;
+  animation: logoReveal 2.2s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+@keyframes logoReveal {
+  0%   { opacity:0; transform:scale(0.88); }
+  25%  { opacity:1; transform:scale(1);    }
+  70%  { opacity:1; transform:scale(1);    }
+  100% { opacity:0; transform:scale(1.06); }
+}
+.page-loader.hide { animation: loaderOut 0.45s ease forwards; }
+@keyframes loaderOut { to { opacity:0; visibility:hidden; } }
+
+/* ── Video Hero ── */
+.hero-video-section {
+  padding: 20px 28px 20px;
+  background: var(--white);
+}
+.hero-video-wrap {
+  position: relative;
+  width: 100%;
+  height: calc(90vh - 101px);
+  min-height: 430px;
+  border-radius: 24px;
+  overflow: hidden;
+}
+.hero-video-wrap video,
+.hero-video-fallback {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+}
+.hero-video-fallback {
+  background: linear-gradient(160deg, #C9A8E8 0%, #F0856E 50%, #EAD9F8 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px; color: rgba(255,255,255,0.85);
+  font-size: 0.85rem; font-weight: 500; text-align: center;
+}
+.hero-video-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.50) 100%);
+  display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 52px 56px;
+}
+.hero-video-text { max-width: 680px; }
+.hero-video-eyebrow {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: rgba(255,255,255,0.80);
+  margin-bottom: 12px; display: block;
+}
+.hero-video-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.6rem, 5.5vw, 5rem);
+  font-weight: 700; color: #fff; line-height: 1.05;
+  letter-spacing: -0.01em; margin-bottom: 28px; text-transform: uppercase;
+}
+.hero-video-title em { font-style: italic; color: var(--coral-light); }
+.hero-video-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-hero-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 28px; border-radius: 50px;
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(6px);
+  color: var(--dark); font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; border: none; cursor: pointer;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+}
+.btn-hero-pill:hover {
+  background: #fff; transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+.btn-hero-pill.outline {
+  background: transparent; color: #fff;
+  border: 2px solid rgba(255,255,255,0.65);
+}
+.btn-hero-pill.outline:hover { background: rgba(255,255,255,0.15); }
+.hero-video-scroll {
+  position: absolute; bottom: 28px; right: 36px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; color: rgba(255,255,255,0.65); font-size: 0.65rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+@media (max-width: 768px) {
+  .hero-video-section { padding: 12px 12px 12px; }
+  .hero-video-wrap { border-radius: 16px; height: 75vh; }
+  .hero-video-overlay { padding: 28px 24px; }
+  .hero-video-title { font-size: clamp(2rem, 8vw, 3rem); }
+}
+
+/* ── Collection banners placeholder colors ── */
+.col-ph-1 { background: linear-gradient(145deg, #F0856E, #EAD9F8); }
+.col-ph-2 { background: linear-gradient(145deg, #C9A8E8, #F9C4B8); }
+.col-ph-3 { background: linear-gradient(145deg, #F9C4B8, #C9A8E8); }
+.col-ph-4 { background: linear-gradient(145deg, #EAD9F8, #F0856E); }
+
+/* ── About placeholder ── */
+.about-ph { background: linear-gradient(145deg, #F0856E 0%, #C9A8E8 100%); }
+
+/* ── Instagram placeholder colors ── */
+.insta-1 { background: linear-gradient(135deg, #F0856E, #F9C4B8); }
+.insta-2 { background: linear-gradient(135deg, #C9A8E8, #EAD9F8); }
+.insta-3 { background: linear-gradient(135deg, #F9C4B8, #F0856E); }
+.insta-4 { background: linear-gradient(135deg, #EAD9F8, #C9A8E8); }
+.insta-5 { background: linear-gradient(135deg, #F0856E, #C9A8E8); }
+.insta-6 { background: linear-gradient(135deg, #C9A8E8, #F0856E); }
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap');
 
