@@ -23,3 +23,12 @@ export interface Testimonial {
   author: string
   rating: number
 }
+
+/** Star rating must be between 1 and 5 */
+export interface CustomerReview {
+  id: number
+  name: string
+  year: number
+  rating: number
+  text: string
+}

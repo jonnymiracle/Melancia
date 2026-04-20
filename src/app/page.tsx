@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import ProductCard from '@/components/ProductCard'
+import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
 import { featuredProducts } from '@/data/products'
+import { featuredCustomerReviews } from '@/data/reviews'
 
 const INSTAGRAM = 'https://www.instagram.com/YOUR_HANDLE'
 
@@ -152,15 +154,16 @@ export default function HomePage() {
           <h2>What Our Girls Are Saying</h2>
         </div>
         <div className="testimonials-grid">
-          {[
-            { text: '"I wore the Watermelon Set on my trip to Tulum and got so many compliments. The fit is incredible — it actually stays put in the ocean!"', author: 'Sofia M.' },
-            { text: '"Finally a brand that gets it right. The colors are exactly like the photos, the fabric is so soft, and the sizing is true-to-size. I\'m obsessed."', author: 'Valentina R.' },
-            { text: '"The Lavender Dream top is my new favorite. It\'s so comfortable and the design is unique. Already ordering a second color!"', author: 'Camila P.' },
-          ].map(t => (
-            <div key={t.author} className="testimonial-card">
-              <div className="testimonial-stars">★★★★★</div>
-              <p className="testimonial-text">{t.text}</p>
-              <span className="testimonial-author">— {t.author}</span>
+          {featuredCustomerReviews.map((review) => (
+            <div key={review.id} className="testimonial-card">
+              <div className="testimonial-stars" aria-hidden>
+                {'★'.repeat(review.rating)}
+              </div>
+              <p className="testimonial-text">&ldquo;{review.text}&rdquo;</p>
+              <span className="testimonial-author">
+                — {review.name}
+                <span style={{ opacity: 0.65, fontWeight: 400 }}> · {review.year}</span>
+              </span>
             </div>
           ))}
         </div>
@@ -189,10 +192,7 @@ export default function HomePage() {
       <section className="newsletter-section">
         <h2>Get Early Access</h2>
         <p>Be the first to know about new drops, exclusive deals, and summer inspo.</p>
-        <form className="newsletter-form" onSubmit={e => e.preventDefault()}>
-          <input type="email" placeholder="Your email address" aria-label="Email" />
-          <button type="submit">Subscribe</button>
-        </form>
+        <NewsletterForm />
       </section>
     </>
   )
