@@ -7,10 +7,10 @@ import { Product } from '@/types'
 
 const SIZES   = ['XS', 'S', 'M', 'L']
 const COLORS  = [
-  { hex: '#F0856E', label: 'Coral' },
-  { hex: '#C9A8E8', label: 'Lavender' },
-  { hex: '#F9C4B8', label: 'Blush' },
-  { hex: '#EAD9F8', label: 'Lilac' },
+  { hex: '#F7A18F', label: 'Coral' },
+  { hex: '#E3C3DD', label: 'Lavender' },
+  { hex: '#FBD4CE', label: 'Blush' },
+  { hex: '#F3EAF5', label: 'Lilac' },
   { hex: '#2C2C2C', label: 'Black' },
   { hex: '#FFFFFF', label: 'White' },
   { hex: '#7EC8A4', label: 'Mint' },

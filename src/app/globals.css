@@ -1,26 +1,28 @@
 /* =============================================
    MELANCIA — Brand Stylesheet (Next.js)
-   Colors: Coral #F0856E | Lavender #C9A8E8
+   Primaries: --primary-1 rgb(247,161,143) | --primary-2 rgb(227,195,221)
    ============================================= */
 
-/* ── Shop product placeholder colors ── */
-.p1  { background: linear-gradient(160deg, #C9A8E8 20%, #F0856E); }
-.p2  { background: linear-gradient(160deg, #F9C4B8 20%, #C9A8E8); }
-.p3  { background: linear-gradient(160deg, #EAD9F8 20%, #F9C4B8); }
-.p4  { background: linear-gradient(160deg, #F0856E 20%, #EAD9F8); }
-.p5  { background: linear-gradient(160deg, #C9A8E8 20%, #F9C4B8); }
-.p6  { background: linear-gradient(160deg, #F9C4B8 20%, #F0856E); }
-.p7  { background: linear-gradient(160deg, #EAD9F8 20%, #C9A8E8); }
-.p8  { background: linear-gradient(160deg, #F0856E 20%, #F9C4B8); }
-.p9  { background: linear-gradient(160deg, #C9A8E8 20%, #EAD9F8); }
-.p10 { background: linear-gradient(160deg, #F9C4B8 20%, #EAD9F8); }
-.p11 { background: linear-gradient(160deg, #EAD9F8 20%, #F0856E); }
-.p12 { background: linear-gradient(160deg, #F0856E 20%, #C9A8E8); }
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap');
 
-.prod-ph-1 { background: linear-gradient(160deg, #C9A8E8 30%, #F0856E); }
-.prod-ph-2 { background: linear-gradient(160deg, #F9C4B8 30%, #C9A8E8); }
-.prod-ph-3 { background: linear-gradient(160deg, #EAD9F8 30%, #F9C4B8); }
-.prod-ph-4 { background: linear-gradient(160deg, #F0856E 30%, #EAD9F8); }
+/* ── Shop product placeholder colors ── */
+.p1  { background: linear-gradient(160deg, var(--lavender) 20%, var(--coral)); }
+.p2  { background: linear-gradient(160deg, var(--coral-light) 20%, var(--lavender)); }
+.p3  { background: linear-gradient(160deg, var(--lavender-light) 20%, var(--coral-light)); }
+.p4  { background: linear-gradient(160deg, var(--coral) 20%, var(--lavender-light)); }
+.p5  { background: linear-gradient(160deg, var(--lavender) 20%, var(--coral-light)); }
+.p6  { background: linear-gradient(160deg, var(--coral-light) 20%, var(--coral)); }
+.p7  { background: linear-gradient(160deg, var(--lavender-light) 20%, var(--lavender)); }
+.p8  { background: linear-gradient(160deg, var(--coral) 20%, var(--coral-light)); }
+.p9  { background: linear-gradient(160deg, var(--lavender) 20%, var(--lavender-light)); }
+.p10 { background: linear-gradient(160deg, var(--coral-light) 20%, var(--lavender-light)); }
+.p11 { background: linear-gradient(160deg, var(--lavender-light) 20%, var(--coral)); }
+.p12 { background: linear-gradient(160deg, var(--coral) 20%, var(--lavender)); }
+
+.prod-ph-1 { background: linear-gradient(160deg, var(--lavender) 30%, var(--coral)); }
+.prod-ph-2 { background: linear-gradient(160deg, var(--coral-light) 30%, var(--lavender)); }
+.prod-ph-3 { background: linear-gradient(160deg, var(--lavender-light) 30%, var(--coral-light)); }
+.prod-ph-4 { background: linear-gradient(160deg, var(--coral) 30%, var(--lavender-light)); }
 
 .placeholder-label {
   background: rgba(255,255,255,0.2);
@@ -71,7 +73,7 @@
   object-fit: cover; object-position: center top;
 }
 .hero-video-fallback {
-  background: linear-gradient(160deg, #C9A8E8 0%, #F0856E 50%, #EAD9F8 100%);
+  background: linear-gradient(160deg, var(--lavender) 0%, var(--coral) 50%, var(--lavender-light) 100%);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   gap: 12px; color: rgba(255,255,255,0.85);
@@ -131,40 +133,45 @@
 }
 
 /* ── Collection banners placeholder colors ── */
-.col-ph-1 { background: linear-gradient(145deg, #F0856E, #EAD9F8); }
-.col-ph-2 { background: linear-gradient(145deg, #C9A8E8, #F9C4B8); }
-.col-ph-3 { background: linear-gradient(145deg, #F9C4B8, #C9A8E8); }
-.col-ph-4 { background: linear-gradient(145deg, #EAD9F8, #F0856E); }
+.col-ph-1 { background: linear-gradient(145deg, var(--coral), var(--lavender-light)); }
+.col-ph-2 { background: linear-gradient(145deg, var(--lavender), var(--coral-light)); }
+.col-ph-3 { background: linear-gradient(145deg, var(--coral-light), var(--lavender)); }
+.col-ph-4 { background: linear-gradient(145deg, var(--lavender-light), var(--coral)); }
 
 /* ── About placeholder ── */
-.about-ph { background: linear-gradient(145deg, #F0856E 0%, #C9A8E8 100%); }
+.about-ph { background: linear-gradient(145deg, var(--coral) 0%, var(--lavender) 100%); }
 
 /* ── Instagram placeholder colors ── */
-.insta-1 { background: linear-gradient(135deg, #F0856E, #F9C4B8); }
-.insta-2 { background: linear-gradient(135deg, #C9A8E8, #EAD9F8); }
-.insta-3 { background: linear-gradient(135deg, #F9C4B8, #F0856E); }
-.insta-4 { background: linear-gradient(135deg, #EAD9F8, #C9A8E8); }
-.insta-5 { background: linear-gradient(135deg, #F0856E, #C9A8E8); }
-.insta-6 { background: linear-gradient(135deg, #C9A8E8, #F0856E); }
-
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap');
+.insta-1 { background: linear-gradient(135deg, var(--coral), var(--coral-light)); }
+.insta-2 { background: linear-gradient(135deg, var(--lavender), var(--lavender-light)); }
+.insta-3 { background: linear-gradient(135deg, var(--coral-light), var(--coral)); }
+.insta-4 { background: linear-gradient(135deg, var(--lavender-light), var(--lavender)); }
+.insta-5 { background: linear-gradient(135deg, var(--coral), var(--lavender)); }
+.insta-6 { background: linear-gradient(135deg, var(--lavender), var(--coral)); }
 
 /* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --coral:       #F0856E;
-  --coral-light: #F9C4B8;
-  --coral-dark:  #D96B54;
-  --lavender:    #C9A8E8;
-  --lavender-light: #EAD9F8;
-  --lavender-dark:  #A882CC;
-  --cream:       #FFF8F5;
-  --white:       #FFFFFF;
-  --dark:        #2C2C2C;
-  --mid:         #6B6B6B;
-  --light-gray:  #F5F0EE;
-  --border:      #EDE0DB;
+  /* Source primaries — change these two to retheme (derived tokens follow) */
+  --primary-1: rgb(247, 161, 143);
+  --primary-2: rgb(227, 195, 221);
+
+  --coral: var(--primary-1);
+  --lavender: var(--primary-2);
+  /* Hand-tuned tints/shades from primaries (no color-mix — broader browser support) */
+  --coral-light: #fbd4ce;
+  --coral-dark: #c97a66;
+  --lavender-light: #f3eaf5;
+  --lavender-dark: #9a7da8;
+
+  --cream: #fdf7f7;
+  --light-gray: #faf7f9;
+  --border: #f1e8ec;
+
+  --white: #ffffff;
+  --dark: #2c2c2c;
+  --mid: #6b6b6b;
 }
 
 html { scroll-behavior: smooth; }
@@ -176,12 +183,44 @@ body {
   line-height: 1.6;
 }
 
+/*
+ * Stray text caret: disable selection on static chrome + page body, not on <html>/<body>
+ * (avoids odd interactions with route views / controls). Forms inside main stay normal.
+ */
+main.page-content,
+nav.nav,
+.announcement-bar,
+footer {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+main.page-content input,
+main.page-content textarea,
+main.page-content select,
+main.page-content option,
+main.page-content [contenteditable="true"] {
+  user-select: auto;
+  -webkit-user-select: auto;
+}
+
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not([type="color"]):not([type="hidden"]),
+textarea {
+  cursor: text;
+}
+
+/* Opt-in for blocks users should be able to highlight (e.g. legal, addresses) */
+.allow-text-selection {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
 h1, h2, h3, h4 {
   font-family: 'Playfair Display', serif;
   line-height: 1.2;
 }
 
-a { text-decoration: none; color: inherit; }
+a { text-decoration: none; color: inherit; cursor: pointer; }
 img { display: block; width: 100%; }
 ul { list-style: none; }
 
@@ -209,7 +248,7 @@ ul { list-style: none; }
   background: var(--coral-dark);
   border-color: var(--coral-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(240, 133, 110, 0.35);
+  box-shadow: 0 8px 24px rgba(247, 161, 143, 0.35);
 }
 
 .btn-outline {
@@ -279,6 +318,7 @@ ul { list-style: none; }
   color: var(--dark);
   position: relative;
   transition: color 0.2s;
+  cursor: pointer;
 }
 
 .nav-links a::after {
@@ -872,7 +912,7 @@ ul { list-style: none; }
 .instagram-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(201, 168, 232, 0.6);
+  background: rgba(227, 195, 221, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1491,7 +1531,7 @@ footer {
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: var(--coral);
-  box-shadow: 0 0 0 3px rgba(240, 133, 110, 0.12);
+  box-shadow: 0 0 0 3px rgba(247, 161, 143, 0.12);
 }
 
 .form-group textarea {

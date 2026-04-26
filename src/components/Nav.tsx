@@ -24,22 +24,26 @@ export default function Nav() {
 
   return (
     <nav className={`nav${scrolled ? ' scrolled' : ''}`} id="mainNav">
-      <Link href="/" className="nav-logo">
-        <Image
-          src="/images/Logo original colors.png"
-          alt="Melancia"
-          width={120}
-          height={72}
-          style={{ height: 48, width: 'auto' }}
-          priority
-        />
-      </Link>
+      <div className="nav-logo-container">
+        <Link href="/" className="nav-logo">
+          <Image
+            src="/images/Logo original colors.png"
+            alt="Melancia"
+            width={120}
+            height={72}
+            style={{ height: 48, width: 'auto' }}
+            priority
+          />
+        </Link>
+      </div>
 
-      <ul className={`nav-links${menuOpen ? ' nav-open' : ''}`}>
-        <li><Link href="/" className={isActive('/') ? 'active' : ''}>Home</Link></li>
-        <li><Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link></li>
-        <li><Link href="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
-      </ul>
+      <div className="nav-links-container">
+        <ul className={`nav-links${menuOpen ? ' nav-open' : ''}`}>
+          <li><Link href="/" className={isActive('/') ? 'active' : ''}>Home</Link></li>
+          <li><Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link></li>
+          <li><Link href="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
+        </ul>
+      </div>
 
       <div className="nav-icons">
         <a href="#" aria-label="Search"><SearchIcon /></a>

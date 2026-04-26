@@ -7,7 +7,7 @@ export const featuredProducts: Product[] = [
     description: 'Triangle top + high-waist bottom',
     price: 89,
     badge: 'new',
-    colors: ['#F0856E', '#C9A8E8', '#F9C4B8'],
+    colors: ['#F7A18F', '#E3C3DD', '#FBD4CE'],
     placeholderClass: 'prod-ph-1',
   },
   {
@@ -16,7 +16,7 @@ export const featuredProducts: Product[] = [
     description: 'Bandeau with removable straps',
     price: 48,
     badge: 'new',
-    colors: ['#C9A8E8', '#ffffff'],
+    colors: ['#E3C3DD', '#ffffff'],
     placeholderClass: 'prod-ph-2',
   },
   {
@@ -24,7 +24,7 @@ export const featuredProducts: Product[] = [
     name: 'Sunset One-Piece',
     description: 'Cut-out back, adjustable straps',
     price: 95,
-    colors: ['#F0856E', '#2C2C2C'],
+    colors: ['#F7A18F', '#2C2C2C'],
     placeholderClass: 'prod-ph-3',
   },
   {
@@ -34,7 +34,7 @@ export const featuredProducts: Product[] = [
     price: 32,
     originalPrice: 46,
     badge: 'sale',
-    colors: ['#F9C4B8', '#EAD9F8', '#F0856E'],
+    colors: ['#FBD4CE', '#F3EAF5', '#F7A18F'],
     placeholderClass: 'prod-ph-4',
   },
 ]
@@ -46,7 +46,7 @@ export const allProducts: Product[] = [
     name: 'Lilac Halter Set',
     description: 'Halter top + cheeky bottom',
     price: 82,
-    colors: ['#EAD9F8', '#C9A8E8'],
+    colors: ['#F3EAF5', '#E3C3DD'],
     placeholderClass: 'p5',
   },
   {
@@ -55,7 +55,7 @@ export const allProducts: Product[] = [
     description: 'Adjustable ties, padding included',
     price: 44,
     badge: 'new',
-    colors: ['#F0856E', '#F9C4B8'],
+    colors: ['#F7A18F', '#FBD4CE'],
     placeholderClass: 'p6',
   },
   {
@@ -73,7 +73,7 @@ export const allProducts: Product[] = [
     price: 28,
     originalPrice: 42,
     badge: 'sale',
-    colors: ['#F5C843', '#F0856E'],
+    colors: ['#F5C843', '#F7A18F'],
     placeholderClass: 'p8',
   },
   {
@@ -81,7 +81,7 @@ export const allProducts: Product[] = [
     name: 'Cloud Nine One-Piece',
     description: 'Plunge neck, open back',
     price: 98,
-    colors: ['#EAD9F8', '#ffffff'],
+    colors: ['#F3EAF5', '#ffffff'],
     placeholderClass: 'p9',
   },
   {
@@ -90,7 +90,7 @@ export const allProducts: Product[] = [
     description: 'Ruched bandeau, strapless',
     price: 46,
     badge: 'new',
-    colors: ['#F9C4B8', '#C9A8E8'],
+    colors: ['#FBD4CE', '#E3C3DD'],
     placeholderClass: 'p10',
   },
   {
@@ -98,7 +98,7 @@ export const allProducts: Product[] = [
     name: 'Tropicana Cover-Up',
     description: 'Sheer mesh, open sides',
     price: 62,
-    colors: ['#F0856E', '#ffffff'],
+    colors: ['#F7A18F', '#ffffff'],
     placeholderClass: 'p11',
   },
   {
@@ -108,7 +108,7 @@ export const allProducts: Product[] = [
     price: 64,
     originalPrice: 86,
     badge: 'sale',
-    colors: ['#F0856E', '#C9A8E8', '#7EC8A4'],
+    colors: ['#F7A18F', '#E3C3DD', '#7EC8A4'],
     placeholderClass: 'p12',
   },
 ]

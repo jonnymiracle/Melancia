@@ -5,6 +5,7 @@ import AnnouncementBar from '@/components/AnnouncementBar'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import PageLoader from '@/components/PageLoader'
+import { brandTabIconHref } from '@/components/icons'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -22,6 +23,10 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'Melancia — Summer Swim',
   description: 'Swimwear designed for the free-spirited. Made with love, worn with confidence.',
+  icons: {
+    icon: [{ url: brandTabIconHref, type: 'image/png' }],
+    apple: brandTabIconHref,
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

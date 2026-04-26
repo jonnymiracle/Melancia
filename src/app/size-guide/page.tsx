@@ -68,21 +68,21 @@ export default function SizeGuidePage() {
             <div className="measure-section">
               <div className="measure-diagram">
                 <svg viewBox="0 0 200 380" width="200" height="340" fill="none">
-                  <path d="M100 30 C85 30 75 42 75 55 C75 68 83 78 100 80 C117 78 125 68 125 55 C125 42 115 30 100 30Z" fill="#EAD9F8" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <rect x="93" y="78" width="14" height="14" rx="2" fill="#EAD9F8" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <path d="M70 92 C60 92 52 100 50 110 L44 150 C42 162 46 172 56 176 L72 180 L72 260 L128 260 L128 180 L144 176 C154 172 158 162 156 150 L150 110 C148 100 140 92 130 92 Z" fill="#EAD9F8" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <path d="M72 260 L65 340" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <path d="M128 260 L135 340" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <line x1="30" y1="118" x2="170" y2="118" stroke="#F0856E" strokeWidth="1.5" strokeDasharray="4 3"/>
-                  <circle cx="30" cy="118" r="3" fill="#F0856E"/>
-                  <circle cx="170" cy="118" r="3" fill="#F0856E"/>
-                  <text x="174" y="122" fontFamily="sans-serif" fontSize="10" fill="#F0856E" fontWeight="600">Bust</text>
-                  <line x1="34" y1="138" x2="166" y2="138" stroke="#C9A8E8" strokeWidth="1.5" strokeDasharray="4 3"/>
-                  <circle cx="34" cy="138" r="3" fill="#C9A8E8"/>
-                  <text x="170" y="142" fontFamily="sans-serif" fontSize="10" fill="#C9A8E8" fontWeight="600">Band</text>
-                  <line x1="38" y1="170" x2="162" y2="170" stroke="#F0856E" strokeWidth="1.5" strokeDasharray="4 3"/>
-                  <circle cx="38" cy="170" r="3" fill="#F0856E"/>
-                  <text x="166" y="174" fontFamily="sans-serif" fontSize="10" fill="#F0856E" fontWeight="600">Waist</text>
+                  <path d="M100 30 C85 30 75 42 75 55 C75 68 83 78 100 80 C117 78 125 68 125 55 C125 42 115 30 100 30Z" fill="#F3EAF5" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <rect x="93" y="78" width="14" height="14" rx="2" fill="#F3EAF5" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <path d="M70 92 C60 92 52 100 50 110 L44 150 C42 162 46 172 56 176 L72 180 L72 260 L128 260 L128 180 L144 176 C154 172 158 162 156 150 L150 110 C148 100 140 92 130 92 Z" fill="#F3EAF5" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <path d="M72 260 L65 340" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <path d="M128 260 L135 340" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <line x1="30" y1="118" x2="170" y2="118" stroke="#F7A18F" strokeWidth="1.5" strokeDasharray="4 3"/>
+                  <circle cx="30" cy="118" r="3" fill="#F7A18F"/>
+                  <circle cx="170" cy="118" r="3" fill="#F7A18F"/>
+                  <text x="174" y="122" fontFamily="sans-serif" fontSize="10" fill="#F7A18F" fontWeight="600">Bust</text>
+                  <line x1="34" y1="138" x2="166" y2="138" stroke="#E3C3DD" strokeWidth="1.5" strokeDasharray="4 3"/>
+                  <circle cx="34" cy="138" r="3" fill="#E3C3DD"/>
+                  <text x="170" y="142" fontFamily="sans-serif" fontSize="10" fill="#E3C3DD" fontWeight="600">Band</text>
+                  <line x1="38" y1="170" x2="162" y2="170" stroke="#F7A18F" strokeWidth="1.5" strokeDasharray="4 3"/>
+                  <circle cx="38" cy="170" r="3" fill="#F7A18F"/>
+                  <text x="166" y="174" fontFamily="sans-serif" fontSize="10" fill="#F7A18F" fontWeight="600">Waist</text>
                 </svg>
               </div>
               <div className="measure-steps">
@@ -131,16 +131,16 @@ export default function SizeGuidePage() {
             <div className="measure-section">
               <div className="measure-diagram">
                 <svg viewBox="0 0 200 380" width="200" height="340" fill="none">
-                  <path d="M60 80 L60 160 C60 165 65 168 70 168 L130 168 C135 168 140 165 140 160 L140 80 Z" fill="#EAD9F8" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <path d="M55 160 C48 165 44 175 48 185 L60 220 L90 240 L110 240 L140 220 L152 185 C156 175 152 165 145 160 L130 168 L70 168 Z" fill="#EAD9F8" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <path d="M60 220 L50 340" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <path d="M140 220 L150 340" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <line x1="30" y1="100" x2="170" y2="100" stroke="#F0856E" strokeWidth="1.5" strokeDasharray="4 3"/>
-                  <circle cx="30" cy="100" r="3" fill="#F0856E"/>
-                  <text x="174" y="104" fontFamily="sans-serif" fontSize="10" fill="#F0856E" fontWeight="600">Waist</text>
-                  <line x1="26" y1="178" x2="174" y2="178" stroke="#C9A8E8" strokeWidth="1.5" strokeDasharray="4 3"/>
-                  <circle cx="26" cy="178" r="3" fill="#C9A8E8"/>
-                  <text x="178" y="182" fontFamily="sans-serif" fontSize="10" fill="#C9A8E8" fontWeight="600">Hips</text>
+                  <path d="M60 80 L60 160 C60 165 65 168 70 168 L130 168 C135 168 140 165 140 160 L140 80 Z" fill="#F3EAF5" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <path d="M55 160 C48 165 44 175 48 185 L60 220 L90 240 L110 240 L140 220 L152 185 C156 175 152 165 145 160 L130 168 L70 168 Z" fill="#F3EAF5" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <path d="M60 220 L50 340" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <path d="M140 220 L150 340" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <line x1="30" y1="100" x2="170" y2="100" stroke="#F7A18F" strokeWidth="1.5" strokeDasharray="4 3"/>
+                  <circle cx="30" cy="100" r="3" fill="#F7A18F"/>
+                  <text x="174" y="104" fontFamily="sans-serif" fontSize="10" fill="#F7A18F" fontWeight="600">Waist</text>
+                  <line x1="26" y1="178" x2="174" y2="178" stroke="#E3C3DD" strokeWidth="1.5" strokeDasharray="4 3"/>
+                  <circle cx="26" cy="178" r="3" fill="#E3C3DD"/>
+                  <text x="178" y="182" fontFamily="sans-serif" fontSize="10" fill="#E3C3DD" fontWeight="600">Hips</text>
                 </svg>
               </div>
               <div className="measure-steps">
@@ -184,18 +184,18 @@ export default function SizeGuidePage() {
             <div className="measure-section">
               <div className="measure-diagram">
                 <svg viewBox="0 0 200 380" width="200" height="340" fill="none">
-                  <ellipse cx="100" cy="48" rx="24" ry="26" fill="#EAD9F8" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <rect x="91" y="72" width="18" height="14" rx="3" fill="#EAD9F8" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <path d="M68 86 C56 86 46 96 44 110 L36 155 C33 170 39 182 52 186 L70 190 L70 270 L130 270 L130 190 L148 186 C161 182 167 170 164 155 L156 110 C154 96 144 86 132 86 Z" fill="#EAD9F8" stroke="#C9A8E8" strokeWidth="1.5"/>
-                  <line x1="26" y1="116" x2="174" y2="116" stroke="#F0856E" strokeWidth="1.5" strokeDasharray="4 3"/>
-                  <circle cx="26" cy="116" r="3" fill="#F0856E"/>
-                  <text x="178" y="120" fontFamily="sans-serif" fontSize="9" fill="#F0856E" fontWeight="600">Bust</text>
-                  <line x1="30" y1="168" x2="170" y2="168" stroke="#C9A8E8" strokeWidth="1.5" strokeDasharray="4 3"/>
-                  <circle cx="30" cy="168" r="3" fill="#C9A8E8"/>
-                  <text x="174" y="172" fontFamily="sans-serif" fontSize="9" fill="#C9A8E8" fontWeight="600">Waist</text>
-                  <line x1="26" y1="196" x2="174" y2="196" stroke="#F0856E" strokeWidth="1.5" strokeDasharray="4 3"/>
-                  <circle cx="26" cy="196" r="3" fill="#F0856E"/>
-                  <text x="178" y="200" fontFamily="sans-serif" fontSize="9" fill="#F0856E" fontWeight="600">Hips</text>
+                  <ellipse cx="100" cy="48" rx="24" ry="26" fill="#F3EAF5" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <rect x="91" y="72" width="18" height="14" rx="3" fill="#F3EAF5" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <path d="M68 86 C56 86 46 96 44 110 L36 155 C33 170 39 182 52 186 L70 190 L70 270 L130 270 L130 190 L148 186 C161 182 167 170 164 155 L156 110 C154 96 144 86 132 86 Z" fill="#F3EAF5" stroke="#E3C3DD" strokeWidth="1.5"/>
+                  <line x1="26" y1="116" x2="174" y2="116" stroke="#F7A18F" strokeWidth="1.5" strokeDasharray="4 3"/>
+                  <circle cx="26" cy="116" r="3" fill="#F7A18F"/>
+                  <text x="178" y="120" fontFamily="sans-serif" fontSize="9" fill="#F7A18F" fontWeight="600">Bust</text>
+                  <line x1="30" y1="168" x2="170" y2="168" stroke="#E3C3DD" strokeWidth="1.5" strokeDasharray="4 3"/>
+                  <circle cx="30" cy="168" r="3" fill="#E3C3DD"/>
+                  <text x="174" y="172" fontFamily="sans-serif" fontSize="9" fill="#E3C3DD" fontWeight="600">Waist</text>
+                  <line x1="26" y1="196" x2="174" y2="196" stroke="#F7A18F" strokeWidth="1.5" strokeDasharray="4 3"/>
+                  <circle cx="26" cy="196" r="3" fill="#F7A18F"/>
+                  <text x="178" y="200" fontFamily="sans-serif" fontSize="9" fill="#F7A18F" fontWeight="600">Hips</text>
                 </svg>
               </div>
               <div className="measure-steps">
