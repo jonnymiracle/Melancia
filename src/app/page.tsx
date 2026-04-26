@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import ProductCard from '@/components/ProductCard'
+import ProductCard3 from '@/components/ProductCard3'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
 import { featuredProducts } from '@/data/products'
@@ -56,7 +56,7 @@ export default function HomePage() {
         </div>
         <div className="product-grid">
           {featuredProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard3 key={product.id} product={product} />
           ))}
         </div>
         <div style={{ textAlign: 'center', marginTop: 48 }}>

@@ -48,7 +48,7 @@ export default function Nav() {
       <div className="nav-icons">
         <a href="#" aria-label="Search"><SearchIcon /></a>
         <a href="#" aria-label="Account"><AccountIcon /></a>
-        <a href="#" aria-label="Cart"><CartIcon /></a>
+        <Link href="/cart" aria-label="Cart" className={isActive('/cart') ? 'active' : ''}><CartIcon /></Link>
       </div>
 
       <button
