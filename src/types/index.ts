@@ -8,6 +8,7 @@ export interface Product {
   colors: string[]
   placeholderClass: string
   image?: string
+  tags: string[]
 }
 
 export interface Retailer {

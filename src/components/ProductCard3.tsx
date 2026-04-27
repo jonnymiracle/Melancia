@@ -3,35 +3,9 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import type { Product } from '@/types'
+import type { ProductCard3Product, ShopifyProductVariant } from '@/types/shopify'
 import BuyNowButton from '@/components/BuyNowButton'
 import { ShirtIcon } from '@/components/icons'
-
-export type ShopifyProductVariant = {
-  id: string
-  title: string
-  availableForSale: boolean
-  price: {
-    amount: string
-    currencyCode: string
-  }
-}
-
-export type ShopifyProduct = {
-  id: string
-  title: string
-  handle?: string
-  featuredImage?: {
-    url: string
-    altText?: string | null
-  } | null
-  variants?: {
-    edges: {
-      node: ShopifyProductVariant
-    }[]
-  }
-}
-
-export type ProductCard3Product = Product | ShopifyProduct
 
 type ProductCard3Props = {
   product: ProductCard3Product
@@ -39,6 +13,13 @@ type ProductCard3Props = {
 
 function isCatalogProduct(p: ProductCard3Product): p is Product {
   return 'placeholderClass' in p
+}
+
+function excerptFromDescription(html?: string, max = 120): string {
+  if (!html?.trim()) return ''
+  const plain = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+  if (plain.length <= max) return plain
+  return `${plain.slice(0, max).trimEnd()}…`
 }
 
 function formatVariantPrice(variant: ShopifyProductVariant) {
@@ -118,6 +99,12 @@ export default function ProductCard3({ product }: ProductCard3Props) {
   const variant = product.variants?.edges?.[0]?.node
   const handle = product.handle ?? ''
 
+  const subtitle =
+    excerptFromDescription(product.description) ||
+    (variant?.title && variant.title !== 'Default Title'
+      ? variant.title
+      : handle.replace(/-/g, ' '))
+
   return (
     <div className="product-card">
       <div className="product-image">
@@ -160,11 +147,7 @@ export default function ProductCard3({ product }: ProductCard3Props) {
 
       <div className="product-info">
         <h3 className="product-name">{product.title}</h3>
-        <p className="product-desc">
-          {variant?.title && variant.title !== 'Default Title'
-            ? variant.title
-            : handle.replace(/-/g, ' ')}
-        </p>
+        <p className="product-desc">{subtitle}</p>
         <div className="product-footer">
           <span className="product-price">
             {variant ? formatVariantPrice(variant) : '—'}

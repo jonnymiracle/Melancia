@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-import { shopifyFetch } from "@/lib/shopify";
+import { NextResponse } from 'next/server'
+import { shopifyFetch } from '@/lib/shopify'
 
 export async function POST(req: Request) {
-  const { variantId, quantity } = await req.json();
+  const { variantId, quantity } = await req.json()
 
   const query = `
     mutation CartCreate($variantId: ID!, $quantity: Int!) {
@@ -26,12 +26,12 @@ export async function POST(req: Request) {
         }
       }
     }
-  `;
+  `
 
   const data = await shopifyFetch(query, {
     variantId,
     quantity,
-  });
+  })
 
-  return NextResponse.json(data);
+  return NextResponse.json(data)
 }

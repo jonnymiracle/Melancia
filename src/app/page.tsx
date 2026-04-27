@@ -6,7 +6,7 @@ import { InstagramIcon } from '@/components/icons'
 import { featuredProducts } from '@/data/products'
 import { featuredCustomerReviews } from '@/data/reviews'
 
-const INSTAGRAM = 'https://www.instagram.com/YOUR_HANDLE'
+const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
 export default function HomePage() {
   return (

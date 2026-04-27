@@ -2,9 +2,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { InstagramIcon, TikTokIcon, PinterestIcon } from './icons'
 
-const INSTAGRAM = 'https://www.instagram.com/YOUR_HANDLE'
-const TIKTOK    = 'https://www.tiktok.com/@YOUR_HANDLE'
-const PINTEREST = 'https://www.pinterest.com/YOUR_HANDLE'
+const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
+const TIKTOK    = 'https://www.instagram.com/melanciaswim/'
+const PINTEREST = 'https://www.instagram.com/melanciaswim/'
 
 export default function Footer() {
   return (
@@ -23,12 +23,12 @@ export default function Footer() {
             <a href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
               <InstagramIcon size={17} />
             </a>
-            <a href={TIKTOK} target="_blank" rel="noopener" aria-label="TikTok">
+            {/* <a href={TIKTOK} target="_blank" rel="noopener" aria-label="TikTok">
               <TikTokIcon size={17} />
-            </a>
-            <a href={PINTEREST} target="_blank" rel="noopener" aria-label="Pinterest">
+            </a> */}
+            {/* <a href={PINTEREST} target="_blank" rel="noopener" aria-label="Pinterest">
               <PinterestIcon size={17} />
-            </a>
+            </a> */}
           </div>
         </div>
 

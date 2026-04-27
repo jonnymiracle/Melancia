@@ -9,6 +9,7 @@ export const featuredProducts: Product[] = [
     badge: 'new',
     colors: ['#F7A18F', '#E3C3DD', '#FBD4CE'],
     placeholderClass: 'prod-ph-1',
+    tags: ['Set', 'Collection-1'],
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export const featuredProducts: Product[] = [
     badge: 'new',
     colors: ['#E3C3DD', '#ffffff'],
     placeholderClass: 'prod-ph-2',
+    tags: ['Top', 'Collection-1'],
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ export const featuredProducts: Product[] = [
     price: 95,
     colors: ['#F7A18F', '#2C2C2C'],
     placeholderClass: 'prod-ph-3',
+    tags: ['One-Piece', 'Collection-1'],
   },
   {
     id: 4,
@@ -36,6 +39,7 @@ export const featuredProducts: Product[] = [
     badge: 'sale',
     colors: ['#FBD4CE', '#F3EAF5', '#F7A18F'],
     placeholderClass: 'prod-ph-4',
+    tags: ['Bottom', 'Collection-1'],
   },
 ]
 
@@ -48,6 +52,7 @@ export const allProducts: Product[] = [
     price: 82,
     colors: ['#F3EAF5', '#E3C3DD'],
     placeholderClass: 'p5',
+    tags: ['Set', 'Collection-1'],
   },
   {
     id: 6,
@@ -57,6 +62,7 @@ export const allProducts: Product[] = [
     badge: 'new',
     colors: ['#F7A18F', '#FBD4CE'],
     placeholderClass: 'p6',
+    tags: ['Top', 'Collection-1'],
   },
   {
     id: 7,
@@ -65,6 +71,7 @@ export const allProducts: Product[] = [
     price: 78,
     colors: ['#7EC8A4', '#2C2C2C'],
     placeholderClass: 'p7',
+    tags: ['Set', 'Collection-1'],
   },
   {
     id: 8,
@@ -75,6 +82,7 @@ export const allProducts: Product[] = [
     badge: 'sale',
     colors: ['#F5C843', '#F7A18F'],
     placeholderClass: 'p8',
+    tags: ['Bottom', 'Collection-1'],
   },
   {
     id: 9,
@@ -83,6 +91,7 @@ export const allProducts: Product[] = [
     price: 98,
     colors: ['#F3EAF5', '#ffffff'],
     placeholderClass: 'p9',
+    tags: ['One-Piece', 'Collection-1'],
   },
   {
     id: 10,
@@ -92,6 +101,7 @@ export const allProducts: Product[] = [
     badge: 'new',
     colors: ['#FBD4CE', '#E3C3DD'],
     placeholderClass: 'p10',
+    tags: ['Top', 'Collection-1'],
   },
   {
     id: 11,
@@ -100,6 +110,7 @@ export const allProducts: Product[] = [
     price: 62,
     colors: ['#F7A18F', '#ffffff'],
     placeholderClass: 'p11',
+    tags: ['Cover-Up', 'Collection-1'],
   },
   {
     id: 12,
@@ -110,5 +121,6 @@ export const allProducts: Product[] = [
     badge: 'sale',
     colors: ['#F7A18F', '#E3C3DD', '#7EC8A4'],
     placeholderClass: 'p12',
+    tags: ['Set', 'Collection-1'],
   },
 ]
