@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import type { Product } from '@/types'
 import type { ProductCard3Product, ShopifyProductVariant } from '@/types/shopify'
-import BuyNowButton from '@/components/BuyNowButton'
+import { addToCart } from '@/lib/add-to-cart-client'
 import { ShirtIcon } from '@/components/icons'
 
 type ProductCard3Props = {
@@ -34,7 +34,12 @@ function formatVariantPrice(variant: ShopifyProductVariant) {
 }
 
 export default function ProductCard3({ product }: ProductCard3Props) {
-  const [wishlisted, setWishlisted] = useState(false)
+  const [inBag, setInBag] = useState(false)
+  const [pending, setPending] = useState(false)
+
+  const goShop = () => {
+    window.location.href = '/shop'
+  }
 
   if (isCatalogProduct(product)) {
     return (
@@ -57,14 +62,35 @@ export default function ProductCard3({ product }: ProductCard3Props) {
 
           <button
             type="button"
-            className={`product-wishlist${wishlisted ? ' active' : ''}`}
-            aria-label="Wishlist"
-            onClick={() => setWishlisted((prev) => !prev)}
+            className={`product-wishlist${inBag ? ' active' : ''}`}
+            aria-label="Add to bag"
+            disabled={pending}
+            onClick={() => {
+              setPending(true)
+              // goShop()
+
+            }}
           >
-            {wishlisted ? '♥' : '♡'}
+            {inBag ? '♥' : '♡'}
           </button>
 
-          <div className="product-quick-add">+ Quick Add</div>
+          <div
+            className="product-quick-add"
+            onClick={(e) => e.stopPropagation()}
+            role="presentation"
+          >
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled={pending}
+              onClick={() => {
+                setPending(true)
+                // goShop()
+              }}
+            >
+              + Add to cart
+            </button>
+          </div>
         </div>
 
         <div className="product-info">
@@ -105,6 +131,20 @@ export default function ProductCard3({ product }: ProductCard3Props) {
       ? variant.title
       : handle.replace(/-/g, ' '))
 
+  const canAdd = Boolean(variant?.id && variant.availableForSale)
+
+  const handleAddToCart = async () => {
+    if (!variant?.id || !variant.availableForSale) return
+    setPending(true)
+    const result = await addToCart(variant.id, 1)
+    setPending(false)
+    if (result.ok) {
+      setInBag(true)
+    } else {
+      alert(result.error)
+    }
+  }
+
   return (
     <div className="product-card">
       <div className="product-image">
@@ -127,16 +167,33 @@ export default function ProductCard3({ product }: ProductCard3Props) {
           <span className="product-badge sale">Sold out</span>
         )}
 
+        <button
+          type="button"
+          className={`product-wishlist${inBag ? ' active' : ''}`}
+          aria-label="Add to bag"
+          disabled={!canAdd || pending}
+          onClick={(e) => {
+            e.stopPropagation()
+            void handleAddToCart()
+          }}
+        >
+          {inBag ? '♥' : '♡'}
+        </button>
+
         <div
           className="product-quick-add"
           onClick={(e) => e.stopPropagation()}
           role="presentation"
         >
           {variant ? (
-            <BuyNowButton
-              variantId={variant.id}
-              disabled={!variant.availableForSale}
-            />
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled={!canAdd || pending}
+              onClick={() => void handleAddToCart()}
+            >
+              {pending ? 'Adding…' : '+ Add to bag'}
+            </button>
           ) : (
             <button type="button" className="btn btn-outline" disabled>
               Unavailable
