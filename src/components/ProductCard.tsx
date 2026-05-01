@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Product } from '@/types'
+import { resolveCatalogProductBadge } from '@/lib/product-badge'
 import { ShirtIcon } from './icons'
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
   const [wishlisted, setWishlisted] = useState(false)
+  const catalogBadge = resolveCatalogProductBadge(product)
 
   return (
     <div className="product-card">
@@ -24,9 +26,9 @@ export default function ProductCard({ product }: Props) {
           </div>
         )}
 
-        {product.badge && (
-          <span className={`product-badge ${product.badge}`}>
-            {product.badge === 'new' ? 'New' : 'Sale'}
+        {catalogBadge && (
+          <span className={`product-badge ${catalogBadge}`}>
+            {catalogBadge === 'new' ? 'New' : 'Sale'}
           </span>
         )}
 

@@ -18,6 +18,8 @@ export type ShopifyProduct = {
   handle?: string
   /** Plain or HTML from Storefront; strip before showing in cards if needed */
   description?: string
+  /** Admin product tags — use for card badges (e.g. `new`, `sale`) */
+  tags: string[]
   featuredImage?: {
     url: string
     altText?: string | null

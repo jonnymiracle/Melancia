@@ -148,7 +148,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Testimonials ── */}
-      <section className="testimonials-section">
+      {/* <section className="testimonials-section">
         <div className="section-header">
           <span className="eyebrow">Reviews</span>
           <h2>What Our Girls Are Saying</h2>
@@ -167,7 +167,7 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ── Instagram Strip ── */}
       <section className="instagram-strip">
@@ -196,4 +196,5 @@ export default function HomePage() {
       </section>
     </>
   )
+  
 }

@@ -10,6 +10,7 @@ const STOREFRONT_PRODUCTS_QUERY = `
           title
           handle
           description
+          tags
           featuredImage {
             url
             altText

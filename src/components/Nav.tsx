@@ -46,8 +46,8 @@ export default function Nav() {
       </div>
 
       <div className="nav-icons">
-        <a href="#" aria-label="Search"><SearchIcon /></a>
-        <a href="#" aria-label="Account"><AccountIcon /></a>
+        <a aria-label="Search"><SearchIcon /></a>
+        {/* <a href="#" aria-label="Account"><AccountIcon /></a> */}
         <Link href="/cart" aria-label="Cart" className={isActive('/cart') ? 'active' : ''}><CartIcon /></Link>
       </div>
 

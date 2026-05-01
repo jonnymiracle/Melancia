@@ -5,6 +5,7 @@ import Image from 'next/image'
 import type { Product } from '@/types'
 import type { ProductCard3Product, ShopifyProductVariant } from '@/types/shopify'
 import { addToCart } from '@/lib/add-to-cart-client'
+import { resolveCatalogProductBadge, resolveShopifyProductBadge } from '@/lib/product-badge'
 import { ShirtIcon } from '@/components/icons'
 
 type ProductCard3Props = {
@@ -42,6 +43,8 @@ export default function ProductCard3({ product }: ProductCard3Props) {
   }
 
   if (isCatalogProduct(product)) {
+    const catalogBadge = resolveCatalogProductBadge(product)
+
     return (
       <div className="product-card">
         <div className="product-image">
@@ -54,22 +57,19 @@ export default function ProductCard3({ product }: ProductCard3Props) {
             </div>
           )}
 
-          {product.badge && (
-            <span className={`product-badge ${product.badge}`}>
-              {product.badge === 'new' ? 'New' : 'Sale'}
+          {catalogBadge && (
+            <span className={`product-badge ${catalogBadge}`}>
+              {catalogBadge === 'new' ? 'New' : 'Sale'}
             </span>
           )}
 
           <button
             type="button"
             className={`product-wishlist${inBag ? ' active' : ''}`}
-            aria-label="Add to bag"
+            aria-label={inBag ? 'Remove from wishlist' : 'Add to wishlist'}
+            aria-pressed={inBag}
             disabled={pending}
-            onClick={() => {
-              setPending(true)
-              // goShop()
-
-            }}
+            onClick={() => setInBag((prev) => !prev)}
           >
             {inBag ? '♥' : '♡'}
           </button>
@@ -84,11 +84,9 @@ export default function ProductCard3({ product }: ProductCard3Props) {
               className="btn btn-primary"
               disabled={pending}
               onClick={() => {
-                setPending(true)
-                // goShop()
-              }}
+                setInBag((prev) => !prev)}}
             >
-              + Add to cart
+              {inBag ? '- Remove From Wishlist' : '+ Add to cart'}
             </button>
           </div>
         </div>
@@ -124,6 +122,8 @@ export default function ProductCard3({ product }: ProductCard3Props) {
 
   const variant = product.variants?.edges?.[0]?.node
   const handle = product.handle ?? ''
+
+  const shopifyPromoBadge = resolveShopifyProductBadge(product.tags ?? [])
 
   const subtitle =
     excerptFromDescription(product.description) ||
@@ -163,8 +163,14 @@ export default function ProductCard3({ product }: ProductCard3Props) {
           </div>
         )}
 
-        {variant && !variant.availableForSale && (
+        {variant && !variant.availableForSale ? (
           <span className="product-badge sale">Sold out</span>
+        ) : (
+          shopifyPromoBadge && (
+            <span className={`product-badge ${shopifyPromoBadge}`}>
+              {shopifyPromoBadge === 'new' ? 'New' : 'Sale'}
+            </span>
+          )
         )}
 
         <button
