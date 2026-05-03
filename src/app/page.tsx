@@ -22,7 +22,7 @@ export default function HomePage() {
             <div className="hero-video-text">
               <span className="hero-video-eyebrow">Summer Collection 2025</span>
               <h1 className="hero-video-title">
-                Made for the<br /><em>ocean,</em> the sun,<br />and you.
+                Made for <em>tanning,</em> made for you.
               </h1>
               <div className="hero-video-cta">
                 <Link href="/shop" className="btn-hero-pill">Shop New Arrivals</Link>
@@ -39,12 +39,9 @@ export default function HomePage() {
 
       {/* ── Category Strip ── */}
       <div className="category-strip">
-        <Link href="/shop">Sets</Link>
         <Link href="/shop">Tops</Link>
         <Link href="/shop">Bottoms</Link>
         <Link href="/shop">One Pieces</Link>
-        <Link href="/shop">Cover-Ups</Link>
-        <Link href="/shop">New Arrivals</Link>
       </div>
 
       {/* ── Featured Products ── */}
@@ -132,7 +129,7 @@ export default function HomePage() {
               { label: 'Chlorine-Resistant', sub: 'Built to last through pool and ocean', icon: '~' },
               { label: 'UV Protection', sub: 'UPF 50+ on select styles', icon: '◎' },
               { label: 'Eco Fabric', sub: 'Made from recycled materials', icon: '↻' },
-              { label: 'Inclusive Sizing', sub: 'XS – L, all body types', icon: '⊟' },
+              { label: 'Inclusive Sizing', sub: 'Small – Large, all body types', icon: '⊟' },
             ].map(f => (
               <div key={f.label} className="about-feature">
                 <span className="about-feature-icon" style={{ fontSize: '1.2rem', color: 'var(--coral)' }}>{f.icon}</span>
