@@ -4,9 +4,9 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { EnvelopeIcon, PhoneIcon, MapPinIcon, ClockIcon, InstagramIcon, TikTokIcon, PinterestIcon, GlobeIcon, MapPinIcon as StoreIcon, PlusIcon } from '@/components/icons'
 
-const INSTAGRAM = 'https://www.instagram.com/YOUR_HANDLE'
-const TIKTOK    = 'https://www.tiktok.com/@YOUR_HANDLE'
-const PINTEREST = 'https://www.pinterest.com/YOUR_HANDLE'
+const INSTAGRAM = 'https://www.instagram.com/melanciaswim'
+const TIKTOK    = 'https://www.tiktok.com/@melanciaswim'
+const PINTEREST = 'https://www.pinterest.com/melanciaswim'
 
 const faqs = [
   { q: 'How do I know what size to order?', a: 'We recommend checking our Size Guide before ordering. Our swimwear generally runs true to size, but if you\'re between sizes we suggest sizing up for tops and down for bottoms.' },

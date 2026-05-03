@@ -7,24 +7,21 @@ type Tab = 'tops' | 'bottoms' | 'onepiece'
 type Unit = 'in' | 'cm'
 
 const topsData = [
-  { size: 'XS', bust: { in: '32–33"', cm: '81–84 cm' }, band: { in: '27–28"', cm: '68–71 cm' }, waist: { in: '25–26"', cm: '63–66 cm' }, cup: 'A/B', popular: false },
-  { size: 'S',  bust: { in: '34–35"', cm: '86–89 cm' }, band: { in: '29–30"', cm: '73–76 cm' }, waist: { in: '27–28"', cm: '68–71 cm' }, cup: 'B/C', popular: true  },
-  { size: 'M',  bust: { in: '36–37"', cm: '91–94 cm' }, band: { in: '31–32"', cm: '78–81 cm' }, waist: { in: '29–30"', cm: '73–76 cm' }, cup: 'C/D', popular: false },
-  { size: 'L',  bust: { in: '38–40"', cm: '96–101 cm'}, band: { in: '33–35"', cm: '83–89 cm' }, waist: { in: '31–33"', cm: '78–83 cm' }, cup: 'D/DD',popular: false },
+  { size: 'Small', bust: { in: '34–35"', cm: '86–89 cm' }, band: { in: '29–30"', cm: '73–76 cm' }, waist: { in: '27–28"', cm: '68–71 cm' }, cup: 'B/C', popular: true },
+  { size: 'Medium', bust: { in: '36–37"', cm: '91–94 cm' }, band: { in: '31–32"', cm: '78–81 cm' }, waist: { in: '29–30"', cm: '73–76 cm' }, cup: 'C/D', popular: false },
+  { size: 'Large', bust: { in: '38–40"', cm: '96–101 cm' }, band: { in: '33–35"', cm: '83–89 cm' }, waist: { in: '31–33"', cm: '78–83 cm' }, cup: 'D/DD', popular: false },
 ]
 
 const bottomsData = [
-  { size: 'XS', waist: { in: '24–25"', cm: '61–63 cm' }, hips: { in: '34–35"', cm: '86–89 cm' }, jean: '0 – 2',   popular: false },
-  { size: 'S',  waist: { in: '26–27"', cm: '66–68 cm' }, hips: { in: '36–37"', cm: '91–94 cm' }, jean: '4 – 6',   popular: true  },
-  { size: 'M',  waist: { in: '28–30"', cm: '71–76 cm' }, hips: { in: '38–40"', cm: '96–101 cm'},jean: '8 – 10',  popular: false },
-  { size: 'L',  waist: { in: '31–33"', cm: '78–83 cm' }, hips: { in: '41–43"', cm: '104–109 cm'},jean:'12 – 14', popular: false },
+  { size: 'Small', waist: { in: '26–27"', cm: '66–68 cm' }, hips: { in: '36–37"', cm: '91–94 cm' }, jean: '4 – 6', popular: true },
+  { size: 'Medium', waist: { in: '28–30"', cm: '71–76 cm' }, hips: { in: '38–40"', cm: '96–101 cm' }, jean: '8 – 10', popular: false },
+  { size: 'Large', waist: { in: '31–33"', cm: '78–83 cm' }, hips: { in: '41–43"', cm: '104–109 cm' }, jean: '12 – 14', popular: false },
 ]
 
 const onepieceData = [
-  { size: 'XS', bust: { in: '32–33"', cm: '81–84 cm' }, waist: { in: '24–25"', cm: '61–63 cm' }, hips: { in: '34–35"', cm: '86–89 cm' }, torso: { in: '25–26"', cm: '63–66 cm' }, popular: false },
-  { size: 'S',  bust: { in: '34–35"', cm: '86–89 cm' }, waist: { in: '26–27"', cm: '66–68 cm' }, hips: { in: '36–37"', cm: '91–94 cm' }, torso: { in: '26–27"', cm: '66–68 cm' }, popular: true  },
-  { size: 'M',  bust: { in: '36–37"', cm: '91–94 cm' }, waist: { in: '28–30"', cm: '71–76 cm' }, hips: { in: '38–40"', cm: '96–101 cm'}, torso: { in: '27–28"', cm: '68–71 cm' }, popular: false },
-  { size: 'L',  bust: { in: '38–40"', cm: '96–101 cm'}, waist: { in: '31–33"', cm: '78–83 cm' }, hips: { in: '41–43"', cm:'104–109 cm'}, torso: { in: '28–30"', cm: '71–76 cm' }, popular: false },
+  { size: 'Small', bust: { in: '34–35"', cm: '86–89 cm' }, waist: { in: '26–27"', cm: '66–68 cm' }, hips: { in: '36–37"', cm: '91–94 cm' }, torso: { in: '26–27"', cm: '66–68 cm' }, popular: true },
+  { size: 'Medium', bust: { in: '36–37"', cm: '91–94 cm' }, waist: { in: '28–30"', cm: '71–76 cm' }, hips: { in: '38–40"', cm: '96–101 cm' }, torso: { in: '27–28"', cm: '68–71 cm' }, popular: false },
+  { size: 'Large', bust: { in: '38–40"', cm: '96–101 cm' }, waist: { in: '31–33"', cm: '78–83 cm' }, hips: { in: '41–43"', cm: '104–109 cm' }, torso: { in: '28–30"', cm: '71–76 cm' }, popular: false },
 ]
 
 function UnitToggle({ unit, setUnit }: { unit: Unit; setUnit: (u: Unit) => void }) {

@@ -4,7 +4,11 @@ import { useState } from 'react'
 import ProductCard3 from '@/components/ProductCard3'
 import type { ProductCard3Product } from '@/types/shopify'
 
-const SIZES = ['XS', 'S', 'M', 'L']
+const SIZES = ['Small', 'Medium', 'Large']
+
+/** Display names for shop filters — extend when new collections ship */
+const COLLECTION_SUN = '🌞'
+const COLLECTION_OPTIONS: { label: string; slug: string }[] = [{ label: 'Sol de Ipanema', slug: 'sol-de-ipanema' }]
 const COLORS = [
   { hex: '#F7A18F', label: 'Coral' },
   { hex: '#E3C3DD', label: 'Lavender' },
@@ -26,6 +30,7 @@ function productKey(p: ProductCard3Product) {
 
 export default function ShopCatalog({ products }: Props) {
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
+  const [selectedCollections, setSelectedCollections] = useState<string[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [maxPrice, setMaxPrice] = useState(200)
   const [sortBy, setSortBy] = useState('Featured')
@@ -37,14 +42,27 @@ export default function ShopCatalog({ products }: Props) {
   const toggleColor = (c: string) =>
     setSelectedColors((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]))
 
+  const toggleCollection = (slug: string) =>
+    setSelectedCollections((prev) =>
+      prev.includes(slug) ? prev.filter((x) => x !== slug) : [...prev, slug],
+    )
+
   const clearFilters = () => {
     setSelectedSizes([])
+    setSelectedCollections([])
     setSelectedColors([])
     setMaxPrice(200)
   }
 
   const activeTags = [
     ...selectedSizes.map((s) => ({ label: `Size: ${s}`, remove: () => toggleSize(s) })),
+    ...selectedCollections.map((slug) => {
+      const label = COLLECTION_OPTIONS.find((o) => o.slug === slug)?.label ?? slug
+      return {
+        label: `Collection: ${COLLECTION_SUN} ${label}`,
+        remove: () => toggleCollection(slug),
+      }
+    }),
     ...selectedColors.map((c) => ({
       label: COLORS.find((x) => x.hex === c)?.label ?? c,
       remove: () => toggleColor(c),
@@ -74,15 +92,12 @@ export default function ShopCatalog({ products }: Props) {
             </div>
             <div className="filter-options">
               {[
-                ['All', 24],
-                ['Sets', 6],
                 ['Tops', 7],
                 ['Bottoms', 6],
                 ['One Pieces', 3],
-                ['Cover-Ups', 2],
               ].map(([label, count]) => (
                 <label key={label} className="filter-check">
-                  <input type="checkbox" defaultChecked={label === 'All'} /> {label}
+                  <input type="checkbox" /> {label}
                   <span className="filter-count">{count}</span>
                 </label>
               ))}
@@ -104,6 +119,27 @@ export default function ShopCatalog({ products }: Props) {
                 >
                   {s}
                 </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="filter-group">
+            <div className="filter-group-title">
+              <h4>Collection</h4>
+              <span>▾</span>
+            </div>
+            <div className="filter-options">
+              {COLLECTION_OPTIONS.map(({ label, slug }) => (
+                <label key={slug} className="filter-check">
+                  <input
+                    type="checkbox"
+                    checked={selectedCollections.includes(slug)}
+                    onChange={() => toggleCollection(slug)}
+                  />{' '}
+                  <span aria-hidden="true">{COLLECTION_SUN}</span>{' '}
+                  {label}
+                  <span className="filter-count">{products.length}</span>
+                </label>
               ))}
             </div>
           </div>

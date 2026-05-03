@@ -35,8 +35,6 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Shop</h4>
           <ul>
-            <li><Link href="/shop">New Arrivals</Link></li>
-            <li><Link href="/shop">Sets</Link></li>
             <li><Link href="/shop">Tops</Link></li>
             <li><Link href="/shop">Bottoms</Link></li>
             <li><Link href="/shop">One Pieces</Link></li>
