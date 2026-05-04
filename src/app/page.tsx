@@ -39,7 +39,7 @@ export default async function HomePage() {
 
           <div className="hero-video-overlay">
             <div className="hero-video-text">
-              <span className="hero-video-eyebrow">Summer Collection 2025</span>
+              <span className="hero-video-eyebrow">Sol de Ipanema Collection 2026</span>
               <h1 className="hero-video-title">
                 Made for <em>tanning,</em> made for you.
               </h1>
@@ -87,23 +87,23 @@ export default async function HomePage() {
           <h2>Our Collections</h2>
         </div>
         <div className="collection-grid">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <div className="collection-banner">
               <div className="collection-banner-bg col-ph-1" style={{ height: '100%' }} />
               <div className="collection-banner-overlay">
-                <h3>Summer Sets</h3>
+                <h3>Sol de Ipanema</h3>
                 <Link href="/shop" className="collection-banner-link">Shop Now →</Link>
               </div>
             </div>
-            <div className="collection-banner">
+            {/* <div className="collection-banner">
               <div className="collection-banner-bg col-ph-2" style={{ height: '100%' }} />
               <div className="collection-banner-overlay">
                 <h3>Bottoms</h3>
                 <Link href="/shop" className="collection-banner-link">Shop Now →</Link>
               </div>
-            </div>
+            </div> */}
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          {/* <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <div className="collection-banner tall">
               <div className="collection-banner-bg col-ph-3" style={{ height: '100%' }} />
               <div className="collection-banner-overlay">
@@ -118,7 +118,7 @@ export default async function HomePage() {
                 <Link href="/shop" className="collection-banner-link">Shop Now →</Link>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 

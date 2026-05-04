@@ -110,7 +110,9 @@
 .page-loader {
   position: fixed; inset: 0; background: #FEF7EB;
   z-index: 99999; display: flex; align-items: center;
-  justify-content: center; pointer-events: none;
+  justify-content: center;
+  /* Block clicks until the loader unmounts — `none` let taps hit product cards underneath. */
+  pointer-events: auto;
 }
 .page-loader img {
   width: 200px; max-width: 50vw;
@@ -750,6 +752,8 @@ ul { list-style: none; }
   color: var(--coral);
 }
 
+/* Touch / coarse pointer: keep “Add to cart” in the layout so taps are deliberate
+   (hover-only slide can stick or sit under the finger on mobile). */
 .product-quick-add {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -762,11 +766,24 @@ ul { list-style: none; }
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--coral);
-  transform: translateY(100%);
+  transform: none;
   transition: transform 0.3s ease;
-  cursor: pointer;
+  pointer-events: auto;
+  cursor: default;
 }
-.product-card:hover .product-quick-add { transform: translateY(0); }
+
+@media (hover: hover) and (pointer: fine) {
+  .product-quick-add {
+    transform: translateY(100%);
+    pointer-events: none;
+    cursor: pointer;
+  }
+  .product-card:hover .product-quick-add,
+  .product-card:focus-within .product-quick-add {
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
 
 .product-quick-add .btn {
   width: 100%;
@@ -836,18 +853,51 @@ ul { list-style: none; }
   gap: 20px;
 }
 
+/* One direct child (e.g. a single collection): avoid an empty second column on wide
+   screens — otherwise the banner + overlay only span ~50% of the row. */
+.collection-grid:has(> :only-child) {
+  grid-template-columns: 1fr;
+}
+
+/* Single collection: break out of `.section` padding without `width: 100vw` (avoids
+   horizontal overflow when `100vw` includes the scrollbar gutter). */
+.collection-grid--full-bleed {
+  grid-template-columns: 1fr;
+  gap: 0;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin-left: calc(-1 * (100vw - 100%) / 2);
+  margin-right: calc(-1 * (100vw - 100%) / 2);
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
 .collection-banner {
   position: relative;
   border-radius: 20px;
   overflow: hidden;
   aspect-ratio: 4/3;
   cursor: pointer;
+  min-width: 0;
+  width: 100%;
 }
 
 .collection-banner.tall { aspect-ratio: 3/4; }
 
+/* Wide strip when the banner is the only full-bleed hero (4/3 on a full-width row is very tall). */
+.collection-banner--fullwidth {
+  border-radius: 0;
+  aspect-ratio: 2.6 / 1;
+  min-height: 200px;
+}
+
 .collection-banner-bg {
-  width: 100%; height: 100%;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   transition: transform 0.5s ease;
 }
 .collection-banner:hover .collection-banner-bg { transform: scale(1.05); }
@@ -855,10 +905,14 @@ ul { list-style: none; }
 .collection-banner-overlay {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
   background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  align-items: stretch;
   padding: 28px;
 }
 
@@ -1158,6 +1212,10 @@ footer {
   background: var(--coral);
   border-color: var(--coral);
   color: var(--white);
+}
+
+.footer-col ul {
+  list-style: none;
 }
 
 .footer-col h4 {
@@ -2116,10 +2174,23 @@ a.size-btn:visited {
 .nav-hamburger span { transition: transform 0.25s ease, opacity 0.2s ease; }
 
 @media (max-width: 768px) {
-  .nav { padding: 0 20px; }
+  .nav {
+    padding: 0 20px;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+  /* Logo left; middle grows so search + cart sit next to the hamburger on the right */
+  .nav-links-container {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .nav-icons {
+    display: flex;
+  }
+  .nav-hamburger {
+    display: flex;
+  }
   .nav-links { display: flex; } /* keep flex, controlled by opacity/pointer-events above */
-  .nav-icons { display: flex; } /* keep cart/search visible on mobile */
-  .nav-hamburger { display: flex; }
   .announcement-bar { font-size: 0.68rem; }
   .section, .section-sm { padding: 48px 20px; }
   .hero-content { padding: 60px 20px; }
@@ -2143,6 +2214,16 @@ a.size-btn:visited {
     text-align: left;
   }
   .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer-col { text-align: center; }
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer-socials {
+    justify-content: center;
+  }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
   .newsletter-form { flex-direction: column; }
   .newsletter-form input { border-radius: 50px; }
