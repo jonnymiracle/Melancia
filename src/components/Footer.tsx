@@ -44,7 +44,7 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Help</h4>
           <ul>
-            <li><Link href="/size-guide">Size Guide</Link></li>
+            {/* <li><Link href="/size-guide">Size Guide</Link></li> */}
             <li><a href="#">Shipping Info</a></li>
             <li><a href="#">Returns</a></li>
             <li><a href="#">FAQ</a></li>

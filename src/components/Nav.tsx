@@ -1,15 +1,42 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { getStoredCartId } from '@/lib/cart-storage'
 import { SearchIcon, AccountIcon, CartIcon } from './icons'
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [cartQty, setCartQty] = useState(0)
   const pathname = usePathname()
+
+  const syncCartQty = useCallback(async () => {
+    const id = getStoredCartId()
+    if (!id) {
+      setCartQty(0)
+      return
+    }
+    try {
+      const res = await fetch(
+        `/api/shopify/cart?cartId=${encodeURIComponent(id)}`,
+      )
+      const body = await res.json()
+      const q = body.data?.cart?.totalQuantity
+      setCartQty(typeof q === 'number' ? q : 0)
+    } catch {
+      setCartQty(0)
+    }
+  }, [])
+
+  useEffect(() => {
+    void syncCartQty()
+    window.addEventListener('melancia-cart-updated', syncCartQty)
+    return () =>
+      window.removeEventListener('melancia-cart-updated', syncCartQty)
+  }, [syncCartQty])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -48,7 +75,20 @@ export default function Nav() {
       <div className="nav-icons">
         <a aria-label="Search"><SearchIcon /></a>
         {/* <a href="#" aria-label="Account"><AccountIcon /></a> */}
-        <Link href="/cart" aria-label="Cart" className={isActive('/cart') ? 'active' : ''}><CartIcon /></Link>
+        <Link
+          href="/cart"
+          className={`nav-cart-link${isActive('/cart') ? ' active' : ''}`}
+          aria-label={
+            cartQty > 0 ? `Cart, ${cartQty} item${cartQty === 1 ? '' : 's'}` : 'Cart'
+          }
+        >
+          <span className="nav-cart-icon-wrap">
+            <CartIcon />
+            {cartQty > 0 ? (
+              <span className="nav-cart-dot" aria-hidden />
+            ) : null}
+          </span>
+        </Link>
       </div>
 
       <button

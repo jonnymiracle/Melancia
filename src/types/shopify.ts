@@ -5,6 +5,11 @@ export type ShopifyProductVariant = {
   id: string
   title: string
   availableForSale: boolean
+  /** Present when the variant has its own image in Admin (often set without a product “featured” image). */
+  image?: {
+    url: string
+    altText?: string | null
+  } | null
   price: {
     amount: string
     currencyCode: string
@@ -38,6 +43,22 @@ export type StorefrontProductsQueryData = {
   data: {
     products: {
       edges: {
+        node: ShopifyProduct
+      }[]
+    }
+  }
+}
+
+/** Paginated products query (cursor) — same `node` shape as `StorefrontProductsQueryData`. */
+export type StorefrontProductsPaginatedQueryData = {
+  data?: {
+    products?: {
+      pageInfo: {
+        hasNextPage: boolean
+        endCursor?: string | null
+      }
+      edges: {
+        cursor: string
         node: ShopifyProduct
       }[]
     }

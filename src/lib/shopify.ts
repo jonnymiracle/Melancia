@@ -11,6 +11,11 @@ export async function shopifyFetch<T>(
 
   const res = await fetch(`https://${domain}/api/2026-01/graphql.json`, {
     method: "POST",
+    /**
+     * Next.js App Router caches `fetch` by default; product/catalog data would stay
+     * stale until rebuild. Opt out so Shopify updates (images, prices) show up.
+     */
+    cache: "no-store",
     headers: {
       "Content-Type": "application/json",
       "X-Shopify-Storefront-Access-Token": token,

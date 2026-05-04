@@ -422,6 +422,25 @@ ul { list-style: none; }
 .nav-icons a:hover { color: var(--coral); }
 .nav-icons a.active { color: var(--coral); }
 
+.nav-cart-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-cart-dot {
+  position: absolute;
+  top: -1px;
+  right: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d32f2f;
+  border: 2px solid rgba(245, 238, 208, 0.98);
+  box-sizing: content-box;
+}
+
 /* Hamburger */
 .nav-hamburger {
   display: none;
@@ -720,6 +739,16 @@ ul { list-style: none; }
 }
 .product-wishlist:hover { color: var(--coral); transform: scale(1.1); }
 .product-wishlist.active { color: var(--coral); }
+
+/* In-bag cart badge (span, not a button) */
+.product-wishlist.product-in-bag-icon {
+  cursor: default;
+  pointer-events: none;
+}
+.product-wishlist.product-in-bag-icon:hover {
+  transform: none;
+  color: var(--coral);
+}
 
 .product-quick-add {
   position: absolute;
@@ -1313,6 +1342,41 @@ footer {
   border-color: var(--coral);
   color: var(--coral);
   background: var(--cream);
+}
+
+/* `size-btn` on links (shop pagination) + prev/next width + disabled */
+a.size-btn {
+  text-decoration: none;
+  color: var(--dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+a.size-btn:visited {
+  color: var(--dark);
+}
+
+.shop-pagination .size-btn.prev-next {
+  min-width: 5.5rem;
+  padding: 0 12px;
+}
+
+.shop-pagination .size-btn.is-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+  cursor: default;
+}
+
+.shop-pagination .page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 36px;
+  font-size: 0.78rem;
+  color: var(--mid);
+  user-select: none;
 }
 
 /* Color swatches */

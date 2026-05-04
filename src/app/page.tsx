@@ -5,10 +5,29 @@ import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
 import { featuredProducts } from '@/data/products'
 import { featuredCustomerReviews } from '@/data/reviews'
+import { fetchStorefrontProducts } from '@/lib/shopify-products'
+import type { ProductCard3Product } from '@/types/shopify'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
-export default function HomePage() {
+/** Always fetch fresh Shopify data; avoid static page cache with stale products/images. */
+export const dynamic = 'force-dynamic'
+
+/** Matches the number of cards in `featuredProducts` (local fallback). */
+const FEATURED_ON_HOME = featuredProducts.length
+
+export default async function HomePage() {
+  let homeFeatured: ProductCard3Product[] = featuredProducts
+
+  try {
+    const fromShopify = await fetchStorefrontProducts(FEATURED_ON_HOME)
+    if (fromShopify.length > 0) {
+      homeFeatured = fromShopify.slice(0, FEATURED_ON_HOME)
+    }
+  } catch {
+    /* missing env or network — keep static featuredProducts */
+  }
+
   return (
     <>
       {/* ── Video Hero ── */}
@@ -52,7 +71,7 @@ export default function HomePage() {
           <p>Our latest pieces — designed for sunshine, saltwater, and good vibes.</p>
         </div>
         <div className="product-grid">
-          {featuredProducts.map(product => (
+          {homeFeatured.map(product => (
             <ProductCard3 key={product.id} product={product} />
           ))}
         </div>

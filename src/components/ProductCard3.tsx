@@ -1,12 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import type { Product } from '@/types'
-import type { ProductCard3Product, ShopifyProductVariant } from '@/types/shopify'
+import type {
+  ProductCard3Product,
+  ShopifyProduct,
+  ShopifyProductVariant,
+} from '@/types/shopify'
 import { addToCart } from '@/lib/add-to-cart-client'
+import { getStoredCartId } from '@/lib/cart-storage'
 import { resolveCatalogProductBadge, resolveShopifyProductBadge } from '@/lib/product-badge'
-import { ShirtIcon } from '@/components/icons'
+import { CartIcon, ShirtIcon } from '@/components/icons'
 
 type ProductCard3Props = {
   product: ProductCard3Product
@@ -34,15 +39,76 @@ function formatVariantPrice(variant: ShopifyProductVariant) {
   }).format(n)
 }
 
-export default function ProductCard3({ product }: ProductCard3Props) {
-  const [inBag, setInBag] = useState(false)
-  const [pending, setPending] = useState(false)
-
-  const goShop = () => {
-    window.location.href = '/shop'
+/** Product card uses `featuredImage`; many stores only attach photos to variants. */
+function shopifyCardImage(product: ShopifyProduct): {
+  url: string
+  alt: string
+} | null {
+  if (product.featuredImage?.url) {
+    return {
+      url: product.featuredImage.url,
+      alt: product.featuredImage.altText || product.title,
+    }
   }
+  const edges = product.variants?.edges ?? []
+  for (const { node } of edges) {
+    if (node.image?.url) {
+      return {
+        url: node.image.url,
+        alt: node.image.altText || product.title,
+      }
+    }
+  }
+  return null
+}
 
-  if (isCatalogProduct(product)) {
+/** Cart line id for this variant, if it’s already in the stored Shopify cart. */
+async function fetchCartLineIdForVariant(variantId: string): Promise<string | null> {
+  const cartId = getStoredCartId()
+  if (!cartId) return null
+  try {
+    const res = await fetch(
+      `/api/shopify/cart?cartId=${encodeURIComponent(cartId)}`,
+    )
+    const body = await res.json()
+    const edges = body?.data?.cart?.lines?.edges ?? []
+    for (const edge of edges) {
+      const node = edge?.node
+      const mid = node?.merchandise?.id
+      if (mid === variantId && node?.id) return node.id as string
+    }
+  } catch {
+    /* ignore */
+  }
+  return null
+}
+
+export default function ProductCard3({ product }: ProductCard3Props) {
+  const [pending, setPending] = useState(false)
+  const [cartLineId, setCartLineId] = useState<string | null>(null)
+
+  const isCatalog = isCatalogProduct(product)
+  const variant = !isCatalog ? product.variants?.edges?.[0]?.node : undefined
+
+  useEffect(() => {
+    if (isCatalog || !variant?.id) {
+      setCartLineId(null)
+      return
+    }
+    let cancelled = false
+    const sync = async () => {
+      const id = await fetchCartLineIdForVariant(variant.id)
+      if (!cancelled) setCartLineId(id)
+    }
+    void sync()
+    window.addEventListener('melancia-cart-updated', sync)
+    return () => {
+      cancelled = true
+      window.removeEventListener('melancia-cart-updated', sync)
+    }
+  }, [isCatalog, variant?.id])
+
+  if (isCatalog) {
     const catalogBadge = resolveCatalogProductBadge(product)
 
     return (
@@ -63,30 +129,13 @@ export default function ProductCard3({ product }: ProductCard3Props) {
             </span>
           )}
 
-          <button
-            type="button"
-            className={`product-wishlist${inBag ? ' active' : ''}`}
-            aria-label={inBag ? 'Remove from wishlist' : 'Add to wishlist'}
-            aria-pressed={inBag}
-            disabled={pending}
-            onClick={() => setInBag((prev) => !prev)}
-          >
-            {inBag ? '♥' : '♡'}
-          </button>
-
           <div
             className="product-quick-add"
             onClick={(e) => e.stopPropagation()}
             role="presentation"
           >
-            <button
-              type="button"
-              className="btn btn-primary"
-              disabled={pending}
-              onClick={() => {
-                setInBag((prev) => !prev)}}
-            >
-              {inBag ? '- Remove From Wishlist' : '+ Add to cart'}
+            <button type="button" className="btn btn-primary">
+              + Add to cart
             </button>
           </div>
         </div>
@@ -120,7 +169,6 @@ export default function ProductCard3({ product }: ProductCard3Props) {
     )
   }
 
-  const variant = product.variants?.edges?.[0]?.node
   const handle = product.handle ?? ''
 
   const shopifyPromoBadge = resolveShopifyProductBadge(product.tags ?? [])
@@ -138,20 +186,62 @@ export default function ProductCard3({ product }: ProductCard3Props) {
     setPending(true)
     const result = await addToCart(variant.id, 1)
     setPending(false)
-    if (result.ok) {
-      setInBag(true)
-    } else {
+    if (!result.ok) {
       alert(result.error)
+      return
+    }
+    const lineId = await fetchCartLineIdForVariant(variant.id)
+    setCartLineId(lineId)
+  }
+
+  const handleRemoveFromCart = async () => {
+    const cartId = getStoredCartId()
+    if (!cartId || !cartLineId) return
+    setPending(true)
+    try {
+      const res = await fetch('/api/shopify/cart/lines', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'remove',
+          cartId,
+          lineIds: [cartLineId],
+        }),
+      })
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        alert(body.error || 'Could not remove from bag')
+        return
+      }
+      setCartLineId(null)
+      window.dispatchEvent(new CustomEvent('melancia-cart-updated', { detail: {} }))
+    } finally {
+      setPending(false)
     }
   }
+
+  const handleBagClick = () => {
+    if (cartLineId) void handleRemoveFromCart()
+    else void handleAddToCart()
+  }
+
+  const bagLabel = pending
+    ? cartLineId
+      ? 'Removing…'
+      : 'Adding…'
+    : cartLineId
+      ? '- remove from cart'
+      : '+ Add to cart'
+
+  const cardImage = shopifyCardImage(product)
 
   return (
     <div className="product-card">
       <div className="product-image">
-        {product.featuredImage?.url ? (
+        {cardImage ? (
           <Image
-            src={product.featuredImage.url}
-            alt={product.featuredImage.altText || product.title}
+            src={cardImage.url}
+            alt={cardImage.alt}
             fill
             sizes="(max-width: 768px) 50vw, 280px"
             style={{ objectFit: 'cover' }}
@@ -173,18 +263,15 @@ export default function ProductCard3({ product }: ProductCard3Props) {
           )
         )}
 
-        <button
-          type="button"
-          className={`product-wishlist${inBag ? ' active' : ''}`}
-          aria-label="Add to bag"
-          disabled={!canAdd || pending}
-          onClick={(e) => {
-            e.stopPropagation()
-            void handleAddToCart()
-          }}
-        >
-          {inBag ? '♥' : '♡'}
-        </button>
+        {cartLineId && (
+          <span
+            className="product-wishlist active product-in-bag-icon"
+            aria-label="In your bag"
+            role="img"
+          >
+            <CartIcon size={16} />
+          </span>
+        )}
 
         <div
           className="product-quick-add"
@@ -195,10 +282,10 @@ export default function ProductCard3({ product }: ProductCard3Props) {
             <button
               type="button"
               className="btn btn-primary"
-              disabled={!canAdd || pending}
-              onClick={() => void handleAddToCart()}
+              disabled={pending || (!cartLineId && !canAdd)}
+              onClick={() => void handleBagClick()}
             >
-              {pending ? 'Adding…' : '+ Add to bag'}
+              {bagLabel}
             </button>
           ) : (
             <button type="button" className="btn btn-outline" disabled>

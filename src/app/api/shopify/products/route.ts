@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { fetchStorefrontProducts } from '@/lib/shopify-products'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     const products = await fetchStorefrontProducts(24)

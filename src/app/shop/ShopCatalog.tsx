@@ -1,8 +1,10 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 import ProductCard3 from '@/components/ProductCard3'
 import type { ProductCard3Product } from '@/types/shopify'
+import { shopPaginationItems } from '@/lib/shop-pagination'
 
 const SIZES = ['Small', 'Medium', 'Large']
 
@@ -22,13 +24,26 @@ const COLORS = [
 
 type Props = {
   products: ProductCard3Product[]
+  currentPage: number
+  totalPages: number
+  totalProducts: number
 }
 
 function productKey(p: ProductCard3Product) {
   return 'placeholderClass' in p ? `cat-${p.id}` : p.id
 }
 
-export default function ShopCatalog({ products }: Props) {
+function shopHref(page: number): string {
+  if (page <= 1) return '/shop'
+  return `/shop?page=${page}`
+}
+
+export default function ShopCatalog({
+  products,
+  currentPage,
+  totalPages,
+  totalProducts,
+}: Props) {
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [selectedCollections, setSelectedCollections] = useState<string[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
@@ -138,13 +153,13 @@ export default function ShopCatalog({ products }: Props) {
                   />{' '}
                   <span aria-hidden="true">{COLLECTION_SUN}</span>{' '}
                   {label}
-                  <span className="filter-count">{products.length}</span>
+                  <span className="filter-count">{totalProducts}</span>
                 </label>
               ))}
             </div>
           </div>
 
-          <div className="filter-group">
+          {/* <div className="filter-group">
             <div className="filter-group-title">
               <h4>Color</h4>
               <span>▾</span>
@@ -171,7 +186,7 @@ export default function ShopCatalog({ products }: Props) {
                 />
               ))}
             </div>
-          </div>
+          </div> */}
 
           <div className="filter-group">
             <div className="filter-group-title">
@@ -221,13 +236,18 @@ export default function ShopCatalog({ products }: Props) {
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
               <button
                 type="button"
-                className="mobile-filter-toggle"
+                className="size-btn mobile-filter-toggle"
                 onClick={() => setFilterOpen((p) => !p)}
               >
                 Filters
               </button>
               <span className="shop-count">
-                <strong>{products.length}</strong> products
+                <strong>{totalProducts}</strong> products
+                {totalPages > 1 && (
+                  <span style={{ marginLeft: 8, opacity: 0.75, fontWeight: 400 }}>
+                    · Page {currentPage} of {totalPages}
+                  </span>
+                )}
               </span>
             </div>
             <div className="shop-sort">
@@ -267,26 +287,68 @@ export default function ShopCatalog({ products }: Props) {
             ))}
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: 8,
-              marginTop: 52,
-              paddingTop: 32,
-              borderTop: '1px solid var(--border)',
-            }}
-          >
-            {['← Prev', '1', '2', '3', 'Next →'].map((p, i) => (
-              <button
-                key={p}
-                type="button"
-                className={`page-btn${p === '1' ? ' active' : ''}${i === 0 || i === 4 ? ' prev-next' : ''}`}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
+          {totalPages > 1 && (
+            <nav
+              className="shop-pagination"
+              aria-label="Product list pages"
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: 8,
+                marginTop: 52,
+                paddingTop: 32,
+                borderTop: '1px solid var(--border)',
+              }}
+            >
+              {currentPage > 1 ? (
+                <Link
+                  href={shopHref(currentPage - 1)}
+                  className="size-btn prev-next"
+                  prefetch={false}
+                >
+                  ← Prev
+                </Link>
+              ) : (
+                <span className="size-btn prev-next is-disabled" aria-disabled="true">
+                  ← Prev
+                </span>
+              )}
+
+              {shopPaginationItems(currentPage, totalPages).map((item, idx) =>
+                item === 'ellipsis' ? (
+                  <span key={`e-${idx}`} className="page-ellipsis" aria-hidden>
+                    …
+                  </span>
+                ) : (
+                  <Link
+                    key={`p-${item}`}
+                    href={shopHref(item)}
+                    className={`size-btn${item === currentPage ? ' active' : ''}`}
+                    prefetch={false}
+                    aria-current={item === currentPage ? 'page' : undefined}
+                  >
+                    {item}
+                  </Link>
+                ),
+              )}
+
+              {currentPage < totalPages ? (
+                <Link
+                  href={shopHref(currentPage + 1)}
+                  className="size-btn prev-next"
+                  prefetch={false}
+                >
+                  Next →
+                </Link>
+              ) : (
+                <span className="size-btn prev-next is-disabled" aria-disabled="true">
+                  Next →
+                </span>
+              )}
+            </nav>
+          )}
         </div>
       </div>
     </>
