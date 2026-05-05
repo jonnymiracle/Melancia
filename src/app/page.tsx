@@ -20,7 +20,7 @@ export default function HomePage() {
 
           <div className="hero-video-overlay">
             <div className="hero-video-text">
-              <span className="hero-video-eyebrow">Summer Collection 2025</span>
+              <span className="hero-video-eyebrow">Sol de Ipanema</span>
               <h1 className="hero-video-title">
                 Made for <em>tanning,</em> made for you.
               </h1>

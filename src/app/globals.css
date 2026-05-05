@@ -45,65 +45,107 @@
 
 .bg-decor-shape {
   position: absolute;
-  color: #C8B87A;
-  opacity: 0.18;
+  color: #C8A96E;
+  opacity: 0.16;
 }
 
-/* Coral branch — bottom right */
-.bg-decor-coral-right {
-  width: 220px;
-  bottom: -20px;
-  right: -20px;
+/* Large organic blob — left center (main brand background shape) */
+.bg-blob-1 {
+  width: clamp(280px, 28vw, 420px);
+  left: -80px;
+  top: 20%;
+  transform: rotate(-10deg);
 }
 
-/* Coral branch — top left (flipped) */
-.bg-decor-coral-left {
-  width: 180px;
-  top: 120px;
-  left: -10px;
-  transform: scaleX(-1) rotate(-15deg);
+/* Cloud/wave blob — upper right */
+.bg-blob-2 {
+  width: clamp(300px, 32vw, 480px);
+  right: -80px;
+  top: -40px;
+  opacity: 0.13;
 }
 
-/* Blob — bottom left */
-.bg-decor-blob-left {
-  width: 280px;
-  bottom: -60px;
-  left: -60px;
+/* Tendril blob — lower right */
+.bg-blob-3 {
+  width: clamp(220px, 24vw, 360px);
+  right: -60px;
+  bottom: 5%;
+  transform: rotate(12deg);
+  opacity: 0.13;
+}
+
+/* Small wisp — upper left */
+.bg-blob-4 {
+  width: clamp(160px, 18vw, 260px);
+  left: -40px;
+  top: -20px;
   opacity: 0.12;
+  transform: rotate(5deg);
 }
 
-/* Bird / swallow shape — upper right area */
-.bg-decor-bird {
-  width: 200px;
-  top: 180px;
-  right: 40px;
+/* Tendril blob — lower left */
+.bg-blob-5 {
+  width: clamp(200px, 22vw, 320px);
+  left: -50px;
+  bottom: -40px;
   transform: rotate(-8deg);
   opacity: 0.12;
 }
 
-/* Sparkle stars — near bird */
-.bg-decor-stars {
-  width: 100px;
-  top: 250px;
-  right: 160px;
-  opacity: 0.20;
+/* Coral branch — bottom right (brand motif from tag) */
+.bg-coral-right {
+  width: clamp(100px, 10vw, 160px);
+  right: 4%;
+  bottom: 8%;
+  opacity: 0.22;
+  color: #B8956A;
 }
 
-/* Blob — top right */
-.bg-decor-blob-right {
-  width: 220px;
-  top: -40px;
-  right: -40px;
-  opacity: 0.10;
+/* Coral branch — top left mirrored */
+.bg-coral-left {
+  width: clamp(80px, 8vw, 130px);
+  left: 3%;
+  top: 18%;
+  opacity: 0.18;
+  color: #B8956A;
+  transform: rotate(10deg);
 }
 
-/* Seaweed — left center */
-.bg-decor-seaweed {
-  width: 60px;
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
-  opacity: 0.15;
+/* Sparkle star — large, near right coral */
+.bg-stars-1 {
+  width: 36px;
+  right: 16%;
+  bottom: 22%;
+  opacity: 0.28;
+  color: #B8956A;
+}
+
+/* Sparkle star — medium, left mid */
+.bg-stars-2 {
+  width: 24px;
+  left: 12%;
+  top: 42%;
+  opacity: 0.25;
+  color: #B8956A;
+}
+
+/* Sparkle star — small, top center right */
+.bg-stars-3 {
+  width: 18px;
+  right: 28%;
+  top: 14%;
+  opacity: 0.22;
+  color: #B8956A;
+}
+
+@media (max-width: 768px) {
+  .bg-blob-1 { width: 220px; left: -60px; }
+  .bg-blob-2 { width: 240px; right: -60px; }
+  .bg-blob-3 { width: 180px; }
+  .bg-blob-4 { width: 140px; }
+  .bg-blob-5 { width: 160px; }
+  .bg-coral-right { width: 80px; }
+  .bg-coral-left { width: 64px; }
 }
 
 /* ── Page Loader ── */
