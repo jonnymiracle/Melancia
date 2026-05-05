@@ -1,12 +1,33 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import ProductCard from '@/components/ProductCard'
+import ProductCard3 from '@/components/ProductCard3'
+import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
 import { featuredProducts } from '@/data/products'
+import { featuredCustomerReviews } from '@/data/reviews'
+import { fetchStorefrontProducts } from '@/lib/shopify-products'
+import type { ProductCard3Product } from '@/types/shopify'
 
-const INSTAGRAM = 'https://www.instagram.com/YOUR_HANDLE'
+const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
-export default function HomePage() {
+/** Always fetch fresh Shopify data; avoid static page cache with stale products/images. */
+export const dynamic = 'force-dynamic'
+
+/** Matches the number of cards in `featuredProducts` (local fallback). */
+const FEATURED_ON_HOME = featuredProducts.length
+
+export default async function HomePage() {
+  let homeFeatured: ProductCard3Product[] = featuredProducts
+
+  try {
+    const fromShopify = await fetchStorefrontProducts(FEATURED_ON_HOME)
+    if (fromShopify.length > 0) {
+      homeFeatured = fromShopify.slice(0, FEATURED_ON_HOME)
+    }
+  } catch {
+    /* missing env or network — keep static featuredProducts */
+  }
+
   return (
     <>
       {/* ── Video Hero ── */}
@@ -18,9 +39,9 @@ export default function HomePage() {
 
           <div className="hero-video-overlay">
             <div className="hero-video-text">
-              <span className="hero-video-eyebrow">Summer Collection 2025</span>
+              <span className="hero-video-eyebrow">Sol de Ipanema Collection 2026</span>
               <h1 className="hero-video-title">
-                Made for the<br /><em>ocean,</em> the sun,<br />and you.
+                Made for <em>tanning,</em> made for you.
               </h1>
               <div className="hero-video-cta">
                 <Link href="/shop" className="btn-hero-pill">Shop New Arrivals</Link>
@@ -37,12 +58,9 @@ export default function HomePage() {
 
       {/* ── Category Strip ── */}
       <div className="category-strip">
-        <Link href="/shop">Sets</Link>
         <Link href="/shop">Tops</Link>
         <Link href="/shop">Bottoms</Link>
         <Link href="/shop">One Pieces</Link>
-        <Link href="/shop">Cover-Ups</Link>
-        <Link href="/shop">New Arrivals</Link>
       </div>
 
       {/* ── Featured Products ── */}
@@ -53,8 +71,8 @@ export default function HomePage() {
           <p>Our latest pieces — designed for sunshine, saltwater, and good vibes.</p>
         </div>
         <div className="product-grid">
-          {featuredProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
+          {homeFeatured.map(product => (
+            <ProductCard3 key={product.id} product={product} />
           ))}
         </div>
         <div style={{ textAlign: 'center', marginTop: 48 }}>
@@ -69,23 +87,23 @@ export default function HomePage() {
           <h2>Our Collections</h2>
         </div>
         <div className="collection-grid">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <div className="collection-banner">
               <div className="collection-banner-bg col-ph-1" style={{ height: '100%' }} />
               <div className="collection-banner-overlay">
-                <h3>Summer Sets</h3>
+                <h3>Sol de Ipanema</h3>
                 <Link href="/shop" className="collection-banner-link">Shop Now →</Link>
               </div>
             </div>
-            <div className="collection-banner">
+            {/* <div className="collection-banner">
               <div className="collection-banner-bg col-ph-2" style={{ height: '100%' }} />
               <div className="collection-banner-overlay">
                 <h3>Bottoms</h3>
                 <Link href="/shop" className="collection-banner-link">Shop Now →</Link>
               </div>
-            </div>
+            </div> */}
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          {/* <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <div className="collection-banner tall">
               <div className="collection-banner-bg col-ph-3" style={{ height: '100%' }} />
               <div className="collection-banner-overlay">
@@ -100,7 +118,7 @@ export default function HomePage() {
                 <Link href="/shop" className="collection-banner-link">Shop Now →</Link>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -130,7 +148,7 @@ export default function HomePage() {
               { label: 'Chlorine-Resistant', sub: 'Built to last through pool and ocean', icon: '~' },
               { label: 'UV Protection', sub: 'UPF 50+ on select styles', icon: '◎' },
               { label: 'Eco Fabric', sub: 'Made from recycled materials', icon: '↻' },
-              { label: 'Inclusive Sizing', sub: 'XS – L, all body types', icon: '⊟' },
+              { label: 'Inclusive Sizing', sub: 'Small – Large, all body types', icon: '⊟' },
             ].map(f => (
               <div key={f.label} className="about-feature">
                 <span className="about-feature-icon" style={{ fontSize: '1.2rem', color: 'var(--coral)' }}>{f.icon}</span>
@@ -146,25 +164,26 @@ export default function HomePage() {
       </section>
 
       {/* ── Testimonials ── */}
-      <section className="testimonials-section">
+      {/* <section className="testimonials-section">
         <div className="section-header">
           <span className="eyebrow">Reviews</span>
           <h2>What Our Girls Are Saying</h2>
         </div>
         <div className="testimonials-grid">
-          {[
-            { text: '"I wore the Watermelon Set on my trip to Tulum and got so many compliments. The fit is incredible — it actually stays put in the ocean!"', author: 'Sofia M.' },
-            { text: '"Finally a brand that gets it right. The colors are exactly like the photos, the fabric is so soft, and the sizing is true-to-size. I\'m obsessed."', author: 'Valentina R.' },
-            { text: '"The Lavender Dream top is my new favorite. It\'s so comfortable and the design is unique. Already ordering a second color!"', author: 'Camila P.' },
-          ].map(t => (
-            <div key={t.author} className="testimonial-card">
-              <div className="testimonial-stars">★★★★★</div>
-              <p className="testimonial-text">{t.text}</p>
-              <span className="testimonial-author">— {t.author}</span>
+          {featuredCustomerReviews.map((review) => (
+            <div key={review.id} className="testimonial-card">
+              <div className="testimonial-stars" aria-hidden>
+                {'★'.repeat(review.rating)}
+              </div>
+              <p className="testimonial-text">&ldquo;{review.text}&rdquo;</p>
+              <span className="testimonial-author">
+                — {review.name}
+                <span style={{ opacity: 0.65, fontWeight: 400 }}> · {review.year}</span>
+              </span>
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ── Instagram Strip ── */}
       <section className="instagram-strip">
@@ -189,11 +208,9 @@ export default function HomePage() {
       <section className="newsletter-section">
         <h2>Get Early Access</h2>
         <p>Be the first to know about new drops, exclusive deals, and summer inspo.</p>
-        <form className="newsletter-form" onSubmit={e => e.preventDefault()}>
-          <input type="email" placeholder="Your email address" aria-label="Email" />
-          <button type="submit">Subscribe</button>
-        </form>
+        <NewsletterForm />
       </section>
     </>
   )
+  
 }

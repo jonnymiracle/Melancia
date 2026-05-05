@@ -8,6 +8,7 @@ export interface Product {
   colors: string[]
   placeholderClass: string
   image?: string
+  tags: string[]
 }
 
 export interface Retailer {
@@ -22,4 +23,13 @@ export interface Testimonial {
   text: string
   author: string
   rating: number
+}
+
+/** Star rating must be between 1 and 5 */
+export interface CustomerReview {
+  id: number
+  name: string
+  year: number
+  rating: number
+  text: string
 }
