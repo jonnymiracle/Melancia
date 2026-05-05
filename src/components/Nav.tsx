@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 import { getStoredCartId } from '@/lib/cart-storage'
 import { SearchIcon, AccountIcon, CartIcon } from './icons'
 
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
