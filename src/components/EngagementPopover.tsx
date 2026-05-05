@@ -9,7 +9,7 @@ const SCROLL_PX = 80
 
 /** Tanning-club timing: unlock after scrolling, then delay 5–10s before opening */
 function delayMs() {
-  return 5000 + Math.floor(Math.random() * 5000)
+  return 2000
 }
 
 export default function EngagementPopover() {

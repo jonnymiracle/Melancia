@@ -1,56 +1,79 @@
 export default function BackgroundDecor() {
   return (
     <div className="bg-decor" aria-hidden="true">
-      {/* Coral branch — bottom right */}
-      <svg className="bg-decor-shape bg-decor-coral-right" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 220 C100 220 98 180 95 160 C92 140 80 130 70 110 C60 90 62 70 58 50 C55 35 45 25 40 10" stroke="currentColor" strokeWidth="8" strokeLinecap="round"/>
-        <path d="M95 160 C85 150 65 148 50 135 C38 124 35 108 28 98" stroke="currentColor" strokeWidth="7" strokeLinecap="round"/>
-        <path d="M50 135 C44 120 46 105 40 92" stroke="currentColor" strokeWidth="5" strokeLinecap="round"/>
-        <path d="M70 110 C80 98 90 85 88 68 C86 55 78 46 80 30" stroke="currentColor" strokeWidth="6" strokeLinecap="round"/>
-        <path d="M88 68 C98 60 112 58 120 45 C126 36 122 22 128 12" stroke="currentColor" strokeWidth="5" strokeLinecap="round"/>
-        <path d="M95 160 C108 155 125 158 138 148 C148 140 150 126 158 118" stroke="currentColor" strokeWidth="6" strokeLinecap="round"/>
-        <path d="M138 148 C142 135 140 120 148 110" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round"/>
-        <path d="M58 50 C48 42 36 40 28 28 C22 18 24 6 18 0" stroke="currentColor" strokeWidth="5" strokeLinecap="round"/>
+
+      {/* Scallop Shell — top left */}
+      <svg className="bg-shape bg-scallop" viewBox="0 0 100 95" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M50 88 C22 88 5 70 5 50 Q5 22 50 8 Q95 22 95 50 C95 70 78 88 50 88Z"/>
+        <line x1="50" y1="88" x2="8" y2="46"/>
+        <line x1="50" y1="88" x2="22" y2="18"/>
+        <line x1="50" y1="88" x2="50" y2="8"/>
+        <line x1="50" y1="88" x2="78" y2="18"/>
+        <line x1="50" y1="88" x2="92" y2="46"/>
+        <path d="M35 85 Q50 94 65 85"/>
       </svg>
 
-      {/* Coral branch — top left */}
-      <svg className="bg-decor-shape bg-decor-coral-left" viewBox="0 0 180 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M80 200 C80 200 82 165 85 145 C88 125 100 115 108 96 C116 77 112 58 116 40 C119 25 128 15 132 2" stroke="currentColor" strokeWidth="7" strokeLinecap="round"/>
-        <path d="M85 145 C95 135 115 133 128 120 C140 109 143 94 150 84" stroke="currentColor" strokeWidth="6" strokeLinecap="round"/>
-        <path d="M108 96 C98 84 88 72 90 55 C92 42 100 34 98 18" stroke="currentColor" strokeWidth="5.5" strokeLinecap="round"/>
-        <path d="M85 145 C72 140 56 143 44 132 C34 124 32 110 24 102" stroke="currentColor" strokeWidth="5.5" strokeLinecap="round"/>
-        <path d="M44 132 C40 118 42 103 36 90" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+      {/* Starfish — upper right */}
+      <svg className="bg-shape bg-starfish" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M50 10 Q55 28 60 36 Q74 34 88 38 Q74 46 68 54 Q74 68 72 82 Q60 72 50 68 Q40 72 28 82 Q26 68 32 54 Q26 46 12 38 Q26 34 40 36 Q45 28 50 10Z"/>
+        <circle cx="50" cy="22" r="2.5" fill="currentColor" stroke="none"/>
+        <circle cx="76" cy="42" r="2" fill="currentColor" stroke="none"/>
+        <circle cx="65" cy="72" r="2" fill="currentColor" stroke="none"/>
+        <circle cx="35" cy="72" r="2" fill="currentColor" stroke="none"/>
+        <circle cx="24" cy="42" r="2" fill="currentColor" stroke="none"/>
       </svg>
 
-      {/* Organic blob — bottom left */}
-      <svg className="bg-decor-shape bg-decor-blob-left" viewBox="0 0 180 160" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 120 C0 100 5 70 20 55 C35 40 55 45 70 35 C85 25 90 5 110 2 C130 -1 148 15 155 35 C162 55 155 78 145 92 C135 106 115 108 100 118 C85 128 75 148 58 152 C41 156 25 135 20 120Z"/>
+      {/* Palm Tree — mid left */}
+      <svg className="bg-shape bg-palm" viewBox="0 0 80 130" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M40 125 Q38 100 36 80 Q34 60 40 38" strokeWidth="3.5"/>
+        <path d="M40 38 Q20 22 2 28 Q12 16 38 32"/>
+        <path d="M40 38 Q32 10 52 4 Q54 20 42 34"/>
+        <path d="M40 38 Q58 16 76 20 Q68 32 44 36"/>
+        <path d="M40 38 Q52 28 66 38 Q58 44 43 40"/>
+        <path d="M40 38 Q18 34 8 46 Q16 42 38 40"/>
+        <circle cx="40" cy="40" r="4" fill="currentColor" stroke="none"/>
+        <circle cx="44" cy="44" r="3" fill="currentColor" stroke="none"/>
       </svg>
 
-      {/* Swallow / bird shape — top right area */}
-      <svg className="bg-decor-shape bg-decor-bird" viewBox="0 0 160 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M80 50 C65 35 30 15 5 20 C20 25 35 38 42 50 C35 38 15 30 0 40 C20 42 45 52 55 65 C45 55 25 55 10 65 C30 62 55 70 65 82 C58 70 50 55 55 45 C60 35 75 30 80 50Z"/>
-        <path d="M80 50 C95 35 130 15 155 20 C140 25 125 38 118 50 C125 38 145 30 160 40 C140 42 115 52 105 65 C115 55 135 55 150 65 C130 62 105 70 95 82 C102 70 110 55 105 45 C100 35 85 30 80 50Z"/>
+      {/* Conch Shell — mid right */}
+      <svg className="bg-shape bg-conch" viewBox="0 0 80 120" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M38 8 Q55 5 68 22 Q80 40 75 60 Q70 80 55 90 Q62 102 58 114 Q48 120 40 112 Q36 102 46 90 Q28 78 20 62 Q10 44 18 28 Q26 14 38 8Z"/>
+        <path d="M40 14 Q58 26 64 48 Q66 64 56 78" strokeWidth="1.8"/>
+        <path d="M30 28 Q46 38 52 58 Q54 72 46 84" strokeWidth="1.4"/>
+        <path d="M38 8 Q32 2 40 0 Q48 0 50 8" strokeWidth="1.8"/>
       </svg>
 
-      {/* Small sparkle stars */}
-      <svg className="bg-decor-shape bg-decor-stars" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 20 L22 14 L24 20 L30 22 L24 24 L22 30 L20 24 L14 22Z"/>
-        <path d="M70 60 L72 54 L74 60 L80 62 L74 64 L72 70 L70 64 L64 62Z"/>
-        <path d="M50 10 L51 6 L52 10 L56 11 L52 12 L51 16 L50 12 L46 11Z"/>
+      {/* Spiral Shell — lower left */}
+      <svg className="bg-shape bg-spiral" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M50 8 Q82 8 90 38 Q98 62 80 80 Q62 95 38 88 Q14 80 8 58 Q2 36 18 20 Q32 6 50 8Z"/>
+        <path d="M50 50 Q66 34 74 50 Q80 66 66 76 Q52 84 40 74 Q28 62 34 48 Q40 34 53 32" strokeWidth="1.8"/>
+        <path d="M50 50 Q56 44 60 50 Q63 57 58 62 Q52 65 47 61 Q43 55 46 50 Q48 44 50 50" strokeWidth="1.4"/>
       </svg>
 
-      {/* Organic blob — top right */}
-      <svg className="bg-decor-shape bg-decor-blob-right" viewBox="0 0 150 130" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M130 20 C148 38 148 68 135 85 C122 102 95 105 78 98 C61 91 50 72 42 55 C34 38 28 18 40 7 C52 -4 72 5 90 8 C108 11 118 8 130 20Z"/>
+      {/* Hibiscus — center */}
+      <svg className="bg-shape bg-hibiscus" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M50 50 Q38 18 50 5 Q62 18 50 50Z"/>
+        <path d="M50 50 Q82 38 95 50 Q82 62 50 50Z"/>
+        <path d="M50 50 Q62 82 50 95 Q38 82 50 50Z"/>
+        <path d="M50 50 Q18 62 5 50 Q18 38 50 50Z"/>
+        <circle cx="50" cy="50" r="8"/>
+        <circle cx="50" cy="50" r="3" fill="currentColor" stroke="none"/>
+        <path d="M50 42 Q53 36 57 32 M50 42 Q47 36 43 32" strokeWidth="1.5"/>
       </svg>
 
-      {/* Seaweed / wavy stem — bottom center */}
-      <svg className="bg-decor-shape bg-decor-seaweed" viewBox="0 0 60 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M30 200 C30 200 20 175 28 155 C36 135 48 125 40 105 C32 85 18 78 22 58 C26 38 42 30 38 12 C36 4 28 0 28 0" stroke="currentColor" strokeWidth="7" strokeLinecap="round"/>
-        <path d="M28 155 C18 145 5 142 2 128 C-1 115 8 104 4 92" stroke="currentColor" strokeWidth="5" strokeLinecap="round"/>
-        <path d="M40 105 C50 95 58 82 54 68" stroke="currentColor" strokeWidth="5" strokeLinecap="round"/>
+      {/* Tribal Fish — bottom right */}
+      <svg className="bg-shape bg-fish" viewBox="0 0 130 70" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M95 35 Q84 14 52 12 Q20 12 8 35 Q20 58 52 58 Q84 56 95 35Z"/>
+        <path d="M95 35 Q110 20 125 28 Q112 35 125 42 Q110 50 95 35Z"/>
+        <circle cx="26" cy="30" r="5"/>
+        <circle cx="26" cy="30" r="2" fill="currentColor" stroke="none"/>
+        <path d="M52 13 L47 22 L54 30 L47 38 L54 46 L49 56" strokeWidth="1.8"/>
+        <path d="M66 12 L61 21 L68 29 L61 37 L68 45 L63 56" strokeWidth="1.8"/>
+        <path d="M80 16 L75 25 L82 33 L75 41 L82 49 L77 56" strokeWidth="1.8"/>
+        <path d="M42 12 Q52 2 62 12" strokeWidth="2"/>
+        <path d="M42 58 Q52 68 62 58" strokeWidth="2"/>
       </svg>
+
     </div>
   )
 }

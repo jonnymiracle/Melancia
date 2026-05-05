@@ -50,7 +50,7 @@ export default function Nav() {
   const isActive = (href: string) => pathname === href
 
   return (
-    <nav className={`nav${scrolled ? ' scrolled' : ''}`} id="mainNav">
+    <nav className={`nav${scrolled ? ' scrolled' : ''}${menuOpen ? ' menu-open' : ''}`} id="mainNav">
       <div className="nav-logo-container">
         <Link href="/" className="nav-logo">
           <Image
