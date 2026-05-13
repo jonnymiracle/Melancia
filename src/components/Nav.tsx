@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { getStoredCartId } from '@/lib/cart-storage'
-import { SearchIcon, AccountIcon, CartIcon } from './icons'
+import { CartIcon } from './icons'
 
 
 export default function Nav() {
@@ -74,7 +74,6 @@ export default function Nav() {
       </div>
 
       <div className="nav-icons">
-        <a aria-label="Search"><SearchIcon /></a>
         {/* <a href="#" aria-label="Account"><AccountIcon /></a> */}
         <Link
           href="/cart"
