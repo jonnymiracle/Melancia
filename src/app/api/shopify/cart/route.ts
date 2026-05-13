@@ -62,37 +62,52 @@ export async function GET(req: Request) {
   }
 }
 
-export async function POST(req: Request) {
-  const { variantId, quantity } = await req.json()
+type CartCreateData = {
+  data?: {
+    cartCreate?: {
+      cart?: { id: string; checkoutUrl: string } | null
+      userErrors?: { field: string[] | null; message: string }[]
+    }
+  }
+}
 
-  const query = `
-    mutation CartCreate($variantId: ID!, $quantity: Int!) {
-      cartCreate(
-        input: {
-          lines: [
-            {
-              merchandiseId: $variantId
-              quantity: $quantity
-            }
-          ]
-        }
-      ) {
-        cart {
-          id
-          checkoutUrl
-        }
-        userErrors {
-          field
-          message
+export async function POST(req: Request) {
+  try {
+    const { variantId, quantity } = await req.json()
+
+    const query = `
+      mutation CartCreate($variantId: ID!, $quantity: Int!) {
+        cartCreate(
+          input: {
+            lines: [{ merchandiseId: $variantId, quantity: $quantity }]
+          }
+        ) {
+          cart {
+            id
+            checkoutUrl
+          }
+          userErrors {
+            field
+            message
+          }
         }
       }
+    `
+
+    const data = await shopifyFetch<CartCreateData>(query, { variantId, quantity })
+    const block = data.data?.cartCreate
+    const errs = block?.userErrors ?? []
+
+    if (errs.length > 0 || !block?.cart?.id) {
+      return NextResponse.json(
+        { error: errs[0]?.message ?? 'cartCreate returned no cart' },
+        { status: 400 },
+      )
     }
-  `
 
-  const data = await shopifyFetch(query, {
-    variantId,
-    quantity,
-  })
-
-  return NextResponse.json(data)
+    return NextResponse.json(data)
+  } catch (e) {
+    const message = e instanceof Error ? e.message : 'Server error'
+    return NextResponse.json({ error: message }, { status: 500 })
+  }
 }

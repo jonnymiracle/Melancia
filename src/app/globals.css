@@ -3,14 +3,7 @@
    Primaries: --primary-1 rgb(247,161,143) | --primary-2 rgb(227,195,221)
    ============================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap');
-@font-face {
-  font-family: 'Rustica'; /* or 'Rustica' — your choice, this is the name you'll use in CSS */
-  src: url('/fonts/your-file.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+/* Fonts are loaded via Next.js font optimization (layout.tsx) — no CDN import needed. */
 /* ── Shop product placeholder colors ── */
 .p1  { background: linear-gradient(160deg, var(--lavender) 20%, var(--coral)); }
 .p2  { background: linear-gradient(160deg, var(--coral-light) 20%, var(--lavender)); }
@@ -1927,6 +1920,8 @@ a.size-btn:visited {
 
 /* ── Cart Page ── */
 .cart-hero {
+  position: relative;
+  overflow: hidden;
   height: 280px;
   background: linear-gradient(135deg, var(--lavender-light) 0%, var(--coral-light) 100%);
   display: flex;
@@ -2469,7 +2464,7 @@ a.size-btn:visited {
 }
 
 .discount-modal-lede {
-  font-family: 'Rustica', ;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.921);
   line-height: 1.6;
@@ -2486,7 +2481,7 @@ a.size-btn:visited {
 }
 
 .discount-modal-btn {
-  font-family: 'Rustica', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   letter-spacing: 0.06em;
   border-radius: 10px;
@@ -2544,7 +2539,7 @@ a.size-btn:visited {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: 'Rustica', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.82rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.88);

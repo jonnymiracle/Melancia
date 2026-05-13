@@ -113,7 +113,10 @@ export default function CartPage() {
         quantity: nextQty,
       }),
     })
-    if (res.ok) await loadCart()
+    if (res.ok) {
+      await loadCart()
+      window.dispatchEvent(new CustomEvent('melancia-cart-updated', { detail: {} }))
+    }
   }
 
   const removeLine = async (lineId: string) => {
@@ -131,6 +134,7 @@ export default function CartPage() {
       const body = await res.json().catch(() => ({}))
       if (body.totalQuantity === 0) clearStoredCartId()
       await loadCart()
+      window.dispatchEvent(new CustomEvent('melancia-cart-updated', { detail: {} }))
     }
   }
 

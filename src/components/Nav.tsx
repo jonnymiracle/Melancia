@@ -58,7 +58,7 @@ export default function Nav() {
             src="/images/Logo original colors.png"
             alt="Melancia"
             width={120}
-            height={72}
+            height={48}
             style={{ height: 48, width: 'auto' }}
             priority
           />
