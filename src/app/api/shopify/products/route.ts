@@ -8,9 +8,10 @@ export async function GET() {
     const products = await fetchStorefrontProducts(24)
     return NextResponse.json({ products })
   } catch (e) {
-    console.error(e)
+    const message = e instanceof Error ? e.message : String(e)
+    console.error('[shopify/products]', message)
     return NextResponse.json(
-      { error: 'Failed to load products', products: [] },
+      { error: message, products: [] },
       { status: 500 },
     )
   }

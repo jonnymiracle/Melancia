@@ -11,10 +11,6 @@ export async function shopifyFetch<T>(
 
   const res = await fetch(`https://${domain}/api/2026-01/graphql.json`, {
     method: "POST",
-    /**
-     * Next.js App Router caches `fetch` by default; product/catalog data would stay
-     * stale until rebuild. Opt out so Shopify updates (images, prices) show up.
-     */
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",
@@ -26,8 +22,9 @@ export async function shopifyFetch<T>(
   const json = await res.json();
 
   if (!res.ok || json.errors) {
-    console.error(json.errors);
-    throw new Error("Shopify API request failed");
+    const detail = JSON.stringify(json.errors ?? { status: res.status });
+    console.error("[shopifyFetch] error:", detail);
+    throw new Error(`Shopify API request failed (${res.status}): ${detail}`);
   }
 
   return json;
