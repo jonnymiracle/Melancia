@@ -1,0 +1,66 @@
+/*
+ * Melancia brand layer for Shopify (Porsiacaso → Theme settings → Custom CSS).
+ * Source: src/app/globals.css — this file omits the * reset and most layout-only
+ * classes so the theme’s markup keeps working. Paste entire file, Save, preview.
+ *
+ * Rustica: not included (Next app used a placeholder /fonts path). Add @font-face
+ * here only after uploading .woff2 to Theme → Edit code → Assets.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --font-lora: 'Lora', Georgia, serif;
+
+  --primary-1: rgb(247, 161, 143);
+  --primary-2: rgb(227, 195, 221);
+
+  --coral: var(--primary-1);
+  --lavender: var(--primary-2);
+  --coral-light: #fbd4ce;
+  --coral-dark: #c97a66;
+  --lavender-light: #f3eaf5;
+  --lavender-dark: #9a7da8;
+
+  --cream: #fef7eb;
+  --light-gray: #faf3e8;
+  --border: #efe4d8;
+
+  --white: #fef7eb;
+  --dark: #2c2c2c;
+  --mid: #6b6b6b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--dark);
+  background: var(--white);
+  line-height: 1.6;
+}
+
+/* Film grain (same as Melancia site) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23grain)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-lora), serif;
+  line-height: 1.2;
+}

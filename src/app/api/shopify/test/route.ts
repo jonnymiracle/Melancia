@@ -70,7 +70,7 @@ type CartCreateData = {
 }
 
 function isProduction() {
-  return false // temporarily unlocked for connection diagnosis — re-lock after fix
+  return process.env.NODE_ENV === 'production'
 }
 
 function pickSampleVariant(data: ConnectionData): {
