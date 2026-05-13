@@ -4,9 +4,10 @@ import ProductCard3 from '@/components/ProductCard3'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
 import { featuredProducts } from '@/data/products'
-import { featuredCustomerReviews } from '@/data/reviews'
 import { fetchStorefrontProducts } from '@/lib/shopify-products'
+import { fetchInstagramFeed } from '@/lib/instagram'
 import type { ProductCard3Product } from '@/types/shopify'
+import type { InstaPost } from '@/lib/instagram'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
@@ -27,6 +28,8 @@ export default async function HomePage() {
   } catch {
     /* missing env or network — keep static featuredProducts */
   }
+
+  const instaPosts: InstaPost[] = await fetchInstagramFeed(6)
 
   return (
     <>
@@ -193,14 +196,33 @@ export default async function HomePage() {
           <p>Tag us in your photos for a chance to be featured.</p>
         </div>
         <div className="instagram-grid">
-          {['insta-1', 'insta-2', 'insta-3', 'insta-4', 'insta-5', 'insta-6'].map(cls => (
-            <a key={cls} href={INSTAGRAM} target="_blank" rel="noopener" className="instagram-item">
-              <div className={`instagram-item-placeholder ${cls}`} />
-              <div className="instagram-overlay">
-                <InstagramIcon size={22} />
-              </div>
-            </a>
-          ))}
+          {instaPosts.length > 0
+            ? instaPosts.map(post => {
+                const imgSrc = post.media_type === 'VIDEO' ? post.thumbnail_url ?? post.media_url : post.media_url
+                return (
+                  <a key={post.id} href={post.permalink} target="_blank" rel="noopener" className="instagram-item">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={imgSrc}
+                      alt={post.caption ? post.caption.slice(0, 80) : 'Melancia Instagram post'}
+                      className="instagram-item-img"
+                      loading="lazy"
+                    />
+                    <div className="instagram-overlay">
+                      <InstagramIcon size={22} />
+                    </div>
+                  </a>
+                )
+              })
+            : ['insta-1', 'insta-2', 'insta-3', 'insta-4', 'insta-5', 'insta-6'].map(cls => (
+                <a key={cls} href={INSTAGRAM} target="_blank" rel="noopener" className="instagram-item">
+                  <div className={`instagram-item-placeholder ${cls}`} />
+                  <div className="instagram-overlay">
+                    <InstagramIcon size={22} />
+                  </div>
+                </a>
+              ))
+          }
         </div>
       </section>
 

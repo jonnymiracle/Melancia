@@ -3,6 +3,8 @@ const nextConfig = {
   env: {
     SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN,
     SHOPIFY_STOREFRONT_ACCESS_TOKEN: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+    INSTAGRAM_USER_ID: process.env.INSTAGRAM_USER_ID,
+    INSTAGRAM_ACCESS_TOKEN: process.env.INSTAGRAM_ACCESS_TOKEN,
   },
   images: {
     remotePatterns: [

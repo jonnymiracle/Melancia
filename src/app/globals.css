@@ -1145,6 +1145,14 @@ ul { list-style: none; }
   cursor: pointer;
 }
 
+.instagram-item-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+.instagram-item:hover .instagram-item-img { transform: scale(1.05); }
+
 .instagram-item-placeholder {
   width: 100%; height: 100%;
   display: flex;
