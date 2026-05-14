@@ -108,7 +108,22 @@ export default function ShopCatalog({
       </div>
 
       <div className="shop-layout">
+        {filterOpen && (
+          <div
+            className="filters-backdrop"
+            aria-hidden
+            onClick={() => setFilterOpen(false)}
+          />
+        )}
         <aside className={`filters-sidebar${filterOpen ? ' open' : ''}`}>
+          <button
+            type="button"
+            className="filters-drawer-close"
+            aria-label="Close filters"
+            onClick={() => setFilterOpen(false)}
+          >
+            ×
+          </button>
           <div className="filters-header">
             <h3>Filters</h3>
             <button type="button" className="filters-clear" onClick={clearFilters}>

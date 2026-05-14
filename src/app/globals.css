@@ -1509,6 +1509,8 @@ footer {
   top: 120px;
   align-self: start;
 }
+.filters-backdrop { display: none; }
+.filters-drawer-close { display: none; }
 
 .filters-header {
   display: flex;
@@ -2432,7 +2434,39 @@ a.size-btn:visited {
   .instagram-grid { grid-template-columns: repeat(3, 1fr); }
   .testimonials-grid { grid-template-columns: 1fr; }
   .shop-layout { grid-template-columns: 1fr; padding: 20px; }
-  .filters-sidebar { position: static; }
+  .filters-sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100dvh;
+    width: min(82vw, 320px);
+    z-index: 1200;
+    background: var(--white);
+    box-shadow: 4px 0 32px rgba(0,0,0,0.18);
+    overflow-y: auto;
+    transform: translateX(-110%);
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 0;
+    padding: 24px 20px 40px;
+  }
+  .filters-sidebar.open { transform: translateX(0); }
+  .filters-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1199;
+    background: rgba(0,0,0,0.38);
+  }
+  .filters-drawer-close {
+    display: flex;
+    margin-left: auto;
+    margin-bottom: 16px;
+    font-size: 1.6rem;
+    line-height: 1;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--dark);
+    padding: 4px 8px;
+  }
   .cart-hero { height: 220px; padding: 0 20px; }
   .cart-layout { padding: 36px 20px 64px; gap: 28px; }
   .cart-line {
