@@ -2,7 +2,14 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { NewsletterForm } from '@/components/NewsletterForm'
 import { EnvelopeIcon, PhoneIcon, MapPinIcon, ClockIcon, InstagramIcon, TikTokIcon, PinterestIcon, GlobeIcon, MapPinIcon as StoreIcon, PlusIcon } from '@/components/icons'
+import {
+  SITE_EMAIL,
+  SITE_EMAIL_MAILTO,
+  SITE_WHATSAPP_DISPLAY,
+  SITE_WHATSAPP_HREF,
+} from '@/lib/site-contact'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim'
 const TIKTOK    = 'https://www.tiktok.com/@melanciaswim'
@@ -52,8 +59,8 @@ export default function ContactPage() {
 
           <div className="contact-cards">
             {[
-              { icon: <EnvelopeIcon />, title: 'Email Us', main: 'hello@melanciaswim.com', sub: 'We reply within 24 hours', href: 'mailto:hello@melanciaswim.com' },
-              { icon: <PhoneIcon />, title: 'WhatsApp / Phone', main: '+1 (234) 567-890', sub: 'Mon–Fri, 9am – 6pm', href: 'tel:+1234567890' },
+              { icon: <EnvelopeIcon />, title: 'Email Us', main: SITE_EMAIL, sub: 'We reply within 24 hours', href: SITE_EMAIL_MAILTO },
+              { icon: <PhoneIcon />, title: 'WhatsApp / Phone', main: SITE_WHATSAPP_DISPLAY, sub: 'Message us anytime', href: SITE_WHATSAPP_HREF },
               { icon: <MapPinIcon />, title: 'Based In', main: 'Miami, Florida — USA', sub: 'Shipping worldwide' },
               { icon: <ClockIcon />, title: 'Response Time', main: 'Within 24 business hours', sub: 'Faster via Instagram DM' },
             ].map(card => (
@@ -186,10 +193,7 @@ export default function ContactPage() {
       <section className="newsletter-section">
         <h2>Stay in the Loop</h2>
         <p>New drops, exclusive deals, and summer vibes — straight to your inbox.</p>
-        <form className="newsletter-form" onSubmit={e => e.preventDefault()}>
-          <input type="email" placeholder="Your email address" aria-label="Email" />
-          <button type="submit">Subscribe</button>
-        </form>
+        <NewsletterForm source="contact-page" />
       </section>
     </>
   )

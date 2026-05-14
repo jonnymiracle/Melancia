@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { InstagramIcon, TikTokIcon, PinterestIcon } from './icons'
+import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 const TIKTOK    = 'https://www.instagram.com/melanciaswim/'
@@ -35,9 +36,9 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Shop</h4>
           <ul>
-            <li><Link href="/shop">Tops</Link></li>
-            <li><Link href="/shop">Bottoms</Link></li>
-            <li><Link href="/shop">One Pieces</Link></li>
+            <li>
+              <Link href={`/shop?collection=${SOL_DE_IPANEMA_SLUG}`}>Sol de Ipanema</Link>
+            </li>
           </ul>
         </div>
 
@@ -56,13 +57,12 @@ export default function Footer() {
           <ul>
             <li><a href="#">Our Story</a></li>
             <li><Link href="/contact">Contact Us</Link></li>
-            <li><a href="#">Sustainability</a></li>
           </ul>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <span>© 2025 Melancia Swimwear. All rights reserved.</span>
+        <span>© 2026 Melancia Swimwear. All rights reserved.</span>
         <span>Privacy Policy · Terms of Service</span>
       </div>
     </footer>

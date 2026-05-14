@@ -3,7 +3,29 @@
    Primaries: --primary-1 rgb(247,161,143) | --primary-2 rgb(227,195,221)
    ============================================= */
 
-/* Fonts are loaded via Next.js font optimization (layout.tsx) — no CDN import needed. */
+/* Fonts: Google families via Next.js (layout.tsx); local brand fonts below. */
+@font-face {
+  font-family: 'Estabuenaonda';
+  src: url('/font/Estabuenaonda-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sometype Mono';
+  src: url('/font/sometype%20mono/SometypeMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sometype Mono';
+  src: url('/font/sometype%20mono/SometypeMono-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ── Shop product placeholder colors ── */
 .p1  { background: linear-gradient(160deg, var(--lavender) 20%, var(--coral)); }
 .p2  { background: linear-gradient(160deg, var(--coral-light) 20%, var(--lavender)); }
@@ -204,14 +226,15 @@ body::after {
 }
 .hero-video-text { max-width: 680px; }
 .hero-video-eyebrow {
+  font-family: 'Estabuenaonda', var(--font-playfair), Georgia, serif;
   font-size: 0.72rem; font-weight: 600; letter-spacing: 0.22em;
   text-transform: uppercase; color: rgba(255,255,255,0.80);
   margin-bottom: 12px; display: block;
 }
 .hero-video-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: clamp(2.6rem, 5.5vw, 5rem);
-  font-weight: 700; color: #fff; line-height: 1.05;
+  font-weight: 500; color: #fff; line-height: 1.05;
   letter-spacing: -0.01em; margin-bottom: 28px; text-transform: uppercase;
 }
 .hero-video-title em { font-style: italic; color: var(--coral-light); }
@@ -235,13 +258,6 @@ body::after {
   border: 2px solid rgba(255,255,255,0.65);
 }
 .btn-hero-pill.outline:hover { background: rgba(255,255,255,0.15); }
-.hero-video-scroll {
-  position: absolute; bottom: 28px; right: 36px;
-  display: flex; flex-direction: column; align-items: center;
-  gap: 6px; color: rgba(255,255,255,0.65); font-size: 0.65rem;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  animation: bounce 2s infinite;
-}
 @media (max-width: 768px) {
   .hero-video-section { padding: 12px 12px 12px; }
   .hero-video-wrap { border-radius: 16px; height: 75vh; }
@@ -1201,9 +1217,28 @@ ul { list-style: none; }
 
 .newsletter-form {
   display: flex;
+  flex-wrap: wrap;
   max-width: 460px;
   margin: 0 auto;
   gap: 0;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.newsletter-form-msg {
+  flex: 1 0 100%;
+  width: 100%;
+  margin: 12px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.newsletter-form-msg--ok {
+  opacity: 0.95;
+}
+
+.newsletter-form-msg--err {
+  color: #ffe8e8;
 }
 
 .newsletter-form input {
@@ -2461,7 +2496,7 @@ a.size-btn:visited {
 }
 
 .discount-modal-title {
-  font-family: var(--font-lora), Georgia, serif;
+  font-family: 'Estabuenaonda', var(--font-playfair), Georgia, serif;
   font-size: clamp(1.75rem, 3.8vw, 2.65rem);
   font-weight: 700;
   color: var(--dark);
@@ -2472,7 +2507,7 @@ a.size-btn:visited {
 }
 
 .discount-modal-lede {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Estabuenaonda', var(--font-playfair), Georgia, serif;
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.921);
   line-height: 1.6;
@@ -2489,7 +2524,7 @@ a.size-btn:visited {
 }
 
 .discount-modal-btn {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Estabuenaonda', var(--font-playfair), Georgia, serif;
   font-weight: 600;
   letter-spacing: 0.06em;
   border-radius: 10px;
@@ -2547,7 +2582,7 @@ a.size-btn:visited {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Estabuenaonda', var(--font-playfair), Georgia, serif;
   font-size: 0.82rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.88);

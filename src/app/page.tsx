@@ -3,6 +3,7 @@ import Image from 'next/image'
 import ProductCard3 from '@/components/ProductCard3'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
+import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
 import { featuredProducts } from '@/data/products'
 import { fetchStorefrontProducts } from '@/lib/shopify-products'
 import { fetchInstagramFeed } from '@/lib/instagram'
@@ -44,17 +45,13 @@ export default async function HomePage() {
             <div className="hero-video-text">
               <span className="hero-video-eyebrow">Sol de Ipanema Collection 2026</span>
               <h1 className="hero-video-title">
-                Made for <em>tanning,</em> made for you.
+                Crafted in Brazil, made for the <em>sun</em>.
               </h1>
               <div className="hero-video-cta">
                 <Link href="/shop" className="btn-hero-pill">Shop New Arrivals</Link>
                 <a href="#collections" className="btn-hero-pill outline">Explore Collections</a>
               </div>
             </div>
-          </div>
-
-          <div className="hero-video-scroll">
-            <span>Scroll</span><span>↓</span>
           </div>
         </div>
       </section>
@@ -95,7 +92,7 @@ export default async function HomePage() {
               <div className="collection-banner-bg col-ph-1" style={{ height: '100%' }} />
               <div className="collection-banner-overlay">
                 <h3>Sol de Ipanema</h3>
-                <Link href="/shop" className="collection-banner-link">Shop Now →</Link>
+                <Link href={`/shop?collection=${SOL_DE_IPANEMA_SLUG}`} className="collection-banner-link">Shop Now →</Link>
               </div>
             </div>
             {/* <div className="collection-banner">
@@ -230,7 +227,7 @@ export default async function HomePage() {
       <section className="newsletter-section">
         <h2>Get Early Access</h2>
         <p>Be the first to know about new drops, exclusive deals, and summer inspo.</p>
-        <NewsletterForm />
+        <NewsletterForm source="home-footer" />
       </section>
     </>
   )

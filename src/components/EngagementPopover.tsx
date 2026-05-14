@@ -152,7 +152,7 @@ export default function EngagementPopover() {
               <>
                 <p className="discount-modal-lede">We&apos;ll send your code — unsubscribe anytime.</p>
                 <div className="discount-modal-form-wrap">
-                  <NewsletterForm />
+                  <NewsletterForm source="discount-popup" />
                 </div>
                 <button type="button" className="discount-modal-dismiss-link" onClick={dismiss}>
                   Maybe later

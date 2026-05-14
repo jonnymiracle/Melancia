@@ -7,15 +7,24 @@ import {
   shopClampPage,
   shopTotalPages,
 } from '@/lib/shop-pagination'
+import {
+  productMatchesCollectionSlug,
+  SOL_DE_IPANEMA_SLUG,
+} from '@/lib/shop-collections'
 
 export const dynamic = 'force-dynamic'
 
 type ShopPageProps = {
-  searchParams: { page?: string }
+  searchParams: { page?: string; collection?: string }
 }
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
   const requestedPage = Math.max(1, parseInt(searchParams.page ?? '1', 10) || 1)
+  const rawCollection = searchParams.collection
+  const activeCollectionSlug =
+    typeof rawCollection === 'string' && rawCollection === SOL_DE_IPANEMA_SLUG
+      ? SOL_DE_IPANEMA_SLUG
+      : null
 
   let fullList: ProductCard3Product[] = allProducts
   try {
@@ -25,6 +34,10 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     }
   } catch {
     /* missing env or network — keep catalog */
+  }
+
+  if (activeCollectionSlug) {
+    fullList = fullList.filter((p) => productMatchesCollectionSlug(p, activeCollectionSlug))
   }
 
   const totalCount = fullList.length
@@ -39,6 +52,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       currentPage={currentPage}
       totalPages={totalPages}
       totalProducts={totalCount}
+      activeCollectionSlug={activeCollectionSlug}
     />
   )
 }

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { getStoredCartId } from '@/lib/cart-storage'
-import { CartIcon } from './icons'
+import { BagIcon } from './icons'
 
 
 export default function Nav() {
@@ -79,11 +79,13 @@ export default function Nav() {
           href="/cart"
           className={`nav-cart-link${isActive('/cart') ? ' active' : ''}`}
           aria-label={
-            cartQty > 0 ? `Cart, ${cartQty} item${cartQty === 1 ? '' : 's'}` : 'Cart'
+            cartQty > 0
+              ? `Shopping bag, ${cartQty} item${cartQty === 1 ? '' : 's'}`
+              : 'Shopping bag'
           }
         >
           <span className="nav-cart-icon-wrap">
-            <CartIcon />
+            <BagIcon />
             {cartQty > 0 ? (
               <span className="nav-cart-dot" aria-hidden />
             ) : null}

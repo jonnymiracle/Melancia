@@ -1,16 +1,17 @@
 'use client'
 
-import Link from 'next/link'
 import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import ProductCard3 from '@/components/ProductCard3'
 import type { ProductCard3Product } from '@/types/shopify'
 import { shopPaginationItems } from '@/lib/shop-pagination'
+import {
+  SHOP_COLLECTION_OPTIONS,
+} from '@/lib/shop-collections'
 
 const SIZES = ['Small', 'Medium', 'Large']
-
-/** Display names for shop filters — extend when new collections ship */
 const COLLECTION_SUN = '🌞'
-const COLLECTION_OPTIONS: { label: string; slug: string }[] = [{ label: 'Sol de Ipanema', slug: 'sol-de-ipanema' }]
 const COLORS = [
   { hex: '#F7A18F', label: 'Coral' },
   { hex: '#E3C3DD', label: 'Lavender' },
@@ -27,15 +28,20 @@ type Props = {
   currentPage: number
   totalPages: number
   totalProducts: number
+  /** When set, catalog is filtered to this collection (see URL `?collection=`). */
+  activeCollectionSlug: string | null
 }
 
 function productKey(p: ProductCard3Product) {
   return 'placeholderClass' in p ? `cat-${p.id}` : p.id
 }
 
-function shopHref(page: number): string {
-  if (page <= 1) return '/shop'
-  return `/shop?page=${page}`
+function makeShopHref(page: number, collectionSlug: string | null): string {
+  const p = new URLSearchParams()
+  if (page > 1) p.set('page', String(page))
+  if (collectionSlug) p.set('collection', collectionSlug)
+  const qs = p.toString()
+  return qs ? `/shop?${qs}` : '/shop'
 }
 
 export default function ShopCatalog({
@@ -43,9 +49,10 @@ export default function ShopCatalog({
   currentPage,
   totalPages,
   totalProducts,
+  activeCollectionSlug,
 }: Props) {
+  const router = useRouter()
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
-  const [selectedCollections, setSelectedCollections] = useState<string[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [maxPrice, setMaxPrice] = useState(200)
   const [sortBy, setSortBy] = useState('Featured')
@@ -57,27 +64,36 @@ export default function ShopCatalog({
   const toggleColor = (c: string) =>
     setSelectedColors((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]))
 
-  const toggleCollection = (slug: string) =>
-    setSelectedCollections((prev) =>
-      prev.includes(slug) ? prev.filter((x) => x !== slug) : [...prev, slug],
-    )
+  const toggleCollection = (slug: string) => {
+    if (activeCollectionSlug === slug) {
+      router.push(makeShopHref(1, null))
+    } else {
+      router.push(makeShopHref(1, slug))
+    }
+  }
 
   const clearFilters = () => {
     setSelectedSizes([])
-    setSelectedCollections([])
     setSelectedColors([])
     setMaxPrice(200)
+    if (activeCollectionSlug) {
+      router.push(makeShopHref(1, null))
+    }
   }
 
   const activeTags = [
     ...selectedSizes.map((s) => ({ label: `Size: ${s}`, remove: () => toggleSize(s) })),
-    ...selectedCollections.map((slug) => {
-      const label = COLLECTION_OPTIONS.find((o) => o.slug === slug)?.label ?? slug
-      return {
-        label: `Collection: ${COLLECTION_SUN} ${label}`,
-        remove: () => toggleCollection(slug),
-      }
-    }),
+    ...(activeCollectionSlug
+      ? [
+          {
+            label: `Collection: ${COLLECTION_SUN} ${
+              SHOP_COLLECTION_OPTIONS.find((o) => o.slug === activeCollectionSlug)?.label ??
+              activeCollectionSlug
+            }`,
+            remove: () => router.push(makeShopHref(1, null)),
+          },
+        ]
+      : []),
     ...selectedColors.map((c) => ({
       label: COLORS.find((x) => x.hex === c)?.label ?? c,
       remove: () => toggleColor(c),
@@ -144,11 +160,11 @@ export default function ShopCatalog({
               <span>▾</span>
             </div>
             <div className="filter-options">
-              {COLLECTION_OPTIONS.map(({ label, slug }) => (
+              {SHOP_COLLECTION_OPTIONS.map(({ label, slug }) => (
                 <label key={slug} className="filter-check">
                   <input
                     type="checkbox"
-                    checked={selectedCollections.includes(slug)}
+                    checked={activeCollectionSlug === slug}
                     onChange={() => toggleCollection(slug)}
                   />{' '}
                   <span aria-hidden="true">{COLLECTION_SUN}</span>{' '}
@@ -304,7 +320,7 @@ export default function ShopCatalog({
             >
               {currentPage > 1 ? (
                 <Link
-                  href={shopHref(currentPage - 1)}
+                  href={makeShopHref(currentPage - 1, activeCollectionSlug)}
                   className="size-btn prev-next"
                   prefetch={false}
                 >
@@ -324,7 +340,7 @@ export default function ShopCatalog({
                 ) : (
                   <Link
                     key={`p-${item}`}
-                    href={shopHref(item)}
+                    href={makeShopHref(item, activeCollectionSlug)}
                     className={`size-btn${item === currentPage ? ' active' : ''}`}
                     prefetch={false}
                     aria-current={item === currentPage ? 'page' : undefined}
@@ -336,7 +352,7 @@ export default function ShopCatalog({
 
               {currentPage < totalPages ? (
                 <Link
-                  href={shopHref(currentPage + 1)}
+                  href={makeShopHref(currentPage + 1, activeCollectionSlug)}
                   className="size-btn prev-next"
                   prefetch={false}
                 >
