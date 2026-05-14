@@ -12,6 +12,11 @@ import {
   SOL_DE_IPANEMA_SLUG,
 } from '@/lib/shop-collections'
 
+export const metadata = {
+  title: 'Shop All Swimwear',
+  description: 'Browse the full Melancia swimwear collection — bikinis, one-pieces, and more. Bold colors and flattering fits for every body.',
+}
+
 export const dynamic = 'force-dynamic'
 
 type ShopPageProps = {

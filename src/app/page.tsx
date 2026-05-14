@@ -3,7 +3,6 @@ import Image from 'next/image'
 import ProductCard3 from '@/components/ProductCard3'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
-import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
 import { featuredProducts } from '@/data/products'
 import { fetchStorefrontProducts } from '@/lib/shopify-products'
 import { fetchInstagramFeed } from '@/lib/instagram'
@@ -37,7 +36,8 @@ export default async function HomePage() {
       {/* ── Video Hero ── */}
       <section className="hero-video-section">
         <div className="hero-video-wrap">
-          <video autoPlay muted loop playsInline>
+          <video autoPlay muted loop playsInline webkit-playsinline="" x5-playsinline="" preload="auto">
+            <source src="/videos/MELANCIA-REEL-01.MOV" type="video/quicktime" />
             <source src="/videos/MELANCIA-REEL-01.MOV" type="video/mp4" />
           </video>
 
@@ -45,11 +45,10 @@ export default async function HomePage() {
             <div className="hero-video-text">
               <span className="hero-video-eyebrow">Sol de Ipanema Collection 2026</span>
               <h1 className="hero-video-title">
-                Crafted in Brazil, made for the <em>sun</em>.
+                Made for <em>tanning,</em> made for you.
               </h1>
               <div className="hero-video-cta">
                 <Link href="/shop" className="btn-hero-pill">Shop New Arrivals</Link>
-                <a href="#collections" className="btn-hero-pill outline">Explore Collections</a>
               </div>
             </div>
           </div>
@@ -92,7 +91,6 @@ export default async function HomePage() {
               <div className="collection-banner-bg col-ph-1" style={{ height: '100%' }} />
               <div className="collection-banner-overlay">
                 <h3>Sol de Ipanema</h3>
-                <Link href={`/shop?collection=${SOL_DE_IPANEMA_SLUG}`} className="collection-banner-link">Shop Now →</Link>
               </div>
             </div>
             {/* <div className="collection-banner">
@@ -125,10 +123,8 @@ export default async function HomePage() {
       {/* ── About Strip ── */}
       <section className="about-strip">
         <div className="about-strip-image">
-          <div className="about-strip-image-placeholder about-ph">
-            <span className="placeholder-label">Add lifestyle photo here</span>
-            <small style={{ opacity: 0.6, fontSize: '0.7rem' }}>public/images/about.jpg</small>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/discount.JPG" alt="Melancia swimwear lifestyle" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
         </div>
         <div className="about-strip-content">
           <span className="eyebrow">Our Story</span>

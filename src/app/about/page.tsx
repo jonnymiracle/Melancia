@@ -3,8 +3,8 @@ import { InstagramIcon } from '@/components/icons'
 import { SITE_WHATSAPP_HREF, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
 
 export const metadata = {
-  title: 'About Us | Melancia',
-  description: 'Born from the ocean — the story behind Melancia swimwear.',
+  title: 'Our Story',
+  description: 'Melancia was born from a love for the sea, sun, and self-expression. Discover the story behind our free-spirited swimwear brand.',
 }
 
 const VALUES = [

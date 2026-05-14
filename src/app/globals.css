@@ -226,15 +226,15 @@ body::after {
 }
 .hero-video-text { max-width: 680px; }
 .hero-video-eyebrow {
-  font-family: 'Estabuenaonda', var(--font-playfair), Georgia, serif;
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.22em;
-  text-transform: uppercase; color: rgba(255,255,255,0.80);
-  margin-bottom: 12px; display: block;
+  font-family: 'Estabuenaonda', Georgia, serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem); font-weight: 400; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.90);
+  margin-bottom: 16px; display: block;
 }
 .hero-video-title {
-  font-family: 'Sometype Mono', ui-monospace, monospace;
+  font-family: 'Estabuenaonda', Georgia, serif;
   font-size: clamp(2.6rem, 5.5vw, 5rem);
-  font-weight: 500; color: #fff; line-height: 1.05;
+  font-weight: 400; color: #fff; line-height: 1.05;
   letter-spacing: -0.01em; margin-bottom: 28px; text-transform: uppercase;
 }
 .hero-video-title em { font-style: italic; color: var(--coral-light); }
@@ -243,8 +243,8 @@ body::after {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 13px 28px; border-radius: 50px;
   background: rgba(255,255,255,0.92); backdrop-filter: blur(6px);
-  color: var(--dark); font-family: 'Poppins', sans-serif;
-  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+  color: var(--dark); font-family: 'Estabuenaonda', Georgia, serif;
+  font-size: 0.95rem; font-weight: 400; letter-spacing: 0.08em;
   text-transform: uppercase; border: none; cursor: pointer;
   transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
   text-decoration: none;
@@ -311,7 +311,7 @@ body::after {
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   color: var(--dark);
   background: var(--white);
   line-height: 1.6;
@@ -350,7 +350,7 @@ textarea {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-lora), serif;
+  font-family: 'Estabuenaonda', Georgia, serif;
   line-height: 1.2;
 }
 
@@ -363,14 +363,17 @@ ul { list-style: none; }
   display: inline-block;
   padding: 14px 36px;
   border-radius: 50px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-family: 'Estabuenaonda', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
   border: 2px solid transparent;
+}
+button {
+  font-family: 'Estabuenaonda', Georgia, serif;
 }
 
 .btn-primary {
@@ -431,7 +434,7 @@ ul { list-style: none; }
 }
 
 .nav-logo-text {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Estabuenaonda', Georgia, serif;
   font-size: 1.6rem;
   font-weight: 700;
   color: var(--coral);
@@ -874,7 +877,7 @@ ul { list-style: none; }
 }
 
 .product-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Estabuenaonda', Georgia, serif;
   font-size: 1rem;
   font-weight: 600;
   color: var(--dark);
@@ -1084,7 +1087,7 @@ ul { list-style: none; }
 }
 
 .about-feature h4 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--dark);
@@ -1333,7 +1336,7 @@ ul { list-style: none; }
   padding: 14px 20px;
   border: none;
   border-radius: 50px 0 0 50px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.88rem;
   outline: none;
   color: var(--dark);
@@ -1345,7 +1348,7 @@ ul { list-style: none; }
   color: var(--white);
   border: none;
   border-radius: 0 50px 50px 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -1370,7 +1373,7 @@ footer {
 }
 
 .footer-brand h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Estabuenaonda', Georgia, serif;
   font-size: 1.5rem;
   color: var(--coral);
   margin-bottom: 14px;
@@ -1409,7 +1412,7 @@ footer {
 }
 
 .footer-col h4 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.15em;
@@ -1520,7 +1523,7 @@ footer {
 }
 
 .filters-header h3 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.15em;
@@ -1534,7 +1537,7 @@ footer {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-weight: 500;
   transition: opacity 0.2s;
 }
@@ -1555,7 +1558,7 @@ footer {
 }
 
 .filter-group-title h4 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--dark);
@@ -1611,7 +1614,7 @@ footer {
   border: 1.5px solid var(--border);
   border-radius: 8px;
   background: var(--white);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.78rem;
   font-weight: 500;
   cursor: pointer;
@@ -1736,7 +1739,7 @@ a.size-btn:visited {
   border: 1.5px solid var(--border);
   border-radius: 8px;
   padding: 8px 14px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.82rem;
   color: var(--dark);
   background: var(--white);
@@ -1875,7 +1878,7 @@ a.size-btn:visited {
 }
 
 .contact-card h4 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.78rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -1892,7 +1895,7 @@ a.size-btn:visited {
 .contact-card a:hover { color: var(--coral); }
 
 .contact-socials h3 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.78rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -1970,7 +1973,7 @@ a.size-btn:visited {
   padding: 12px 16px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.88rem;
   color: var(--dark);
   background: var(--white);
@@ -2024,7 +2027,7 @@ a.size-btn:visited {
 }
 
 .retailer-card h4 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.92rem;
   font-weight: 600;
   color: var(--dark);
@@ -2108,7 +2111,7 @@ a.size-btn:visited {
 }
 
 .cart-empty h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Estabuenaonda', Georgia, serif;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   color: var(--dark);
   margin-bottom: 12px;
@@ -2122,7 +2125,7 @@ a.size-btn:visited {
 }
 
 .cart-section-title {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -2169,7 +2172,7 @@ a.size-btn:visited {
 }
 
 .cart-line-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Estabuenaonda', Georgia, serif;
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--dark);
@@ -2226,7 +2229,7 @@ a.size-btn:visited {
 .cart-remove {
   background: none;
   border: none;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--coral);
@@ -2269,7 +2272,7 @@ a.size-btn:visited {
 }
 
 .cart-summary-card h2 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sometype Mono', ui-monospace, monospace;
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -2422,6 +2425,18 @@ a.size-btn:visited {
   }
   .nav-icons {
     display: flex;
+    margin-left: auto;
+    margin-right: 12px;
+  }
+  .nav-cart-icon-wrap svg {
+    width: 28px;
+    height: 28px;
+  }
+  .nav-cart-dot {
+    top: -2px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
   }
   .nav-hamburger {
     display: flex;
