@@ -2,13 +2,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ProductCard3 from '@/components/ProductCard3'
 import { NewsletterForm } from '@/components/NewsletterForm'
-import { InstagramIcon } from '@/components/icons'
+import { InstagramIcon, BikiniIcon } from '@/components/icons'
 import AnnouncementBar from '@/components/AnnouncementBar'
+import HeroSlideshow from '@/components/HeroSlideshow'
+import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
 import { featuredProducts } from '@/data/products'
 import { fetchStorefrontProducts } from '@/lib/shopify-products'
-import { fetchInstagramFeed } from '@/lib/instagram'
 import type { ProductCard3Product } from '@/types/shopify'
-import type { InstaPost } from '@/lib/instagram'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
@@ -30,28 +30,10 @@ export default async function HomePage() {
     /* missing env or network — keep static featuredProducts */
   }
 
-  const instaPosts: InstaPost[] = await fetchInstagramFeed(6)
-
   return (
     <>
-      {/* ── Video Hero ── */}
-      <section className="hero-video-section">
-        <div className="hero-video-wrap">
-          <video autoPlay muted loop playsInline webkit-playsinline="" x5-playsinline="" preload="auto">
-            <source src="/videos/MELANCIA-REEL-01.MOV" type="video/quicktime" />
-            <source src="/videos/MELANCIA-REEL-01.MOV" type="video/mp4" />
-          </video>
-
-          <div className="hero-video-overlay">
-            <div className="hero-video-text">
-              <h1 className="hero-video-title">SOL de<br />IPANEMA</h1>
-            </div>
-            <div className="hero-video-cta">
-              <Link href="/shop" className="btn-hero-pill">SHOP COLLECTION</Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── Hero Slideshow ── */}
+      <HeroSlideshow />
 
       {/* ── Announcement Bar (below hero) ── */}
       <div className="announcement-bar-below-hero">
@@ -70,42 +52,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Collections ── */}
-      <section className="section" id="collections" style={{ background: 'var(--cream)', paddingTop: 0, paddingBottom: 0 }}>
-        <div className="collection-grid">
-          <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <div className="collection-banner">
-              <div className="collection-banner-bg col-ph-1" style={{ height: '100%' }} />
-              <div className="collection-banner-overlay">
-                <h3>Sol de Ipanema</h3>
-              </div>
-            </div>
-            {/* <div className="collection-banner">
-              <div className="collection-banner-bg col-ph-2" style={{ height: '100%' }} />
-              <div className="collection-banner-overlay">
-                <h3>Bottoms</h3>
-                <Link href="/shop" className="collection-banner-link">Shop Now →</Link>
-              </div>
-            </div> */}
-          </div>
-          {/* <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <div className="collection-banner tall">
-              <div className="collection-banner-bg col-ph-3" style={{ height: '100%' }} />
-              <div className="collection-banner-overlay">
-                <h3>One Pieces</h3>
-                <Link href="/shop" className="collection-banner-link">Shop Now →</Link>
-              </div>
-            </div>
-            <div className="collection-banner">
-              <div className="collection-banner-bg col-ph-4" style={{ height: '100%' }} />
-              <div className="collection-banner-overlay">
-                <h3>Cover-Ups</h3>
-                <Link href="/shop" className="collection-banner-link">Shop Now →</Link>
-              </div>
-            </div>
-          </div> */}
-        </div>
-      </section>
 
       {/* ── About Strip ── */}
       <section className="about-strip">
@@ -130,11 +76,12 @@ export default async function HomePage() {
             {[
               { label: 'Chlorine-Resistant', sub: 'Built to last through pool and ocean', icon: '~' },
               { label: 'UV Protection', sub: 'UPF 50+ on select styles', icon: '◎' },
-              { label: 'Eco Fabric', sub: 'Made from recycled materials', icon: '↻' },
-              { label: 'Inclusive Sizing', sub: 'Small – Large, all body types', icon: '⊟' },
+              { label: 'Brazilian Cut', sub: 'Designed with the iconic Brazilian silhouette', icon: null },
             ].map(f => (
               <div key={f.label} className="about-feature">
-                <span className="about-feature-icon" style={{ fontSize: '1.2rem', color: 'var(--coral)' }}>{f.icon}</span>
+                <span className="about-feature-icon" style={{ fontSize: '1.2rem', color: 'var(--coral)' }}>
+                  {f.label === 'Brazilian Cut' ? <BikiniIcon size={22} /> : f.icon}
+                </span>
                 <div>
                   <h4>{f.label}</h4>
                   <p>{f.sub}</p>
@@ -142,7 +89,9 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
-          <Link href="/contact" className="btn btn-primary">Learn More</Link>
+          <div style={{ marginTop: 8, display: 'flex' }}>
+            <Link href="/about" className="btn btn-primary btn-sm">Our Story</Link>
+          </div>
         </div>
       </section>
 
@@ -168,42 +117,19 @@ export default async function HomePage() {
         </div>
       </section> */}
 
-      {/* ── Instagram Strip ── */}
-      <section className="instagram-strip">
-        <div className="section-header">
-          <span className="eyebrow">@melanciaswim</span>
-          <h2>Find us on Instagram</h2>
-          <p>Tag us in your photos for a chance to be featured.</p>
-        </div>
-        <div className="instagram-grid">
-          {instaPosts.length > 0
-            ? instaPosts.map(post => {
-                const imgSrc = post.media_type === 'VIDEO' ? post.thumbnail_url ?? post.media_url : post.media_url
-                return (
-                  <a key={post.id} href={post.permalink} target="_blank" rel="noopener" className="instagram-item">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={imgSrc}
-                      alt={post.caption ? post.caption.slice(0, 80) : 'Melancia Instagram post'}
-                      className="instagram-item-img"
-                      loading="lazy"
-                    />
-                    <div className="instagram-overlay">
-                      <InstagramIcon size={22} />
-                    </div>
-                  </a>
-                )
-              })
-            : ['insta-1', 'insta-2', 'insta-3', 'insta-4', 'insta-5', 'insta-6'].map(cls => (
-                <a key={cls} href={INSTAGRAM} target="_blank" rel="noopener" className="instagram-item">
-                  <div className={`instagram-item-placeholder ${cls}`} />
-                  <div className="instagram-overlay">
-                    <InstagramIcon size={22} />
-                  </div>
-                </a>
-              ))
-          }
-        </div>
+      {/* ── Instagram CTA ── */}
+      <section className="instagram-cta-section">
+        <h2>Find us on Instagram</h2>
+        <p>Follow our journey and tag us in your photos.</p>
+        <a
+          href={INSTAGRAM}
+          target="_blank"
+          rel="noopener"
+          className="btn btn-primary instagram-cta-btn"
+        >
+          <InstagramIcon size={18} />
+          @melanciaswim
+        </a>
       </section>
 
       {/* ── Newsletter ── */}

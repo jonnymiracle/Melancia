@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { InstagramIcon } from '@/components/icons'
 import { SITE_WHATSAPP_HREF, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
+import AboutHero from '@/components/AboutHero'
 
 export const metadata = {
   title: 'Our Story',
@@ -34,38 +35,24 @@ export default function AboutPage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="about-page-hero">
-        <div className="about-page-hero-overlay">
-          <span className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>Our Story</span>
-          <h1>Born from the ocean,<br /><em>made for you.</em></h1>
-          <p>Melancia is Portuguese for watermelon — and just like the fruit, we're bold, sweet, and made for summer.</p>
-        </div>
-      </section>
+      <AboutHero />
 
       {/* ── Story ── */}
       <section className="section about-page-story">
+        <h2 className="about-melancia-title">About Melancia</h2>
         <div className="about-page-story-grid">
           <div className="about-page-story-image">
             <div className="about-strip-image-placeholder about-ph" style={{ height: 420, borderRadius: 20 }}>
-              <span className="placeholder-label">Founder photo</span>
-              <small style={{ opacity: 0.6, fontSize: '0.7rem' }}>public/images/founder.jpg</small>
+              <span className="placeholder-label">Brand photo</span>
+              <small style={{ opacity: 0.6, fontSize: '0.7rem' }}>public/images/about.jpg</small>
             </div>
           </div>
           <div className="about-page-story-text">
-            <span className="eyebrow">How it started</span>
-            <h2>A love letter to the sea.</h2>
             <p>
-              Melancia was born out of a deep love for the sea, the sun, and the feeling of being
-              completely free. We wanted swimwear that matched that energy — bold colors, feminine
-              shapes, and quality that actually lasts beyond one summer.
-            </p>
-            <p>
-              Every piece is designed to move with you, not against you. From beach to brunch,
-              from the pool to the party — Melancia is built for the girl who lives life in full color.
-            </p>
-            <p>
-              We're a small, passionate team and we put everything into every stitch. When you wear
-              Melancia, you're wearing something made with real care.
+              Designed especially for tanning, Melancia was created with the intention of bringing
+              the heart and style of Brazil to the world. The brand was born from my own experience
+              as a Salvadoran who fell in love with Brazil&apos;s effortless bikini culture — from
+              the minimal silhouettes to the colors, the music, and the energy.
             </p>
             <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
               <Link href="/shop" className="btn btn-primary">Shop the Collection</Link>
@@ -73,6 +60,16 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ── Collab Quote ── */}
+      <section className="about-collab-section">
+        <div className="about-collab-overlay" />
+        <p className="about-collab-text">
+          Each bikini is made in collaboration with Brazilian women designers, creating unique
+          pieces that carry the Carioca spirit. There&apos;s something special about wearing a
+          Brazilian bikini paired with sun-kissed skin — it becomes more than a look, it&apos;s a feeling.
+        </p>
       </section>
 
       {/* ── Values ── */}
