@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ProductCard3 from '@/components/ProductCard3'
 import { NewsletterForm } from '@/components/NewsletterForm'
-import { InstagramIcon } from '@/components/icons'
+import { InstagramIcon, BikiniIcon } from '@/components/icons'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import HeroSlideshow from '@/components/HeroSlideshow'
 import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
@@ -53,6 +53,42 @@ export default async function HomePage() {
       </section>
 
 
+
+      {/* ── About Strip ── */}
+      <section className="about-strip">
+        <div className="about-strip-image">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/discount.JPG" alt="Melancia swimwear lifestyle" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        </div>
+        <div className="about-strip-content">
+          <span className="eyebrow">Our Story</span>
+          <h2>Made for the sun. <em>Made for you.</em></h2>
+          <p>
+            Melancia was born for the moments you never forget: beach days, boat rides,
+            pool parties and everything in between. Designed to make you feel as good as you look.
+          </p>
+          <div className="about-features">
+            {[
+              { label: 'Chlorine-Resistant', sub: 'Built to last through pool and ocean', icon: '~' },
+              { label: 'UV Protection', sub: 'UPF 50+ on select styles', icon: '◎' },
+              { label: 'Brazilian Cut', sub: 'Designed with the iconic Brazilian silhouette', icon: null },
+            ].map(f => (
+              <div key={f.label} className="about-feature">
+                <span className="about-feature-icon" style={{ fontSize: '1.2rem', color: 'var(--coral)' }}>
+                  {f.label === 'Brazilian Cut' ? <BikiniIcon size={22} /> : f.icon}
+                </span>
+                <div>
+                  <h4>{f.label}</h4>
+                  <p>{f.sub}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 8, display: 'flex' }}>
+            <Link href="/about" className="btn btn-primary btn-sm">Our Story</Link>
+          </div>
+        </div>
+      </section>
 
       {/* ── Testimonials ── */}
       {/* <section className="testimonials-section">
