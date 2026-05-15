@@ -1969,6 +1969,78 @@ a.size-btn:visited {
 }
 .filter-tag button:hover { color: var(--coral); }
 
+/* ── Policy Pages ── */
+.policy-body {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 64px 32px 96px;
+}
+
+.policy-section {
+  margin-bottom: 52px;
+}
+
+.policy-section h2 {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--sand);
+}
+
+.policy-section p,
+.policy-section li {
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: var(--mid);
+  margin-bottom: 10px;
+}
+
+.policy-section ul,
+.policy-section ol {
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+
+.policy-section a {
+  color: var(--coral);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.policy-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: 0.92rem;
+}
+
+.policy-table th,
+.policy-table td {
+  text-align: left;
+  padding: 10px 14px;
+  border: 1px solid var(--sand);
+  color: var(--mid);
+}
+
+.policy-table th {
+  background: #faf7f2;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.policy-table tr:nth-child(even) td {
+  background: #fdfbf8;
+}
+
+@media (max-width: 600px) {
+  .policy-body { padding: 40px 20px 72px; }
+  .policy-table th,
+  .policy-table td { padding: 8px 10px; font-size: 0.85rem; }
+}
+
 /* ── Contact Page ── */
 .contact-hero {
   position: relative;
