@@ -8,6 +8,7 @@ import type {
   ShopifyProduct,
   ShopifyProductVariant,
 } from '@/types/shopify'
+import Link from 'next/link'
 import { addToCart } from '@/lib/add-to-cart-client'
 import { getStoredCartId } from '@/lib/cart-storage'
 import { resolveCatalogProductBadge, resolveShopifyProductBadge } from '@/lib/product-badge'
@@ -231,12 +232,19 @@ export default function ProductCard3({ product }: ProductCard3Props) {
       : 'Adding…'
     : cartLineId
       ? '- remove from cart'
-      : '+ Add to cart'
+      : !canAdd
+        ? 'Sold Out'
+        : '+ Add to cart'
 
   const cardImage = shopifyCardImage(product)
 
   return (
     <div className="product-card">
+      {/* Invisible full-card link — button sits above it via z-index */}
+      {handle && (
+        <Link href={`/shop/${handle}`} className="product-card-link" aria-label={product.title} tabIndex={-1} />
+      )}
+
       <div className="product-image">
         {cardImage ? (
           <Image
@@ -254,7 +262,7 @@ export default function ProductCard3({ product }: ProductCard3Props) {
         )}
 
         {variant && !variant.availableForSale ? (
-          <span className="product-badge sale">Sold out</span>
+          <span className="product-badge sale">Sold Out</span>
         ) : (
           shopifyPromoBadge && (
             <span className={`product-badge ${shopifyPromoBadge}`}>
@@ -281,14 +289,14 @@ export default function ProductCard3({ product }: ProductCard3Props) {
           {variant ? (
             <button
               type="button"
-              className="btn btn-primary"
+              className={`btn ${!cartLineId && !canAdd ? 'btn-sold-out' : 'btn-primary'}`}
               disabled={pending || (!cartLineId && !canAdd)}
               onClick={() => void handleBagClick()}
             >
               {bagLabel}
             </button>
           ) : (
-            <button type="button" className="btn btn-outline" disabled>
+            <button type="button" className="btn btn-sold-out" disabled>
               Unavailable
             </button>
           )}
@@ -296,7 +304,13 @@ export default function ProductCard3({ product }: ProductCard3Props) {
       </div>
 
       <div className="product-info">
-        <h3 className="product-name">{product.title}</h3>
+        {handle ? (
+          <Link href={`/shop/${handle}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <h3 className="product-name">{product.title}</h3>
+          </Link>
+        ) : (
+          <h3 className="product-name">{product.title}</h3>
+        )}
         <p className="product-desc">{subtitle}</p>
         <div className="product-footer">
           <span className="product-price">

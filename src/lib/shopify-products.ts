@@ -1,6 +1,7 @@
 import { shopifyFetch } from '@/lib/shopify'
 import type {
   ShopifyProduct,
+  ShopifyProductDetail,
   StorefrontProductsPaginatedQueryData,
   StorefrontProductsQueryData,
 } from '@/types/shopify'
@@ -78,6 +79,56 @@ export async function fetchStorefrontProducts(first = 24): Promise<ShopifyProduc
 
   const edges = json.data?.products?.edges ?? []
   return edges.map(({ node }) => node)
+}
+
+const PRODUCT_BY_HANDLE_QUERY = `
+  query ProductByHandle($handle: String!) {
+    productByHandle(handle: $handle) {
+      id
+      title
+      handle
+      description
+      descriptionHtml
+      tags
+      images(first: 10) {
+        edges {
+          node {
+            url
+            altText
+          }
+        }
+      }
+      variants(first: 20) {
+        edges {
+          node {
+            id
+            title
+            availableForSale
+            price {
+              amount
+              currencyCode
+            }
+            compareAtPrice {
+              amount
+              currencyCode
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export async function fetchProductByHandle(handle: string): Promise<ShopifyProductDetail | null> {
+  try {
+    const json = await shopifyFetch<{ data: { productByHandle: ShopifyProductDetail | null } }>(
+      PRODUCT_BY_HANDLE_QUERY,
+      { handle },
+    )
+    return json.data?.productByHandle ?? null
+  } catch {
+    return null
+  }
 }
 
 type PaginatedVars = { first: number; after?: string | null }

@@ -38,6 +38,35 @@ export type ShopifyProduct = {
 
 export type ProductCard3Product = Product | ShopifyProduct
 
+/** Full product detail shape — used by /shop/[handle] page */
+export type ShopifyProductDetail = {
+  id: string
+  title: string
+  handle: string
+  description: string
+  descriptionHtml: string
+  tags: string[]
+  images: {
+    edges: {
+      node: {
+        url: string
+        altText?: string | null
+      }
+    }[]
+  }
+  variants: {
+    edges: {
+      node: {
+        id: string
+        title: string
+        availableForSale: boolean
+        price: { amount: string; currencyCode: string }
+        compareAtPrice?: { amount: string; currencyCode: string } | null
+      }
+    }[]
+  }
+}
+
 /** Raw GraphQL envelope for a products list query */
 export type StorefrontProductsQueryData = {
   data: {
