@@ -136,7 +136,6 @@ export default function EngagementPopover() {
 
             {step === 'offer' && (
               <>
-                <p className="discount-modal-lede">Sunshine not required.</p>
                 <div className="discount-modal-actions">
                   <button type="button" className="discount-modal-btn discount-modal-btn--primary" onClick={handleReady}>
                     I&apos;m ready

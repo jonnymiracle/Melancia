@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { NewsletterForm } from '@/components/NewsletterForm'
-import { EnvelopeIcon, PhoneIcon, MapPinIcon, ClockIcon, InstagramIcon, TikTokIcon, PinterestIcon, GlobeIcon, MapPinIcon as StoreIcon, PlusIcon } from '@/components/icons'
+import { EnvelopeIcon, PhoneIcon, MapPinIcon, ClockIcon, InstagramIcon, GlobeIcon, MapPinIcon as StoreIcon, PlusIcon } from '@/components/icons'
 import {
   SITE_EMAIL,
   SITE_EMAIL_MAILTO,
@@ -12,8 +12,6 @@ import {
 } from '@/lib/site-contact'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim'
-const TIKTOK    = 'https://www.tiktok.com/@melanciaswim'
-const PINTEREST = 'https://www.pinterest.com/melanciaswim'
 
 const faqs = [
   { q: 'How do I know what size to order?', a: 'We recommend checking our Size Guide before ordering. Our swimwear generally runs true to size, but if you\'re between sizes we suggest sizing up for tops and down for bottoms.' },
@@ -80,12 +78,6 @@ export default function ContactPage() {
             <div className="contact-social-links">
               <a href={INSTAGRAM} target="_blank" rel="noopener" className="contact-social-link">
                 <InstagramIcon size={16} /> Instagram
-              </a>
-              <a href={TIKTOK} target="_blank" rel="noopener" className="contact-social-link">
-                <TikTokIcon size={16} /> TikTok
-              </a>
-              <a href={PINTEREST} target="_blank" rel="noopener" className="contact-social-link">
-                <PinterestIcon size={16} /> Pinterest
               </a>
             </div>
           </div>

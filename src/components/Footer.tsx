@@ -1,11 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { InstagramIcon, TikTokIcon, PinterestIcon } from './icons'
+import { InstagramIcon } from './icons'
 import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
-const TIKTOK    = 'https://www.tiktok.com/@melanciaswim'
-const PINTEREST = 'https://www.pinterest.com/melanciaswim'
 
 export default function Footer() {
   return (
@@ -24,12 +22,6 @@ export default function Footer() {
             <a href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
               <InstagramIcon size={17} />
             </a>
-            {/* <a href={TIKTOK} target="_blank" rel="noopener" aria-label="TikTok">
-              <TikTokIcon size={17} />
-            </a> */}
-            {/* <a href={PINTEREST} target="_blank" rel="noopener" aria-label="Pinterest">
-              <PinterestIcon size={17} />
-            </a> */}
           </div>
         </div>
 
