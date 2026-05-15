@@ -12,6 +12,27 @@
   font-display: swap;
 }
 @font-face {
+  font-family: 'Rustica';
+  src: url('/font/Rustica-Sans-Font-Family/Demo_Fonts/Fontspring-DEMO-5_rustica-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rustica';
+  src: url('/font/Rustica-Sans-Font-Family/Demo_Fonts/Fontspring-DEMO-6_rustica-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rustica';
+  src: url('/font/Rustica-Sans-Font-Family/Demo_Fonts/Fontspring-DEMO-7_rustica-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
   font-family: 'Sometype Mono';
   src: url('/font/sometype%20mono/SometypeMono-Regular.ttf') format('truetype');
   font-weight: 400;
@@ -220,11 +241,24 @@ body::after {
 }
 .hero-video-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.50) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.22) 50%, rgba(0,0,0,0.42) 100%);
   display: flex; flex-direction: column;
-  justify-content: flex-end; padding: 52px 56px;
+  align-items: center; justify-content: center;
+  padding: 40px;
 }
-.hero-video-text { max-width: 680px; }
+.hero-video-text { text-align: center; max-width: 800px; }
+.hero-video-cta {
+  position: absolute;
+  bottom: 36px;
+  left: 36px;
+}
+.hero-video-cta .btn-hero-pill {
+  background: rgb(230, 146, 171);
+  color: #fff;
+}
+.hero-video-cta .btn-hero-pill:hover {
+  background: rgb(210, 120, 150);
+}
 .hero-video-eyebrow {
   font-family: 'Estabuenaonda', Georgia, serif;
   font-size: clamp(1.1rem, 2.5vw, 1.6rem); font-weight: 400; letter-spacing: 0.12em;
@@ -234,8 +268,8 @@ body::after {
 .hero-video-title {
   font-family: 'Estabuenaonda', Georgia, serif;
   font-size: clamp(2.6rem, 5.5vw, 5rem);
-  font-weight: 400; color: #fff; line-height: 1.05;
-  letter-spacing: -0.01em; margin-bottom: 28px; text-transform: uppercase;
+  font-weight: 400; color: #fff; line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 .hero-video-title em { font-style: italic; color: var(--coral-light); }
 .hero-video-cta { display: flex; gap: 14px; flex-wrap: wrap; }
@@ -243,7 +277,7 @@ body::after {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 13px 28px; border-radius: 50px;
   background: rgba(255,255,255,0.92); backdrop-filter: blur(6px);
-  color: var(--dark); font-family: 'Estabuenaonda', Georgia, serif;
+  color: var(--dark); font-family: var(--font-lora), 'Lora', Georgia, serif;
   font-size: 0.95rem; font-weight: 400; letter-spacing: 0.08em;
   text-transform: uppercase; border: none; cursor: pointer;
   transition: background 0.25s, transform 0.2s, box-shadow 0.2s;
@@ -261,8 +295,8 @@ body::after {
 @media (max-width: 768px) {
   .hero-video-section { padding: 12px 12px 12px; }
   .hero-video-wrap { border-radius: 16px; height: 75vh; }
-  .hero-video-overlay { padding: 28px 24px; }
-  .hero-video-title { font-size: clamp(2rem, 8vw, 3rem); }
+  .hero-video-overlay { padding: 20px; }
+  .hero-video-title { font-size: clamp(2.4rem, 10vw, 3.6rem); }
 }
 
 /* ── Collection banners placeholder colors ── */
@@ -298,12 +332,12 @@ body::after {
   --lavender-light: #f3eaf5;
   --lavender-dark: #9a7da8;
 
-  --cream: #FEF7EB;
-  --light-gray: #faf3e8;
-  --border: #efe4d8;
+  --cream: rgb(242, 220, 194);
+  --light-gray: rgb(248, 235, 215);
+  --border: #e8d4bc;
 
-  /* Page canvas + light surfaces (Tanning-inspired eggshell) */
-  --white: #FEF7EB;
+  /* Page canvas + light surfaces */
+  --white: rgb(242, 220, 194);
   --dark: #2c2c2c;
   --mid: #6b6b6b;
 }
@@ -311,7 +345,7 @@ body::after {
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Sometype Mono', ui-monospace, monospace;
+  font-family: 'Rustica', ui-sans-serif, sans-serif;
   color: var(--dark);
   background: var(--white);
   line-height: 1.6;
@@ -363,7 +397,7 @@ ul { list-style: none; }
   display: inline-block;
   padding: 14px 36px;
   border-radius: 50px;
-  font-family: 'Estabuenaonda', Georgia, serif;
+  font-family: var(--font-lora), 'Lora', Georgia, serif;
   font-size: 0.95rem;
   font-weight: 400;
   letter-spacing: 0.06em;
@@ -373,7 +407,7 @@ ul { list-style: none; }
   border: 2px solid transparent;
 }
 button {
-  font-family: 'Estabuenaonda', Georgia, serif;
+  font-family: var(--font-lora), 'Lora', Georgia, serif;
 }
 
 .btn-primary {
@@ -420,13 +454,17 @@ button {
   justify-content: space-between;
   padding: 0 48px;
   height: 72px;
-  background: rgba(245,238,208,0.95);
-  backdrop-filter: blur(12px);
+  background: rgb(242, 220, 194);
   border-bottom: 1px solid var(--border);
-  transition: box-shadow 0.3s;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
 }
 
 .nav.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+/* Hide nav on scroll down, show on scroll up */
+.nav.nav-hidden {
+  transform: translateY(-100%);
+}
 
 .nav-logo img {
   height: 48px;
@@ -539,6 +577,16 @@ button {
   white-space: nowrap;
 }
 
+/* ── Announcement Bar — below-hero homepage placement ── */
+.announcement-bar-below-hero {
+  margin-top: 64px;
+}
+.announcement-bar-below-hero .announcement-bar {
+  position: relative;
+  top: auto; left: auto; right: auto;
+  z-index: auto;
+}
+
 .announcement-track {
   display: inline-flex;
   gap: 0;
@@ -555,10 +603,10 @@ button {
   100% { transform: translateX(-50%); }
 }
 
-.nav { top: 40px; }
+.nav { top: 0; }
 
 /* ── Page Wrapper ── */
-.page-content { padding-top: 112px; }
+.page-content { padding-top: 72px; }
 
 /* ── Section Shared ── */
 .section { padding: 80px 48px; }
@@ -877,7 +925,7 @@ button {
 }
 
 .product-name {
-  font-family: 'Estabuenaonda', Georgia, serif;
+  font-family: 'Rustica', sans-serif;
   font-size: 1rem;
   font-weight: 600;
   color: var(--dark);
@@ -885,6 +933,7 @@ button {
 }
 
 .product-desc {
+  font-family: 'Rustica', sans-serif;
   font-size: 0.78rem;
   color: var(--mid);
   margin-bottom: 10px;
@@ -897,6 +946,7 @@ button {
 }
 
 .product-price {
+  font-family: 'Rustica', sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--coral);
@@ -2660,12 +2710,12 @@ a.size-btn:visited {
 }
 
 .discount-modal-btn {
-  font-family: 'Estabuenaonda', var(--font-playfair), Georgia, serif;
+  font-family: var(--font-lora), 'Lora', Georgia, serif;
   font-weight: 600;
   letter-spacing: 0.06em;
   border-radius: 10px;
   padding: 16px 24px;
-  font-size: 0.82rem;
+  font-size: 1.64rem;
   cursor: pointer;
   border: 2px solid transparent;
   text-transform: none;
@@ -2718,7 +2768,7 @@ a.size-btn:visited {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: 'Estabuenaonda', var(--font-playfair), Georgia, serif;
+  font-family: var(--font-lora), 'Lora', Georgia, serif;
   font-size: 0.82rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.88);

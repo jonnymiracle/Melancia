@@ -4,8 +4,8 @@ import { InstagramIcon, TikTokIcon, PinterestIcon } from './icons'
 import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
-const TIKTOK    = 'https://www.instagram.com/melanciaswim/'
-const PINTEREST = 'https://www.instagram.com/melanciaswim/'
+const TIKTOK    = 'https://www.tiktok.com/@melanciaswim'
+const PINTEREST = 'https://www.pinterest.com/melanciaswim'
 
 export default function Footer() {
   return (
@@ -46,16 +46,16 @@ export default function Footer() {
           <h4>Help</h4>
           <ul>
             {/* <li><Link href="/size-guide">Size Guide</Link></li> */}
-            <li><a href="#">Shipping Info</a></li>
-            <li><a href="#">Returns</a></li>
-            <li><a href="#">FAQ</a></li>
+            <li><Link href="/contact">Shipping Info</Link></li>
+            <li><Link href="/contact">Returns</Link></li>
+            <li><Link href="/contact">FAQ</Link></li>
           </ul>
         </div>
 
         <div className="footer-col">
           <h4>Company</h4>
           <ul>
-            <li><a href="#">Our Story</a></li>
+            <li><Link href="/about">Our Story</Link></li>
             <li><Link href="/contact">Contact Us</Link></li>
           </ul>
         </div>

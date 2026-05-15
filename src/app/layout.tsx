@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Lora, Playfair_Display, Poppins } from 'next/font/google'
 import './globals.css'
-import AnnouncementBar from '@/components/AnnouncementBar'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import PageLoader from '@/components/PageLoader'
@@ -85,7 +84,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <BackgroundDecor />
         <PageLoader />
-        <AnnouncementBar />
         <Nav />
         <main className="page-content">
           {children}

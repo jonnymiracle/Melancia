@@ -3,6 +3,7 @@ import Image from 'next/image'
 import ProductCard3 from '@/components/ProductCard3'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
+import AnnouncementBar from '@/components/AnnouncementBar'
 import { featuredProducts } from '@/data/products'
 import { fetchStorefrontProducts } from '@/lib/shopify-products'
 import { fetchInstagramFeed } from '@/lib/instagram'
@@ -43,32 +44,22 @@ export default async function HomePage() {
 
           <div className="hero-video-overlay">
             <div className="hero-video-text">
-              <span className="hero-video-eyebrow">Sol de Ipanema Collection 2026</span>
-              <h1 className="hero-video-title">
-                Made for <em>tanning,</em> made for you.
-              </h1>
-              <div className="hero-video-cta">
-                <Link href="/shop" className="btn-hero-pill">Shop New Arrivals</Link>
-              </div>
+              <h1 className="hero-video-title">SOL de<br />IPANEMA</h1>
+            </div>
+            <div className="hero-video-cta">
+              <Link href="/shop" className="btn-hero-pill">SHOP COLLECTION</Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Category Strip ── */}
-      <div className="category-strip">
-        <Link href="/shop">Tops</Link>
-        <Link href="/shop">Bottoms</Link>
-        <Link href="/shop">One Pieces</Link>
+      {/* ── Announcement Bar (below hero) ── */}
+      <div className="announcement-bar-below-hero">
+        <AnnouncementBar />
       </div>
 
       {/* ── Featured Products ── */}
-      <section className="section" id="featured">
-        <div className="section-header">
-          <span className="eyebrow">Just Dropped</span>
-          <h2>New Arrivals</h2>
-          <p>Our latest pieces — designed for sunshine, saltwater, and good vibes.</p>
-        </div>
+      <section className="section" id="featured" style={{ paddingTop: 40, paddingBottom: 40 }}>
         <div className="product-grid">
           {homeFeatured.map(product => (
             <ProductCard3 key={product.id} product={product} />
@@ -80,11 +71,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Collections ── */}
-      <section className="section" id="collections" style={{ background: 'var(--cream)' }}>
-        <div className="section-header">
-          <span className="eyebrow">Shop By</span>
-          <h2>Our Collections</h2>
-        </div>
+      <section className="section" id="collections" style={{ background: 'var(--cream)', paddingTop: 0, paddingBottom: 0 }}>
         <div className="collection-grid">
           <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <div className="collection-banner">

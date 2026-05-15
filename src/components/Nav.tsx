@@ -10,6 +10,7 @@ import { BagIcon } from './icons'
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
+  const [navHidden, setNavHidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [cartQty, setCartQty] = useState(0)
   const pathname = usePathname()
@@ -40,8 +41,19 @@ export default function Nav() {
   }, [syncCartQty])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
+    let lastY = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 40)
+      // Hide on scroll down (past 80px), show on scroll up
+      if (y > 80) {
+        setNavHidden(y > lastY)
+      } else {
+        setNavHidden(false)
+      }
+      lastY = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -51,7 +63,7 @@ export default function Nav() {
   const isActive = (href: string) => pathname === href
 
   return (
-    <nav className={`nav${scrolled ? ' scrolled' : ''}${menuOpen ? ' menu-open' : ''}`} id="mainNav">
+    <nav className={`nav${scrolled ? ' scrolled' : ''}${navHidden ? ' nav-hidden' : ''}${menuOpen ? ' menu-open' : ''}`} id="mainNav">
       <div className="nav-logo-container">
         <Link href="/" className="nav-logo">
           <Image
@@ -67,7 +79,6 @@ export default function Nav() {
 
       <div className="nav-links-container">
         <ul className={`nav-links${menuOpen ? ' nav-open' : ''}`}>
-          <li><Link href="/" className={isActive('/') ? 'active' : ''}>Home</Link></li>
           <li><Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link></li>
           <li><Link href="/about" className={isActive('/about') ? 'active' : ''}>About</Link></li>
           <li><Link href="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
