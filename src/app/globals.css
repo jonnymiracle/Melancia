@@ -253,11 +253,13 @@ body::after {
   left: 36px;
 }
 .hero-video-cta .btn-hero-pill {
-  background: rgb(230, 146, 171);
-  color: #fff;
+  background: rgb(224, 88, 45);
+  color: rgba(251, 250, 244);
+  font-family: 'Rustica', sans-serif;
+  font-weight: 700;
 }
 .hero-video-cta .btn-hero-pill:hover {
-  background: rgb(210, 120, 150);
+  background: rgb(200, 70, 30);
 }
 .hero-video-eyebrow {
   font-family: 'Estabuenaonda', Georgia, serif;
@@ -268,7 +270,7 @@ body::after {
 .hero-video-title {
   font-family: 'Estabuenaonda', Georgia, serif;
   font-size: clamp(2.6rem, 5.5vw, 5rem);
-  font-weight: 400; color: #fff; line-height: 1.1;
+  font-weight: 400; color: rgba(251, 250, 244); line-height: 1.1;
   letter-spacing: -0.01em;
 }
 .hero-video-title em { font-style: italic; color: var(--coral-light); }
@@ -332,12 +334,12 @@ body::after {
   --lavender-light: #f3eaf5;
   --lavender-dark: #9a7da8;
 
-  --cream: rgb(242, 220, 194);
+  --cream: rgba(251, 250, 244);
   --light-gray: rgb(248, 235, 215);
   --border: #e8d4bc;
 
   /* Page canvas + light surfaces */
-  --white: rgb(242, 220, 194);
+  --white: rgba(251, 250, 244);
   --dark: #2c2c2c;
   --mid: #6b6b6b;
 }
@@ -454,7 +456,7 @@ button {
   justify-content: space-between;
   padding: 0 48px;
   height: 72px;
-  background: rgb(242, 220, 194);
+  background: rgba(251, 250, 244);
   border-bottom: 1px solid var(--border);
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
 }
@@ -490,7 +492,7 @@ button {
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--dark);
+  color: rgb(224, 88, 45);
   position: relative;
   transition: color 0.2s;
   cursor: pointer;
