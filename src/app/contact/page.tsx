@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { NewsletterForm } from '@/components/NewsletterForm'
-import { EnvelopeIcon, PhoneIcon, MapPinIcon, ClockIcon, InstagramIcon, GlobeIcon, MapPinIcon as StoreIcon, PlusIcon } from '@/components/icons'
+import { EnvelopeIcon, PhoneIcon, MapPinIcon, ClockIcon, InstagramIcon, GlobeIcon } from '@/components/icons'
 import {
   SITE_EMAIL,
   SITE_EMAIL_MAILTO,
@@ -22,22 +22,46 @@ const faqs = [
 ]
 
 const retailers = [
-  { icon: <GlobeIcon />, name: 'Our Online Store', detail: 'Shop the full collection at melanciaswim.com — ships worldwide.', badge: 'Online', online: true },
-  { icon: <GlobeIcon />, name: 'Amazon', detail: 'Selected styles available on Amazon with Prime shipping.', badge: 'Online', online: true },
-  { icon: <StoreIcon />, name: 'Beach Boutique Miami', detail: '123 Ocean Drive, South Beach, Miami, FL 33139', badge: 'In-Store', online: false },
-  { icon: <StoreIcon />, name: 'Sol & Mar Resort Wear', detail: '456 Collins Ave, Miami Beach, FL 33140', badge: 'In-Store', online: false },
-  { icon: <StoreIcon />, name: 'Tropic Threads', detail: '789 Brickell Ave, Miami, FL 33131', badge: 'In-Store', online: false },
-  { icon: <PlusIcon />, name: 'Become a Stockist', detail: 'Interested in carrying Melancia? We\'d love to work with you.', badge: 'Get in Touch', online: true },
+  { icon: <GlobeIcon />, name: 'Our Online Store', detail: 'Browse and shop the full Melancia collection.', badge: 'Shop Now', online: true, href: '/shop' },
+  { icon: <PhoneIcon />, name: 'WhatsApp', detail: 'Message us directly — we reply fast.', badge: 'Message Us', online: true, href: SITE_WHATSAPP_HREF },
+  { icon: <InstagramIcon size={24} />, name: 'Instagram', detail: 'Slide into our DMs on @melanciaswim.', badge: 'Send a DM', online: true, href: 'https://ig.me/m/melanciaswim' },
 ]
 
 export default function ContactPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const formRef = useRef<HTMLFormElement>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 6000)
+    setLoading(true)
+    setError(false)
+    const fd = new FormData(e.currentTarget)
+    const body = {
+      firstName: fd.get('firstName'),
+      lastName: fd.get('lastName'),
+      email: fd.get('email'),
+      phone: fd.get('phone'),
+      subject: fd.get('subject'),
+      message: fd.get('message'),
+    }
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      if (!res.ok) throw new Error('Failed')
+      setSubmitted(true)
+      formRef.current?.reset()
+      setTimeout(() => setSubmitted(false), 6000)
+    } catch {
+      setError(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -59,7 +83,7 @@ export default function ContactPage() {
             {[
               { icon: <EnvelopeIcon />, title: 'Email Us', main: SITE_EMAIL, sub: 'We reply within 24 hours', href: SITE_EMAIL_MAILTO },
               { icon: <PhoneIcon />, title: 'WhatsApp / Phone', main: SITE_WHATSAPP_DISPLAY, sub: 'Message us anytime', href: SITE_WHATSAPP_HREF },
-              { icon: <MapPinIcon />, title: 'Based In', main: 'Miami, Florida — USA', sub: 'Shipping worldwide' },
+              { icon: <MapPinIcon />, title: 'Based In', main: 'Puerto Rico & El Salvador', sub: 'Shipping within the USA' },
               { icon: <ClockIcon />, title: 'Response Time', main: 'Within 24 business hours', sub: 'Faster via Instagram DM' },
             ].map(card => (
               <div key={card.title} className="contact-card">
@@ -82,11 +106,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="map-placeholder">
-            <MapPinIcon size={36} />
-            <h4>Miami, Florida</h4>
-            <p>Replace this with a Google Maps iframe.</p>
-          </div>
         </div>
 
         {/* Right: Form */}
@@ -100,32 +119,34 @@ export default function ContactPage() {
             </div>
           )}
 
-          {/*
-            FORMSPREE: Replace YOUR_FORMSPREE_ID with your code from formspree.io
-            Change action to: https://formspree.io/f/YOUR_FORMSPREE_ID
-          */}
-          <form onSubmit={handleSubmit}>
+          {error && (
+            <div className="form-success show" style={{ background: '#fee2e2', color: '#b91c1c' }}>
+              Something went wrong. Please try again or email us directly.
+            </div>
+          )}
+
+          <form ref={formRef} onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="firstName">First Name *</label>
-                <input id="firstName" type="text" placeholder="Sofia" required />
+                <input id="firstName" name="firstName" type="text" placeholder="Sofia" required />
               </div>
               <div className="form-group">
                 <label htmlFor="lastName">Last Name *</label>
-                <input id="lastName" type="text" placeholder="Martinez" required />
+                <input id="lastName" name="lastName" type="text" placeholder="Martinez" required />
               </div>
             </div>
             <div className="form-group">
               <label htmlFor="email">Email Address *</label>
-              <input id="email" type="email" placeholder="sofia@example.com" required />
+              <input id="email" name="email" type="email" placeholder="sofia@example.com" required />
             </div>
             <div className="form-group">
               <label htmlFor="phone">Phone / WhatsApp (optional)</label>
-              <input id="phone" type="tel" placeholder="+1 (555) 000-0000" />
+              <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" />
             </div>
             <div className="form-group">
               <label htmlFor="subject">Subject *</label>
-              <select id="subject" required defaultValue="">
+              <select id="subject" name="subject" required defaultValue="">
                 <option value="" disabled>Select a topic…</option>
                 {['Order Question', 'Sizing Help', 'Returns & Exchanges', 'Wholesale / Stockist Inquiry', 'Press & Collaboration', 'Other'].map(o => (
                   <option key={o}>{o}</option>
@@ -134,10 +155,10 @@ export default function ContactPage() {
             </div>
             <div className="form-group">
               <label htmlFor="message">Message *</label>
-              <textarea id="message" placeholder="Tell us how we can help…" required />
+              <textarea id="message" name="message" placeholder="Tell us how we can help…" required />
             </div>
-            <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-              Send Message
+            <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
+              {loading ? 'Sending…' : 'Send Message'}
             </button>
           </form>
         </div>
@@ -147,17 +168,17 @@ export default function ContactPage() {
       <section className="where-we-sell">
         <div className="section-header" style={{ textAlign: 'left', marginBottom: 40 }}>
           <span className="eyebrow">Find Us</span>
-          <h2>Where to Buy Melancia</h2>
-          <p style={{ textAlign: 'left', margin: 0 }}>Shop online or visit one of our stockists near you.</p>
+          <h2>Get in touch</h2>
+          <p style={{ textAlign: 'left', margin: 0 }}>Shop online or reach out directly — we&apos;re always happy to help.</p>
         </div>
         <div className="retailers-grid">
           {retailers.map(r => (
-            <div key={r.name} className="retailer-card">
+            <a key={r.name} className="retailer-card" href={r.href} target={r.href.startsWith('http') ? '_blank' : undefined} rel={r.href.startsWith('http') ? 'noopener' : undefined} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
               <div className="retailer-icon" style={{ color: 'var(--coral)' }}>{r.icon}</div>
               <h4>{r.name}</h4>
               <p>{r.detail}</p>
-              <span className={`retailer-badge${r.online ? ' online' : ''}`}>{r.badge}</span>
-            </div>
+              <span className="retailer-badge online">{r.badge}</span>
+            </a>
           ))}
         </div>
       </section>
