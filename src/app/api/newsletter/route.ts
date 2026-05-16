@@ -16,23 +16,59 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
   }
 
-  const source =
-    typeof rec.source === 'string' ? rec.source.slice(0, 120) : 'unknown'
-  const payload = { email, source, at: new Date().toISOString() }
+  const apiKey = process.env.KLAVIYO_API_KEY
+  const listId = process.env.KLAVIYO_LIST_ID
 
-  const webhook = process.env.NEWSLETTER_WEBHOOK_URL
-  if (webhook) {
-    try {
-      await fetch(webhook, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-    } catch {
-      /* still acknowledge to user; check webhook logs */
+  if (!apiKey || !listId) {
+    console.info('[newsletter] No Klaviyo config — email not saved:', email)
+    return NextResponse.json({ ok: true })
+  }
+
+  try {
+    const res = await fetch('https://a.klaviyo.com/api/profile-subscription-bulk-create-jobs/', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Klaviyo-API-Key ${apiKey}`,
+        'Content-Type': 'application/json',
+        'revision': '2023-12-15',
+      },
+      body: JSON.stringify({
+        data: {
+          type: 'profile-subscription-bulk-create-job',
+          attributes: {
+            profiles: {
+              data: [
+                {
+                  type: 'profile',
+                  attributes: {
+                    email,
+                    subscriptions: {
+                      email: {
+                        marketing: { consent: 'SUBSCRIBED' },
+                      },
+                    },
+                  },
+                },
+              ],
+            },
+          },
+          relationships: {
+            list: {
+              data: { type: 'list', id: listId },
+            },
+          },
+        },
+      }),
+    })
+
+    if (!res.ok) {
+      const err = await res.text()
+      console.error('[newsletter] Klaviyo error:', res.status, err)
+      return NextResponse.json({ error: 'Subscription failed' }, { status: 500 })
     }
-  } else {
-    console.info('[newsletter]', payload)
+  } catch (e) {
+    console.error('[newsletter] Klaviyo fetch failed:', e)
+    return NextResponse.json({ error: 'Network error' }, { status: 500 })
   }
 
   return NextResponse.json({ ok: true })
