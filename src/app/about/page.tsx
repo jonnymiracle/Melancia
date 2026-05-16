@@ -39,7 +39,9 @@ export default function AboutPage() {
 
       {/* ── Story ── */}
       <section className="section about-page-story">
-        <h2 className="about-melancia-title">About Melancia</h2>
+        <h2 className="about-melancia-title">
+          About <span className="about-melancia-sub">Melancia Swim</span>
+        </h2>
         <div className="about-page-story-grid">
           <div className="about-page-story-image">
             <div className="about-strip-image-placeholder about-ph" style={{ height: 420, borderRadius: 20 }}>
@@ -62,32 +64,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Collab Quote ── */}
-      <section className="about-collab-section">
-        <div className="about-collab-overlay" />
-        <p className="about-collab-text">
-          Each bikini is made in collaboration with Brazilian women designers, creating unique
-          pieces that carry the Carioca spirit. There&apos;s something special about wearing a
-          Brazilian bikini paired with sun-kissed skin — it becomes more than a look, it&apos;s a feeling.
-        </p>
-      </section>
 
-      {/* ── Values ── */}
-      <section className="section" style={{ background: 'var(--cream)' }}>
-        <div className="section-header">
-          <span className="eyebrow">What we stand for</span>
-          <h2>Our Values</h2>
-        </div>
-        <div className="about-values-grid">
-          {VALUES.map(v => (
-            <div key={v.label} className="about-values-card">
-              <span className="about-values-icon">{v.icon}</span>
-              <h3>{v.label}</h3>
-              <p>{v.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* ── CTA ── */}
       <section className="about-page-cta">

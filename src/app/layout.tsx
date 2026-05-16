@@ -30,8 +30,8 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL('https://main.dvujasy3l4uac.amplifyapp.com'),
   title: {
-    default: 'Melancia Swimwear | Sol de Ipanema Collection 2026',
-    template: '%s | Melancia Swimwear',
+    default: 'Melancia Swim',
+    template: '%s | Melancia Swim',
   },
   description: 'Melancia swimwear — bold colors, flattering fits. Shop the Sol de Ipanema Collection 2026. Free-spirited swimwear made with love, worn with confidence.',
   keywords: ['swimwear', 'bikini', 'swimsuit', 'Sol de Ipanema', 'Melancia', 'summer', 'beachwear', 'women swimwear', 'Brazilian swimwear'],

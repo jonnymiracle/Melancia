@@ -1134,7 +1134,7 @@ button {
 
 .about-strip-content h2 {
   font-size: clamp(1.8rem, 2.5vw, 2.4rem);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .about-strip-content p {
@@ -1266,7 +1266,7 @@ button {
   line-height: 1.6;
   max-width: 480px;
 }
-/* "ABOUT MELANCIA" large title above the grid */
+/* "ABOUT / Melancia Swim" large title above the grid */
 .about-melancia-title {
   text-align: center;
   font-size: clamp(2rem, 5vw, 3.8rem);
@@ -1275,6 +1275,20 @@ button {
   text-transform: uppercase;
   color: var(--lavender);
   margin-bottom: 48px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.4em;
+  flex-wrap: wrap;
+}
+
+.about-melancia-sub {
+  font-family: var(--font-lora), 'Lora', Georgia, serif;
+  font-size: clamp(0.95rem, 2vw, 1.25rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--mid);
 }
 
 /* Collab full-bleed quote section */

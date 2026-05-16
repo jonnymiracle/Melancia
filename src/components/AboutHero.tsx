@@ -18,10 +18,8 @@ export default function AboutHero() {
       {/* Dark overlay so text stays readable */}
       <div className="about-hero-video-overlay" />
 
-      <div className="about-page-hero-overlay">
-        <span className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>Our Story</span>
-        <h1>Born from the ocean,<br /><em>made for you.</em></h1>
-        <p>Born from a love for Brazil&apos;s effortless bikini culture — designed for the sun, the sea, and you.</p>
+      <div className="about-page-hero-overlay" style={{ textAlign: 'center', position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: 'none' }}>
+        <h1 style={{ textTransform: 'uppercase', margin: 0 }}>About Us</h1>
       </div>
     </section>
   )
