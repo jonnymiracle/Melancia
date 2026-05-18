@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { InstagramIcon } from './icons'
-import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
@@ -12,7 +11,7 @@ export default function Footer() {
         <div className="footer-brand">
           <Image
             src="/images/Logo original colors.png"
-            alt="Melancia"
+            alt="Melancia Swim — Brazilian Bikinis & Swimwear"
             width={120}
             height={72}
             style={{ height: 52, width: 'auto', marginBottom: 12 }}
@@ -28,9 +27,7 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Shop</h4>
           <ul>
-            <li>
-              <Link href={`/shop?collection=${SOL_DE_IPANEMA_SLUG}`}>Sol de Ipanema</Link>
-            </li>
+            <li><Link href="/shop">All Swimwear</Link></li>
           </ul>
         </div>
 

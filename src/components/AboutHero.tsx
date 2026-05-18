@@ -19,7 +19,7 @@ export default function AboutHero() {
       <div className="about-hero-video-overlay" />
 
       <div className="about-page-hero-overlay" style={{ textAlign: 'center', position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: 'none' }}>
-        <h1 style={{ textTransform: 'uppercase', margin: 0 }}>About Us</h1>
+        <h1 style={{ textTransform: 'uppercase', margin: 0 }}>Melancia Swim</h1>
       </div>
     </section>
   )

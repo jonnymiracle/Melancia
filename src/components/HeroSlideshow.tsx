@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
 
 // ─────────────────────────────────────────────
 // Adjust `position` per slide to control which
@@ -16,10 +15,10 @@ import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
 //   '30% center'    → shift left/right + center
 // ─────────────────────────────────────────────
 const SLIDES = [
-  { src: '/images/Fotos hero/image00002.jpeg', position: 'center center' },
-  { src: '/images/Fotos hero/image00005.jpeg', position: 'center center' },
-  { src: '/images/Fotos hero/image00006.jpeg', position: 'center top' },
-  { src: '/images/Fotos hero/image00008.jpeg', position: 'center top' },
+  { src: '/images/Fotos hero/image00002.jpeg', position: 'center center', alt: 'Melancia Swim — Brazilian-style bikini designed for tanning' },
+  { src: '/images/Fotos hero/image00005.jpeg', position: 'center center', alt: 'Small bikini swimwear by Melancia Swim — bold colors and minimal silhouettes' },
+  { src: '/images/Fotos hero/image00006.jpeg', position: 'center top', alt: 'Brazilian bikini swimwear collection by Melancia Swim' },
+  { src: '/images/Fotos hero/image00008.jpeg', position: 'center top', alt: 'Melancia Swim swimwear — tanning bikini from Puerto Rico' },
 ]
 
 const INTERVAL = 4500 // ms per slide
@@ -42,11 +41,11 @@ export default function HeroSlideshow() {
   return (
     <section className="hero-video-section">
       <div className="hero-video-wrap">
-        {SLIDES.map(({ src, position }, i) => (
+        {SLIDES.map(({ src, position, alt }, i) => (
           <Image
             key={src}
             src={src}
-            alt={`Melancia swimwear ${i + 1}`}
+            alt={alt}
             fill
             priority={i === 0}
             sizes="100vw"
@@ -64,7 +63,7 @@ export default function HeroSlideshow() {
             <h1 className="hero-video-title">SOL de<br />IPANEMA</h1>
           </div>
           <div className="hero-video-cta">
-            <Link href={`/shop?collection=${SOL_DE_IPANEMA_SLUG}`} className="btn-hero-pill">
+            <Link href="/shop" className="btn-hero-pill">
               SHOP COLLECTION
             </Link>
           </div>

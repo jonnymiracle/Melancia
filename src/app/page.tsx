@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import ProductCard3 from '@/components/ProductCard3'
@@ -5,10 +6,22 @@ import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import HeroSlideshow from '@/components/HeroSlideshow'
-import { SOL_DE_IPANEMA_SLUG } from '@/lib/shop-collections'
 import { featuredProducts } from '@/data/products'
 import { fetchStorefrontProducts } from '@/lib/shopify-products'
 import type { ProductCard3Product } from '@/types/shopify'
+
+export const metadata: Metadata = {
+  title: 'Brazilian Bikinis & Swimwear Designed for Tanning',
+  description: 'Melancia Swim — Brazilian-style bikinis and swimwear made for tanning. Shop small bikinis, bold colors, and minimal silhouettes. Based in Puerto Rico, shipping within the USA.',
+  alternates: {
+    canonical: 'https://melanciaswim.com',
+  },
+  openGraph: {
+    title: 'Melancia Swim | Brazilian Bikinis & Swimwear Designed for Tanning',
+    description: 'Shop Brazilian-style bikinis and swimwear. Minimal silhouettes, bold colors — designed for tanning. Based in Puerto Rico, ships within the USA.',
+    url: 'https://melanciaswim.com',
+  },
+}
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
@@ -41,7 +54,7 @@ export default async function HomePage() {
       </div>
 
       {/* ── Featured Products ── */}
-      <section className="section" id="featured" style={{ paddingTop: 40, paddingBottom: 40 }}>
+      <section className="section section-featured" id="featured">
         <div className="product-grid">
           {homeFeatured.map(product => (
             <ProductCard3 key={product.id} product={product} />
@@ -58,7 +71,7 @@ export default async function HomePage() {
       <section className="about-strip">
         <div className="about-strip-image">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/photos bottom hero/wheelbarrow.jpeg" alt="Melancia swimwear lifestyle" style={{ width: '100%', height: 'calc(100% + 200px)', objectFit: 'cover', display: 'block', marginTop: '-200px' }} />
+          <img src="/images/photos bottom hero/wheelbarrow.jpeg" alt="Brazilian bikini swimwear lifestyle — Melancia Swim" style={{ width: '100%', height: 'calc(100% + 200px)', objectFit: 'cover', display: 'block', marginTop: '-200px' }} />
         </div>
         <div className="about-strip-content">
           <h2>Made for the sun.<br /><em>Made for you.</em></h2>
@@ -101,7 +114,8 @@ export default async function HomePage() {
         <a
           href={INSTAGRAM}
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
+          aria-label="Follow Melancia Swim on Instagram (opens in a new tab)"
           className="btn btn-primary instagram-cta-btn"
         >
           <InstagramIcon size={18} />

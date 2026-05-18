@@ -13,14 +13,6 @@ import {
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim'
 
-const faqs = [
-  { q: 'How do I know what size to order?', a: 'We recommend checking our Size Guide before ordering. Our swimwear generally runs true to size, but if you\'re between sizes we suggest sizing up for tops and down for bottoms.' },
-  { q: 'Do you ship internationally?', a: 'Yes! We ship worldwide. Standard international shipping takes 7–14 business days. Free shipping applies to all orders over $80 within the US, and over $120 internationally.' },
-  { q: 'What is your return policy?', a: 'We accept returns within 30 days of delivery, provided items are unworn, unwashed, and have all original tags attached. Swimwear must have the hygiene liner intact. Sale items are final sale.' },
-  { q: 'How do I care for my swimwear?', a: 'Rinse in cold fresh water after each use. Hand wash with mild soap and lay flat to dry away from direct sunlight. Avoid wringing or machine washing to preserve shape and color.' },
-  { q: 'Can I collaborate or become an affiliate?', a: 'Absolutely! We love working with content creators who align with our brand values. Send us a message via the contact form with your social handles and we\'ll be in touch.' },
-]
-
 const retailers = [
   { icon: <GlobeIcon />, name: 'Our Online Store', detail: 'Browse and shop the full Melancia collection.', badge: 'Shop Now', online: true, href: '/shop' },
   { icon: <PhoneIcon />, name: 'WhatsApp', detail: 'Message us directly — we reply fast.', badge: 'Message Us', online: true, href: SITE_WHATSAPP_HREF },
@@ -28,7 +20,6 @@ const retailers = [
 ]
 
 export default function ContactPage() {
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -168,7 +159,7 @@ export default function ContactPage() {
       <section className="where-we-sell">
         <div className="section-header" style={{ textAlign: 'left', marginBottom: 40 }}>
           <span className="eyebrow">Find Us</span>
-          <h2>Get in touch</h2>
+          <h2>Ways to reach us</h2>
           <p style={{ textAlign: 'left', margin: 0 }}>Shop online or reach out directly — we&apos;re always happy to help.</p>
         </div>
         <div className="retailers-grid">
@@ -182,25 +173,6 @@ export default function ContactPage() {
           ))}
         </div>
       </section>
-
-      {/* ── FAQ ── */}
-      <div style={{ maxWidth: 860, margin: '0 auto', padding: '80px 48px' }}>
-        <div className="section-header" style={{ textAlign: 'left', marginBottom: 32 }}>
-          <span className="eyebrow">Quick Answers</span>
-          <h2>Frequently Asked Questions</h2>
-        </div>
-        {faqs.map((faq, i) => (
-          <div key={i} className={`faq-item${openFaq === i ? ' open' : ''}`}>
-            <div className="faq-question" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-              <h4>{faq.q}</h4>
-              <span className="faq-toggle">+</span>
-            </div>
-            <div className="faq-answer">
-              <p>{faq.a}</p>
-            </div>
-          </div>
-        ))}
-      </div>
 
       {/* Newsletter */}
       <section className="newsletter-section">

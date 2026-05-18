@@ -3,9 +3,19 @@ import { InstagramIcon } from '@/components/icons'
 import { SITE_WHATSAPP_HREF, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
 import AboutHero from '@/components/AboutHero'
 
-export const metadata = {
-  title: 'Our Story',
-  description: 'Melancia was born from a love for the sea, sun, and self-expression. Discover the story behind our free-spirited swimwear brand.',
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Our Story — Brazilian Swimwear Born for Tanning',
+  description: 'Melancia Swim was born from a love of Brazilian bikini culture — minimal silhouettes, bold colors, designed for tanning. Discover the story behind our swimwear brand, based in Puerto Rico & El Salvador.',
+  alternates: {
+    canonical: 'https://melanciaswim.com/about',
+  },
+  openGraph: {
+    title: 'Our Story | Melancia Swim — Brazilian Bikini Brand',
+    description: 'Born from Brazilian bikini culture. Melancia Swim brings minimal silhouettes and bold colors designed for tanning, from Puerto Rico & El Salvador to the world.',
+    url: 'https://melanciaswim.com/about',
+  },
 }
 
 const VALUES = [
@@ -80,13 +90,13 @@ export default function AboutPage() {
               className="btn btn-primary"
               style={{ display: 'flex', alignItems: 'center', gap: 8 }}
             >
-              <InstagramIcon size={18} /> Follow on Instagram
+              <InstagramIcon size={18} /> Instagram
             </a>
-            <a href={SITE_WHATSAPP_HREF} target="_blank" rel="noopener" className="btn btn-outline">
-              WhatsApp us
+            <a href={SITE_WHATSAPP_HREF} target="_blank" rel="noopener" className="btn btn-primary">
+              WhatsApp
             </a>
-            <a href={SITE_EMAIL_MAILTO} className="btn btn-outline">
-              Send an email
+            <a href={SITE_EMAIL_MAILTO} className="btn btn-primary">
+              Email
             </a>
           </div>
         </div>

@@ -28,30 +28,52 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://main.dvujasy3l4uac.amplifyapp.com'),
+  metadataBase: new URL('https://melanciaswim.com'),
   title: {
-    default: 'Melancia Swim',
+    default: 'Melancia Swim | Brazilian Bikinis & Swimwear',
     template: '%s | Melancia Swim',
   },
-  description: 'Melancia swimwear — bold colors, flattering fits. Shop the Sol de Ipanema Collection 2026. Free-spirited swimwear made with love, worn with confidence.',
-  keywords: ['swimwear', 'bikini', 'swimsuit', 'Sol de Ipanema', 'Melancia', 'summer', 'beachwear', 'women swimwear', 'Brazilian swimwear'],
+  description: 'Shop Brazilian-style bikinis and swimwear designed for tanning. Melancia Swim offers small bikinis, bold colors, and minimal silhouettes — shipped within the USA. Based in Puerto Rico & El Salvador.',
+  keywords: [
+    'bikini',
+    'Brazilian style bikini',
+    'swimwear',
+    'small bikini',
+    'tanning',
+    'melancia',
+    'bikini puerto rico',
+    'Brazilian bikini',
+    'women swimwear',
+    'beachwear',
+    'swimsuit',
+    'Sol de Ipanema',
+    'Melancia Swim',
+    'minimal bikini',
+    'cheeky bikini',
+    'summer swimwear',
+  ],
   openGraph: {
     type: 'website',
-    siteName: 'Melancia Swimwear',
-    title: 'Melancia Swimwear | Sol de Ipanema Collection 2026',
-    description: 'Bold colors, flattering fits. Shop the Sol de Ipanema Collection 2026.',
-    images: [{ url: '/images/Logo original colors.png', width: 400, height: 400, alt: 'Melancia Swimwear Logo' }],
+    siteName: 'Melancia Swim',
+    url: 'https://melanciaswim.com',
+    title: 'Melancia Swim | Brazilian Bikinis & Swimwear',
+    description: 'Shop Brazilian-style bikinis and swimwear designed for tanning. Bold colors, minimal silhouettes — shipped within the USA.',
+    images: [{ url: '/images/Logo original colors.png', width: 1200, height: 630, alt: 'Melancia Swim — Brazilian Bikinis & Swimwear' }],
+    locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Melancia Swimwear | Sol de Ipanema Collection 2026',
-    description: 'Bold colors, flattering fits. Shop the Sol de Ipanema Collection 2026.',
+    title: 'Melancia Swim | Brazilian Bikinis & Swimwear',
+    description: 'Shop Brazilian-style bikinis and swimwear designed for tanning. Bold colors, minimal silhouettes — shipped within the USA.',
     images: ['/images/Logo original colors.png'],
+  },
+  alternates: {
+    canonical: 'https://melanciaswim.com',
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   },
   icons: {
     icon: [{ url: brandTabIconHref, type: 'image/png' }],
@@ -66,20 +88,62 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'ClothingStore',
-              name: 'Melancia Swimwear',
-              description: 'Bold, free-spirited swimwear made with love.',
-              url: 'https://main.dvujasy3l4uac.amplifyapp.com',
-              logo: 'https://main.dvujasy3l4uac.amplifyapp.com/images/Logo original colors.png',
-              sameAs: ['https://www.instagram.com/melanciaswim/'],
-              offers: {
-                '@type': 'AggregateOffer',
-                priceCurrency: 'USD',
-                availability: 'https://schema.org/InStock',
+            __html: JSON.stringify([
+              {
+                '@context': 'https://schema.org',
+                '@type': 'Organization',
+                '@id': 'https://melanciaswim.com/#organization',
+                name: 'Melancia Swim',
+                alternateName: 'Melancia Swimwear',
+                url: 'https://melanciaswim.com',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://melanciaswim.com/images/Logo original colors.png',
+                  width: 400,
+                  height: 400,
+                },
+                description: 'Brazilian-inspired bikinis and swimwear designed for tanning. Bold colors, minimal silhouettes — based in Puerto Rico & El Salvador, shipping within the USA.',
+                areaServed: 'US',
+                foundingLocation: {
+                  '@type': 'Place',
+                  name: 'Puerto Rico',
+                },
+                sameAs: [
+                  'https://www.instagram.com/melanciaswim/',
+                ],
               },
-            }),
+              {
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                '@id': 'https://melanciaswim.com/#website',
+                url: 'https://melanciaswim.com',
+                name: 'Melancia Swim',
+                publisher: {
+                  '@id': 'https://melanciaswim.com/#organization',
+                },
+                potentialAction: {
+                  '@type': 'SearchAction',
+                  target: {
+                    '@type': 'EntryPoint',
+                    urlTemplate: 'https://melanciaswim.com/shop?q={search_term_string}',
+                  },
+                  'query-input': 'required name=search_term_string',
+                },
+              },
+              {
+                '@context': 'https://schema.org',
+                '@type': 'ClothingStore',
+                '@id': 'https://melanciaswim.com/#store',
+                name: 'Melancia Swim',
+                url: 'https://melanciaswim.com',
+                logo: 'https://melanciaswim.com/images/Logo original colors.png',
+                description: 'Brazilian-style bikinis and swimwear designed for tanning. Minimal silhouettes, bold colors, shipped within the USA.',
+                areaServed: 'US',
+                currenciesAccepted: 'USD',
+                paymentAccepted: 'Credit Card',
+                sameAs: ['https://www.instagram.com/melanciaswim/'],
+              },
+            ]),
           }}
         />
         <BackgroundDecor />

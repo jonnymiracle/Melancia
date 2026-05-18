@@ -78,7 +78,7 @@ export default function Nav() {
       </div>
 
       <div className="nav-links-container">
-        <ul className={`nav-links${menuOpen ? ' nav-open' : ''}`}>
+        <ul className={`nav-links${menuOpen ? ' nav-open' : ''}`} id="nav-menu">
           <li><Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link></li>
           <li><Link href="/about" className={isActive('/about') ? 'active' : ''}>About</Link></li>
           <li><Link href="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
@@ -107,7 +107,9 @@ export default function Nav() {
 
       <button
         className={`nav-hamburger${menuOpen ? ' is-open' : ''}`}
-        aria-label="Menu"
+        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={menuOpen}
+        aria-controls="nav-menu"
         onClick={() => setMenuOpen(prev => !prev)}
       >
         <span /><span /><span />

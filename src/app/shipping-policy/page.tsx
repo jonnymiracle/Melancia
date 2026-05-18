@@ -1,9 +1,14 @@
 import Link from 'next/link'
 import { SITE_EMAIL, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
 
-export const metadata = {
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
   title: 'Shipping Policy',
-  description: 'Everything you need to know about shipping, delivery times, and international orders for Melancia Swimwear.',
+  description: 'Melancia Swim ships bikinis and swimwear within the USA. Learn about shipping times, free shipping thresholds, international delivery, and our 30-day return policy.',
+  alternates: {
+    canonical: 'https://melanciaswim.com/shipping-policy',
+  },
 }
 
 export default function ShippingPolicyPage() {

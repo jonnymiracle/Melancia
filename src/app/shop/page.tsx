@@ -7,29 +7,30 @@ import {
   shopClampPage,
   shopTotalPages,
 } from '@/lib/shop-pagination'
-import {
-  productMatchesCollectionSlug,
-  SOL_DE_IPANEMA_SLUG,
-} from '@/lib/shop-collections'
 
-export const metadata = {
-  title: 'Shop All Swimwear',
-  description: 'Browse the full Melancia swimwear collection — bikinis, one-pieces, and more. Bold colors and flattering fits for every body.',
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Shop Bikinis & Swimwear',
+  description: 'Shop Melancia Swim — Brazilian-style bikinis, small bikinis, and swimwear designed for tanning. Bold colors, minimal silhouettes, ships within the USA. Browse the full collection.',
+  alternates: {
+    canonical: 'https://melanciaswim.com/shop',
+  },
+  openGraph: {
+    title: 'Shop Bikinis & Swimwear | Melancia Swim',
+    description: 'Brazilian-style bikinis and swimwear designed for tanning. Small bikinis, bold colors, minimal silhouettes — ships within the USA.',
+    url: 'https://melanciaswim.com/shop',
+  },
 }
 
 export const dynamic = 'force-dynamic'
 
 type ShopPageProps = {
-  searchParams: { page?: string; collection?: string }
+  searchParams: { page?: string }
 }
 
 export default async function ShopPage({ searchParams }: ShopPageProps) {
   const requestedPage = Math.max(1, parseInt(searchParams.page ?? '1', 10) || 1)
-  const rawCollection = searchParams.collection
-  const activeCollectionSlug =
-    typeof rawCollection === 'string' && rawCollection === SOL_DE_IPANEMA_SLUG
-      ? SOL_DE_IPANEMA_SLUG
-      : null
 
   let fullList: ProductCard3Product[] = allProducts
   try {
@@ -39,10 +40,6 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     }
   } catch {
     /* missing env or network — keep catalog */
-  }
-
-  if (activeCollectionSlug) {
-    fullList = fullList.filter((p) => productMatchesCollectionSlug(p, activeCollectionSlug))
   }
 
   const totalCount = fullList.length
@@ -57,7 +54,6 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       currentPage={currentPage}
       totalPages={totalPages}
       totalProducts={totalCount}
-      activeCollectionSlug={activeCollectionSlug}
     />
   )
 }
