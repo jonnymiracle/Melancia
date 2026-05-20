@@ -7,7 +7,7 @@ import { InstagramIcon } from '@/components/icons'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import HeroSlideshow from '@/components/HeroSlideshow'
 import { featuredProducts } from '@/data/products'
-import { fetchStorefrontProducts } from '@/lib/shopify-products'
+import { fetchBestSellingProducts } from '@/lib/shopify-products'
 import type { ProductCard3Product } from '@/types/shopify'
 
 export const metadata: Metadata = {
@@ -28,16 +28,15 @@ const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 /** Always fetch fresh Shopify data; avoid static page cache with stale products/images. */
 export const dynamic = 'force-dynamic'
 
-/** Matches the number of cards in `featuredProducts` (local fallback). */
-const FEATURED_ON_HOME = featuredProducts.length
+const FEATURED_ON_HOME = 6
 
 export default async function HomePage() {
-  let homeFeatured: ProductCard3Product[] = featuredProducts
+  let homeFeatured: ProductCard3Product[] = featuredProducts.slice(0, FEATURED_ON_HOME)
 
   try {
-    const fromShopify = await fetchStorefrontProducts(FEATURED_ON_HOME)
+    const fromShopify = await fetchBestSellingProducts(FEATURED_ON_HOME)
     if (fromShopify.length > 0) {
-      homeFeatured = fromShopify.slice(0, FEATURED_ON_HOME)
+      homeFeatured = fromShopify
     }
   } catch {
     /* missing env or network — keep static featuredProducts */

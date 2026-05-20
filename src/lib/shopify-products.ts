@@ -50,6 +50,18 @@ const STOREFRONT_PRODUCTS_QUERY = `
   }
 `
 
+const STOREFRONT_BEST_SELLING_QUERY = `
+  query BestSellingProducts($first: Int!) {
+    products(first: $first, sortKey: BEST_SELLING) {
+      edges {
+        node {
+          ${PRODUCT_NODE_FIELDS}
+        }
+      }
+    }
+  }
+`
+
 const STOREFRONT_PRODUCTS_PAGINATED_QUERY = `
   query ProductsPaginated($first: Int!, $after: String) {
     products(first: $first, after: $after) {
@@ -77,6 +89,18 @@ export async function fetchStorefrontProducts(first = 24): Promise<ShopifyProduc
     { first },
   )
 
+  const edges = json.data?.products?.edges ?? []
+  return edges.map(({ node }) => node)
+}
+
+/**
+ * Fetches top N products sorted by best selling (Shopify's sales velocity).
+ */
+export async function fetchBestSellingProducts(first = 6): Promise<ShopifyProduct[]> {
+  const json = await shopifyFetch<StorefrontProductsQueryData>(
+    STOREFRONT_BEST_SELLING_QUERY,
+    { first },
+  )
   const edges = json.data?.products?.edges ?? []
   return edges.map(({ node }) => node)
 }
