@@ -64,7 +64,7 @@ export async function POST(req: Request) {
     if (!res.ok) {
       const err = await res.text()
       console.error('[newsletter] Klaviyo error:', res.status, err)
-      return NextResponse.json({ error: 'Subscription failed' }, { status: 500 })
+      return NextResponse.json({ error: 'Subscription failed', detail: err, status: res.status }, { status: 500 })
     }
   } catch (e) {
     console.error('[newsletter] Klaviyo fetch failed:', e)

@@ -3157,6 +3157,17 @@ a.size-btn:visited {
   color: rgba(255, 255, 255, 0.45);
 }
 
+/* Kill browser autofill white background */
+.cs-form-wrap .newsletter-form input:-webkit-autofill,
+.cs-form-wrap .newsletter-form input:-webkit-autofill:hover,
+.cs-form-wrap .newsletter-form input:-webkit-autofill:focus,
+.cs-form-wrap .newsletter-form input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: #fff !important;
+  background-color: transparent !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
 .cs-form-wrap .newsletter-form button {
   border-radius: 50px;
   padding: 13px;
