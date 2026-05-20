@@ -2999,7 +2999,15 @@ a.size-btn:visited {
   width: 160px;
   max-width: 50vw;
   height: auto;
-  animation: logoReveal 2.2s cubic-bezier(0.4,0,0.2,1) forwards;
+  animation: csLogoIn 0.6s ease forwards, csPulse 2s ease-in-out 0.8s infinite;
+}
+@keyframes csLogoIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes csPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.93); }
 }
 .cs-loader--hide {
   opacity: 0;
