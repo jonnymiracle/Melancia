@@ -35,18 +35,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true })
   }
 
-  // Build subscriptions object
-  const subscriptions: Record<string, unknown> = {
-    email: { marketing: { consent: 'SUBSCRIBED' } },
-  }
-  if (phone) {
-    subscriptions.sms = { marketing: { consent: 'SUBSCRIBED' } }
-  }
-
-  // Build profile attributes
+  // Build profile attributes — phone saved to profile, SMS list subscription handled separately in Klaviyo flows
   const profileAttributes: Record<string, unknown> = {
     email,
-    subscriptions,
+    subscriptions: {
+      email: { marketing: { consent: 'SUBSCRIBED' } },
+    },
   }
   if (phone) {
     profileAttributes.phone_number = phone
