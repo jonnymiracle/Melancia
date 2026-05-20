@@ -3193,6 +3193,43 @@ a.size-btn:visited {
   font-size: 0.8rem;
 }
 
+/* Phone field — same underline style as email */
+.cs-form-wrap .newsletter-form input[type="tel"],
+.cs-form-wrap .newsletter-form input[type="tel"]:focus,
+.cs-form-wrap .newsletter-form input[type="tel"]:active {
+  padding: 10px 4px !important;
+  border-radius: 0 !important;
+  font-size: 0.88rem !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #fff !important;
+  text-align: center !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.cs-form-wrap .newsletter-form input[type="tel"]:focus {
+  border-bottom-color: var(--coral) !important;
+}
+.cs-form-wrap .newsletter-form input[type="tel"]::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+.cs-form-wrap .newsletter-form input[type="tel"]:-webkit-autofill,
+.cs-form-wrap .newsletter-form input[type="tel"]:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* SMS consent text */
+.newsletter-form-sms-consent {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.35);
+  text-align: center;
+  line-height: 1.4;
+  margin: -4px 0 0;
+}
+
 /* Instagram link */
 .cs-insta {
   display: inline-flex;
