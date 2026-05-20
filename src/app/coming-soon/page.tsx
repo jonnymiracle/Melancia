@@ -6,6 +6,7 @@ const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif'])
 
 // Default vertical focus per filename — add entries here to fine-tune any image
 const POSITION_MAP: Record<string, string> = {
+  'image00006.jpg':  'center top',
   'image00006.jpeg': 'center top',
   'image00008.jpeg': 'center top',
   'IMG_3582.JPG':    'center bottom',
