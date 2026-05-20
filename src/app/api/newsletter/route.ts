@@ -76,12 +76,11 @@ export async function POST(req: Request) {
       }),
     })
 
-    const responseText = await res.text()
     if (!res.ok) {
-      console.error('[newsletter] Klaviyo error:', res.status, responseText)
-      return NextResponse.json({ error: 'Subscription failed', klaviyo_status: res.status, klaviyo_response: responseText }, { status: 500 })
+      const err = await res.text()
+      console.error('[newsletter] Klaviyo error:', res.status, err)
+      return NextResponse.json({ error: 'Subscription failed' }, { status: 500 })
     }
-    console.log('[newsletter] Klaviyo success:', res.status, responseText)
   } catch (e) {
     console.error('[newsletter] Klaviyo fetch failed:', e)
     return NextResponse.json({ error: 'Network error', detail: String(e) }, { status: 500 })
