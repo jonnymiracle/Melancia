@@ -15,7 +15,8 @@ export function NewsletterForm({ source = 'site', className, placeholder = 'Your
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const fd = new FormData(e.currentTarget)
+    const form = e.currentTarget
+    const fd = new FormData(form)
     const email = String(fd.get('email') ?? '').trim()
     if (!email) return
     setStatus('loading')
@@ -30,7 +31,7 @@ export function NewsletterForm({ source = 'site', className, placeholder = 'Your
         return
       }
       setStatus('ok')
-      e.currentTarget.reset()
+      form.reset()
     } catch {
       setStatus('err')
     }
