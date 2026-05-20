@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
   if (!apiKey || !listId) {
     console.info('[newsletter] No Klaviyo config — email not saved:', email)
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true, debug: 'no_config' })
   }
 
   // Build profile attributes — phone saved to profile, SMS list subscription handled separately in Klaviyo flows
