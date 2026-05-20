@@ -70,7 +70,6 @@ export default function ComingSoonClient({ slides }: { slides: Slide[] }) {
             fill
             priority={i === 0}
             sizes="100vw"
-            quality={60}
             onLoad={i === 0 ? () => setImgReady(true) : undefined}
             style={{
               objectFit: 'cover',
