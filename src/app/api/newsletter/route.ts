@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       headers: {
         'Authorization': `Klaviyo-API-Key ${apiKey}`,
         'Content-Type': 'application/json',
-        'revision': '2023-12-15',
+        'revision': '2024-10-15',
       },
       body: JSON.stringify({
         data: {
