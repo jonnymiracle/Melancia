@@ -122,7 +122,6 @@ export default function ComingSoonClient({ slides }: { slides: Slide[] }) {
             source="coming-soon"
             placeholder="First buyers get a gift. Drop your email."
             buttonLabel="Get ready for tanning"
-            showPhone
           />
         </div>
 

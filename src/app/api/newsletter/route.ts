@@ -2,15 +2,6 @@ import { NextResponse } from 'next/server'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-/** Normalise a phone number to E.164 format (US assumed if no country code). */
-function normalisePhone(raw: string): string | null {
-  const digits = raw.replace(/\D/g, '')
-  if (digits.length === 10) return `+1${digits}`
-  if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`
-  if (digits.length > 8) return `+${digits}`
-  return null
-}
-
 export async function POST(req: Request) {
   let body: unknown
   try {
@@ -19,13 +10,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const rec = body as { email?: string; phone?: string; source?: string }
+  const rec = body as { email?: string; source?: string }
   const email = typeof rec.email === 'string' ? rec.email.trim() : ''
   if (!EMAIL_RE.test(email)) {
     return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
   }
-
-  const phone = typeof rec.phone === 'string' ? normalisePhone(rec.phone) : null
 
   const apiKey = process.env.KLAVIYO_API_KEY
   const listId = process.env.KLAVIYO_LIST_ID
@@ -33,17 +22,6 @@ export async function POST(req: Request) {
   if (!apiKey || !listId) {
     console.info('[newsletter] No Klaviyo config — email not saved:', email)
     return NextResponse.json({ ok: true, debug: 'no_config' })
-  }
-
-  // Build profile attributes — phone saved to profile, SMS list subscription handled separately in Klaviyo flows
-  const profileAttributes: Record<string, unknown> = {
-    email,
-    subscriptions: {
-      email: { marketing: { consent: 'SUBSCRIBED' } },
-    },
-  }
-  if (phone) {
-    profileAttributes.phone_number = phone
   }
 
   try {
@@ -62,7 +40,14 @@ export async function POST(req: Request) {
               data: [
                 {
                   type: 'profile',
-                  attributes: profileAttributes,
+                  attributes: {
+                    email,
+                    subscriptions: {
+                      email: {
+                        marketing: { consent: 'SUBSCRIBED' },
+                      },
+                    },
+                  },
                 },
               ],
             },
@@ -83,7 +68,7 @@ export async function POST(req: Request) {
     }
   } catch (e) {
     console.error('[newsletter] Klaviyo fetch failed:', e)
-    return NextResponse.json({ error: 'Network error', detail: String(e) }, { status: 500 })
+    return NextResponse.json({ error: 'Network error' }, { status: 500 })
   }
 
   return NextResponse.json({ ok: true })
