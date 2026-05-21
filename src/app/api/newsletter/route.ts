@@ -2,6 +2,15 @@ import { NextResponse } from 'next/server'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+/** Normalise a phone number to E.164 format (US assumed if no country code). */
+function normalisePhone(raw: string): string | null {
+  const digits = raw.replace(/\D/g, '')
+  if (digits.length === 10) return `+1${digits}`
+  if (digits.length === 11 && digits.startsWith('1')) return `+${digits}`
+  if (digits.length > 8) return `+${digits}`
+  return null
+}
+
 export async function POST(req: Request) {
   let body: unknown
   try {
@@ -10,11 +19,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const rec = body as { email?: string; source?: string }
+  const rec = body as { email?: string; phone?: string; source?: string }
   const email = typeof rec.email === 'string' ? rec.email.trim() : ''
   if (!EMAIL_RE.test(email)) {
     return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
   }
+
+  const phone = typeof rec.phone === 'string' ? normalisePhone(rec.phone) : null
 
   const apiKey = process.env.KLAVIYO_API_KEY
   const listId = process.env.KLAVIYO_LIST_ID
@@ -23,6 +34,16 @@ export async function POST(req: Request) {
     console.info('[newsletter] No Klaviyo config — email not saved:', email)
     return NextResponse.json({ ok: true, debug: 'no_config' })
   }
+
+  const subscriptions: Record<string, unknown> = {
+    email: { marketing: { consent: 'SUBSCRIBED' } },
+  }
+  if (phone) {
+    subscriptions.sms = { marketing: { consent: 'SUBSCRIBED' } }
+  }
+
+  const profileAttributes: Record<string, unknown> = { email, subscriptions }
+  if (phone) profileAttributes.phone_number = phone
 
   try {
     const res = await fetch('https://a.klaviyo.com/api/profile-subscription-bulk-create-jobs/', {
@@ -37,25 +58,11 @@ export async function POST(req: Request) {
           type: 'profile-subscription-bulk-create-job',
           attributes: {
             profiles: {
-              data: [
-                {
-                  type: 'profile',
-                  attributes: {
-                    email,
-                    subscriptions: {
-                      email: {
-                        marketing: { consent: 'SUBSCRIBED' },
-                      },
-                    },
-                  },
-                },
-              ],
+              data: [{ type: 'profile', attributes: profileAttributes }],
             },
           },
           relationships: {
-            list: {
-              data: { type: 'list', id: listId },
-            },
+            list: { data: { type: 'list', id: listId } },
           },
         },
       }),
