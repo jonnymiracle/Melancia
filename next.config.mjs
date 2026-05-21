@@ -5,6 +5,10 @@ const nextConfig = {
     SHOPIFY_STOREFRONT_ACCESS_TOKEN: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN,
     INSTAGRAM_USER_ID: process.env.INSTAGRAM_USER_ID,
     INSTAGRAM_ACCESS_TOKEN: process.env.INSTAGRAM_ACCESS_TOKEN,
+    KLAVIYO_API_KEY: process.env.KLAVIYO_API_KEY,
+    KLAVIYO_LIST_ID: process.env.KLAVIYO_LIST_ID,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    CONTACT_EMAIL: process.env.CONTACT_EMAIL,
   },
   images: {
     remotePatterns: [
