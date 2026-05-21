@@ -38,9 +38,6 @@ export async function POST(req: Request) {
   const subscriptions: Record<string, unknown> = {
     email: { marketing: { consent: 'SUBSCRIBED' } },
   }
-  if (phone) {
-    subscriptions.sms = { marketing: { consent: 'SUBSCRIBED' } }
-  }
 
   const profileAttributes: Record<string, unknown> = { email, subscriptions }
   if (phone) profileAttributes.phone_number = phone
