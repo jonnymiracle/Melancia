@@ -68,14 +68,14 @@ export default function ProductDetail({ product }: Props) {
 
   // Unique sizes sorted by SIZE_ORDER
   const uniqueSizes = isColorSizeFormat
-    ? [...new Set(variants.map(v => parseTitle(v.title)!.size))].sort(
+    ? Array.from(new Set(variants.map(v => parseTitle(v.title)!.size))).sort(
         (a, b) => (SIZE_ORDER[a] ?? 99) - (SIZE_ORDER[b] ?? 99)
       )
     : []
 
   // Unique colors (in order they first appear)
   const uniqueColors = isColorSizeFormat
-    ? [...new Set(variants.map(v => parseTitle(v.title)!.color))]
+    ? Array.from(new Set(variants.map(v => parseTitle(v.title)!.color)))
     : []
 
   // Initial size + color from first available variant
