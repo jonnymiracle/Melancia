@@ -60,6 +60,10 @@ export type ShopifyProductDetail = {
         id: string
         title: string
         availableForSale: boolean
+        image?: {
+          url: string
+          altText?: string | null
+        } | null
         price: { amount: string; currencyCode: string }
         compareAtPrice?: { amount: string; currencyCode: string } | null
       }

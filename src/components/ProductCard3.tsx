@@ -89,7 +89,10 @@ export default function ProductCard3({ product }: ProductCard3Props) {
   const [cartLineId, setCartLineId] = useState<string | null>(null)
 
   const isCatalog = isCatalogProduct(product)
-  const variant = !isCatalog ? product.variants?.edges?.[0]?.node : undefined
+  const allVariants = !isCatalog ? (product.variants?.edges ?? []).map(e => e.node) : []
+  const variant = allVariants[0]
+  /** True only when every size/variant is out of stock */
+  const isCompletelyOutOfStock = allVariants.length > 0 && allVariants.every(v => !v.availableForSale)
 
   useEffect(() => {
     if (isCatalog || !variant?.id) {
@@ -180,7 +183,7 @@ export default function ProductCard3({ product }: ProductCard3Props) {
       ? variant.title
       : handle.replace(/-/g, ' '))
 
-  const canAdd = Boolean(variant?.id && variant.availableForSale)
+  const canAdd = Boolean(variant?.id && !isCompletelyOutOfStock && allVariants.some(v => v.availableForSale))
 
   const handleAddToCart = async () => {
     if (!variant?.id || !variant.availableForSale) return
@@ -251,7 +254,8 @@ export default function ProductCard3({ product }: ProductCard3Props) {
             src={cardImage.url}
             alt={cardImage.alt}
             fill
-            sizes="(max-width: 768px) 50vw, 280px"
+            quality={90}
+            sizes="(max-width: 768px) 50vw, 400px"
             style={{ objectFit: 'cover' }}
           />
         ) : (
@@ -261,7 +265,7 @@ export default function ProductCard3({ product }: ProductCard3Props) {
           </div>
         )}
 
-        {variant && !variant.availableForSale ? (
+        {isCompletelyOutOfStock ? (
           <span className="product-badge sale">Sold Out</span>
         ) : (
           shopifyPromoBadge && (
