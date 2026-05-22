@@ -2972,6 +2972,43 @@ a.size-btn:visited {
 .pdp-description ul { padding-left: 18px; }
 .pdp-description li { margin-bottom: 4px; }
 
+/* ── Composition & Care accordion ── */
+.pdp-composition {
+  border-top: 1px solid var(--border);
+}
+
+.pdp-composition-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark);
+  font-family: var(--font-lora), 'Lora', Georgia, serif;
+}
+.pdp-composition-toggle:hover { opacity: 0.7; }
+
+.pdp-composition-icon {
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.pdp-composition-body {
+  padding-bottom: 18px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--mid);
+}
+.pdp-composition-body p { margin: 0; }
+
 .pdp-trust {
   display: flex;
   flex-direction: column;

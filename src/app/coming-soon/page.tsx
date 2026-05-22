@@ -4,7 +4,7 @@ import ComingSoonClient from './ComingSoonClient'
 
 const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif'])
 
-// Default vertical focus per filename — add entries here to fine-tune any image
+// Desktop focus per filename
 const POSITION_MAP: Record<string, string> = {
   'image00006.jpg':  'center top',
   'image00006.jpeg': 'center top',
@@ -18,10 +18,21 @@ const POSITION_MAP: Record<string, string> = {
   'IMG_3590.JPG':    'center bottom',
 }
 
+// Mobile-specific overrides — only add entries that differ from desktop or are new
+const MOBILE_POSITION_MAP: Record<string, string> = {
+  'IMG_3576.JPG':    'right center',
+  'IMG_3580.JPG':    'left center',
+  'IMG_3582.JPG':    'left center',
+  'IMG_3586.JPG':    'left center',
+  'IMG_3589.JPG':    'center bottom',
+  'image00002.jpg':  'left center',
+  'image00002.jpeg': 'left center',
+}
+
 export default function ComingSoonPage() {
   const dir = path.join(process.cwd(), 'public', 'images', 'Fotos hero')
 
-  let slides: { src: string; position: string }[] = []
+  let slides: { src: string; position: string; mobilePosition: string }[] = []
 
   try {
     slides = fs
@@ -30,7 +41,8 @@ export default function ComingSoonPage() {
       .sort()
       .map(f => ({
         src: `/images/Fotos hero/${f}`,
-        position: POSITION_MAP[f] ?? 'center center',
+        position:       POSITION_MAP[f]        ?? 'center center',
+        mobilePosition: MOBILE_POSITION_MAP[f] ?? POSITION_MAP[f] ?? 'center center',
       }))
   } catch {
     // folder missing at build time — fall back to empty (won't crash)

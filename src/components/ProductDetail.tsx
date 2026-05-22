@@ -331,16 +331,28 @@ export default function ProductDetail({ product }: Props) {
             </div>
           ) : null}
 
-          {/* Trust bar */}
-          <div className="pdp-trust">
-            <div className="pdp-trust-item">
-              <span>🚚</span> Free US shipping on orders over $80
-            </div>
-            <div className="pdp-trust-item">
-              <span>↩</span> Easy returns within 30 days
-            </div>
-            <div className="pdp-trust-item">
-              <span>🔒</span> Secure checkout via Shopify
+          {/* Composition & Care */}
+          <div className="pdp-composition">
+            <button
+              type="button"
+              className="pdp-composition-toggle"
+              onClick={(e) => {
+                const el = (e.currentTarget.nextElementSibling as HTMLElement)
+                const isOpen = el.style.display !== 'none'
+                el.style.display = isOpen ? 'none' : 'block'
+                e.currentTarget.setAttribute('aria-expanded', String(!isOpen))
+              }}
+              aria-expanded="true"
+            >
+              <span>Composition &amp; Care</span>
+              <span className="pdp-composition-icon">−</span>
+            </button>
+            <div className="pdp-composition-body">
+              <p>
+                Crafted in a soft, high-performance fabric (82% Polyamide, 18% Elastane)
+                that feels like a second skin — quick-drying, chlorine-resistant, and built
+                to keep its shape all season long.
+              </p>
             </div>
           </div>
         </div>
