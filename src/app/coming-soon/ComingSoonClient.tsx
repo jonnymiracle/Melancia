@@ -7,8 +7,8 @@ import { InstagramIcon } from '@/components/icons'
 
 type Slide = { src: string; position: string }
 
-// ── Launch date: this Friday at 12:00 noon ────────────────────────────────────
-const LAUNCH_DATE = new Date('2026-05-23T12:00:00')
+// ── Launch date: Saturday May 23 at 10:00 AM ─────────────────────────────────
+const LAUNCH_DATE = new Date('2026-05-23T10:00:00')
 const INTERVAL = 3500
 
 function getTimeLeft() {

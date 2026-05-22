@@ -9,9 +9,12 @@ const POSITION_MAP: Record<string, string> = {
   'image00006.jpg':  'center top',
   'image00006.jpeg': 'center top',
   'image00008.jpeg': 'center top',
-  'IMG_3582.JPG':    'center bottom',
-  'IMG_3589.JPG':    'center bottom',
+  'IMG_3576.JPG':    'right center',
   'IMG_3579.JPG':    'center bottom',
+  'IMG_3580.JPG':    'left center',
+  'IMG_3582.JPG':    'left center',
+  'IMG_3586.JPG':    'left center',
+  'IMG_3589.JPG':    'center bottom',
   'IMG_3590.JPG':    'center bottom',
 }
 

@@ -814,7 +814,7 @@ button {
 /* ── Product Cards ── */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
   gap: 28px;
 }
 
@@ -833,7 +833,7 @@ button {
 
 .product-image {
   position: relative;
-  aspect-ratio: 3/4;
+  aspect-ratio: 9/16;
   overflow: hidden;
 }
 
@@ -1681,7 +1681,7 @@ footer {
 
 /* Shop Main — full-width grid without sidebar */
 .shop-main .product-grid {
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
 
 /* Size buttons (used for pagination) */
@@ -2788,7 +2788,7 @@ a.size-btn:visited {
 
 .pdp-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.54fr 1fr;
   gap: 56px;
   max-width: 1200px;
   margin: 0 auto;
@@ -2909,6 +2909,33 @@ a.size-btn:visited {
   opacity: 0.3;
   cursor: not-allowed;
   text-decoration: line-through;
+}
+
+/* ── Color swatches on PDP ── */
+.pdp-color-circles { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.pdp-color-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--swatch);
+  border: 2.5px solid transparent;
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.18);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  padding: 0;
+}
+.pdp-color-circle:hover:not(:disabled) {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 2px var(--dark);
+}
+.pdp-color-circle.selected {
+  box-shadow: 0 0 0 3px var(--dark);
+  transform: scale(1.08);
+}
+.pdp-color-circle.unavailable {
+  opacity: 0.28;
+  cursor: not-allowed;
 }
 
 .pdp-add-btn {
