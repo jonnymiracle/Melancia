@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
 
-type Slide = { src: string; position: string }
+type Slide = { src: string; position: string; mobilePosition: string }
 
 // ── Launch date: Saturday May 23 at 10:00 AM ─────────────────────────────────
 const LAUNCH_DATE = new Date('2026-05-23T10:00:00')
@@ -29,6 +29,16 @@ export default function ComingSoonClient({ slides }: { slides: Slide[] }) {
   const [timeLeft, setTimeLeft] = useState<ReturnType<typeof getTimeLeft>>(null)
   const [current, setCurrent] = useState(0)
   const [imgReady, setImgReady] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   // Countdown
   useEffect(() => {
@@ -62,7 +72,7 @@ export default function ComingSoonClient({ slides }: { slides: Slide[] }) {
 
       {/* Slideshow background */}
       <div className="cs-bg">
-        {slides.map(({ src, position }, i) => (
+        {slides.map(({ src, position, mobilePosition }, i) => (
           <Image
             key={src}
             src={src}
@@ -73,7 +83,7 @@ export default function ComingSoonClient({ slides }: { slides: Slide[] }) {
             onLoad={i === 0 ? () => setImgReady(true) : undefined}
             style={{
               objectFit: 'cover',
-              objectPosition: position,
+              objectPosition: isMobile ? mobilePosition : position,
               transition: 'opacity 0.6s ease',
               opacity: i === current ? 1 : 0,
             }}
