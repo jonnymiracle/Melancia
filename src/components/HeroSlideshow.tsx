@@ -15,9 +15,9 @@ import Link from 'next/link'
 //   '30% center'    → shift left/right + center
 // ─────────────────────────────────────────────
 const SLIDES = [
-  { src: '/images/Fotos hero/image00002.jpeg', position: 'center center', alt: 'Melancia Swim — Brazilian-style bikini designed for tanning' },
-  { src: '/images/Fotos hero/image00005.jpeg', position: 'center center', alt: 'Small bikini swimwear by Melancia Swim — bold colors and minimal silhouettes' },
-  { src: '/images/Fotos hero/image00006.jpeg', position: 'center top', alt: 'Brazilian bikini swimwear collection by Melancia Swim' },
+  { src: '/images/Fotos hero/image00002.jpg', position: 'center center', alt: 'Melancia Swim — Brazilian-style bikini designed for tanning' },
+  { src: '/images/Fotos hero/image00005.jpg', position: 'center center', alt: 'Small bikini swimwear by Melancia Swim — bold colors and minimal silhouettes' },
+  { src: '/images/Fotos hero/image00006.jpg', position: 'center top', alt: 'Brazilian bikini swimwear collection by Melancia Swim' },
   { src: '/images/Fotos hero/image00008.jpeg', position: 'center top', alt: 'Melancia Swim swimwear — tanning bikini from Puerto Rico' },
 ]
 
@@ -25,15 +25,10 @@ const INTERVAL = 4500 // ms per slide
 
 export default function HeroSlideshow() {
   const [current, setCurrent] = useState(0)
-  const [fading, setFading] = useState(false)
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setFading(true)
-      setTimeout(() => {
-        setCurrent((prev) => (prev + 1) % SLIDES.length)
-        setFading(false)
-      }, 500)
+      setCurrent((prev) => (prev + 1) % SLIDES.length)
     }, INTERVAL)
     return () => clearInterval(timer)
   }, [])
@@ -53,7 +48,7 @@ export default function HeroSlideshow() {
               objectFit: 'cover',
               objectPosition: position,
               transition: 'opacity 0.5s ease',
-              opacity: i === current ? (fading ? 0 : 1) : 0,
+              opacity: i === current ? 1 : 0,
             }}
           />
         ))}
