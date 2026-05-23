@@ -31,17 +31,11 @@ function formatVariantPrice(variant: ShopifyProductVariant) {
   }).format(n)
 }
 
-/** Product card uses `featuredImage`; many stores only attach photos to variants. */
+/** Product card prefers the image on the first variant; falls back to featuredImage. */
 function shopifyCardImage(product: ShopifyProduct): {
   url: string
   alt: string
 } | null {
-  if (product.featuredImage?.url) {
-    return {
-      url: product.featuredImage.url,
-      alt: product.featuredImage.altText || product.title,
-    }
-  }
   const edges = product.variants?.edges ?? []
   for (const { node } of edges) {
     if (node.image?.url) {
@@ -49,6 +43,12 @@ function shopifyCardImage(product: ShopifyProduct): {
         url: node.image.url,
         alt: node.image.altText || product.title,
       }
+    }
+  }
+  if (product.featuredImage?.url) {
+    return {
+      url: product.featuredImage.url,
+      alt: product.featuredImage.altText || product.title,
     }
   }
   return null

@@ -22,20 +22,14 @@ const SIZE_ORDER: Record<string, number> = {
 // Exact Shopify color name (normalized: lowercase, letters only) → hex
 const COLOR_MAP: Record<string, string> = {
   // ── Melancia brand colors ──────────────────────────────────────
-  // moss, papaya, terracota → now in PATTERN_MAP (image swatches)
-  areia:          '#BB693A',
-  coconut:        '#FFFFFF',
-  mar:            '#14A7C8',
-  riored:         '#F61F1F',
-  dragonfruit:    '#F70893',
-  amazonia:       '#306C2D',
+  // moss, papaya, terracota, areia, coco, mar → now in PATTERN_MAP (image swatches)
+  // riored, dragonfruit, amazonia → now in PATTERN_MAP (image swatches)
   lemoncream:     '#FCFAB1',  // "Lemon cream"
   cremedelimo:    '#FCFAB1',  // "Creme de limão" (Portuguese, current Shopify name)
   ceu:            '#AAF2FD',
   burgandy:       '#6B0F1A',  // Leblon Glow (typo of Burgundy kept to match Shopify)
   burgundy:       '#6B0F1A',
   // ── Patterns — placeholder until images are provided ──────────
-  // zebravermelhia, zebrapastel, zebraareia, carioca, bahiatiles,
   // tropicalia, junglemuse  →  will be added to PATTERN_MAP below
 }
 
@@ -47,6 +41,14 @@ const PATTERN_MAP: Record<string, string> = {
   papaya:          '/images/Color Swatch/papaya.png',
   terracota:       '/images/Color Swatch/terracota.png',
   terracotta:      '/images/Color Swatch/terracota.png',
+  // Solid-pattern swatches
+  coco:            '/images/Color Swatch/Coco.png',
+  coconut:         '/images/Color Swatch/Coco.png',  // legacy fallback
+  mar:             '/images/Color Swatch/Mar.png',
+  areia:           '/images/Color Swatch/Areia.png',
+  riored:          '/images/Color Swatch/Rio Red.png',
+  amazonia:        '/images/Color Swatch/Amazonia.png',
+  dragonfruit:     '/images/Color Swatch/Dragon Fruit.png',
   // Pedra do Sal patterns
   zebravermelhia:  '/images/Color Swatch/Zebra Vermelha.png',
   zebrapastel:     '/images/Color Swatch/Zebra Pastel.png',
@@ -101,22 +103,26 @@ export default function ProductDetail({ product }: Props) {
 
   function handleOptionChange(optName: string, value: string) {
     setSelection(prev => ({ ...prev, [optName]: value }))
-    // Reset gallery to first image when color changes
-    if (optName === 'Color') setActiveImage(0)
+    // Reset gallery whenever a non-Size option changes (Color, Swimwear Feature, Piece, etc.)
+    if (optName !== 'Size') setActiveImage(0)
   }
 
-  // Color-filtered gallery: show only images for the selected color
-  const selectedColor = selection['Color'] ?? null
-  const colorImages = selectedColor
+  // Gallery: show only images matching all selected options except Size
+  // (Size never changes the photo; Color and Swimwear Feature / Piece do)
+  const relevantSelection = Object.entries(selection).filter(([key]) => key !== 'Size')
+  const variantImages = relevantSelection.length > 0
     ? variants
         .filter(v => {
-          const colorOpt = (v.selectedOptions ?? []).find(o => o.name === 'Color')
-          return colorOpt?.value === selectedColor && Boolean(v.image?.url)
+          const opts = v.selectedOptions ?? []
+          return relevantSelection.every(([name, value]) => {
+            const opt = opts.find(o => o.name === name)
+            return !opt || opt.value === value
+          }) && Boolean(v.image?.url)
         })
         .map(v => ({ url: v.image!.url, altText: v.image?.altText ?? null }))
         .filter((img, i, arr) => arr.findIndex(x => x.url === img.url) === i)
     : []
-  const displayImages = colorImages.length > 0 ? colorImages : images
+  const displayImages = variantImages.length > 0 ? variantImages : images
 
   const handleNotifySubmit = async (e: React.FormEvent) => {
     e.preventDefault()
