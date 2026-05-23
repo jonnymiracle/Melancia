@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { InstagramIcon } from '@/components/icons'
-import { SITE_WHATSAPP_HREF, SITE_WHATSAPP2_HREF, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
+import { SITE_WHATSAPP_HREF, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
 import AboutHero from '@/components/AboutHero'
 
 import type { Metadata } from 'next'
@@ -54,7 +54,7 @@ export default function AboutPage() {
           <div className="about-page-story-image">
             <div style={{ position: 'relative', height: 420, borderRadius: 20, overflow: 'hidden' }}>
               <Image
-                src="/images/Brand photo/IMG_7518.JPG"
+                src="/images/Brand Photo/IMG_7518.JPG"
                 alt="Melancia Swim — brand photo"
                 fill
                 style={{ objectFit: 'cover', objectPosition: 'center' }}
@@ -105,10 +105,7 @@ export default function AboutPage() {
               <InstagramIcon size={18} /> Instagram
             </a>
             <a href={SITE_WHATSAPP_HREF} target="_blank" rel="noopener" className="btn btn-primary">
-              WhatsApp (SV)
-            </a>
-            <a href={SITE_WHATSAPP2_HREF} target="_blank" rel="noopener" className="btn btn-primary">
-              WhatsApp (US)
+              WhatsApp
             </a>
             <a href={SITE_EMAIL_MAILTO} className="btn btn-primary">
               Email

@@ -19,7 +19,7 @@ const PRODUCT_NODE_FIELDS = `
     url
     altText
   }
-  variants(first: 10) {
+  variants(first: 100) {
     edges {
       node {
         id
@@ -126,7 +126,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
           }
         }
       }
-      variants(first: 30) {
+      variants(first: 100) {
         edges {
           node {
             id

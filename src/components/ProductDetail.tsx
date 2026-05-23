@@ -32,8 +32,8 @@ const COLOR_MAP: Record<string, string> = {
   riored:         '#F61F1F',
   dragonfruit:    '#F70893',
   amazonia:       '#306C2D',
-  lemoncream:     '#FCFAB1',  // "Lemon cream" in Shopify
-  cremedlimo:     '#FCFAB1',  // fallback for Portuguese name variant
+  lemoncream:     '#FCFAB1',  // "Lemon cream"
+  cremedelimo:    '#FCFAB1',  // "Creme de limão" (Portuguese, current Shopify name)
   ceu:            '#AAF2FD',
   burgandy:       '#6B0F1A',  // Leblon Glow (typo of Burgundy kept to match Shopify)
   burgundy:       '#6B0F1A',
@@ -43,15 +43,15 @@ const COLOR_MAP: Record<string, string> = {
 }
 
 // Shopify color name (normalized: lowercase, letters only) → swatch image path
+// Keys are computed via: name.toLowerCase().replace(/[^a-z]/g, '')
 const PATTERN_MAP: Record<string, string> = {
-  zebravermelhia:  '/images/Color Swatch/Zebra Vermelha.png',
-  zebravermehia:   '/images/Color Swatch/Zebra Vermelha.png',
-  zebrapastel:     '/images/Color Swatch/Zebra Pastel.png',
-  zebraareia:      '/images/Color Swatch/Zebra Areia.png',
-  carioca:         '/images/Color Swatch/Carioca.png',
-  azulejosbaiano:  '/images/Color Swatch/Azulejo Baiano.png',
-  azulejobaianos:  '/images/Color Swatch/Azulejo Baiano.png',
-  bahiatiles:      '/images/Color Swatch/Azulejo Baiano.png',
+  zebravermelhia:  '/images/Color Swatch/Zebra Vermelha.png', // "Zebra Vermelhia"
+  zebrapastel:     '/images/Color Swatch/Zebra Pastel.png',   // "Zebra pastel"
+  zebraareia:      '/images/Color Swatch/Zebra Areia.png',    // "Zebra Areia"
+  carioca:         '/images/Color Swatch/Carioca.png',        // "Carioca"
+  azulejosbainos: '/images/Color Swatch/Azulejo Baiano.png', // wrong — kept for safety
+  azulejosbaianos: '/images/Color Swatch/Azulejo Baiano.png', // "Azulejos Baianos" ✓
+  bahiatiles:      '/images/Color Swatch/Azulejo Baiano.png', // legacy alias
 }
 
 /** Returns a CSS `background` value — either a hex color or a url() for patterns. */
@@ -175,15 +175,22 @@ export default function ProductDetail({ product }: Props) {
         {/* ── Gallery ── */}
         <div className="pdp-gallery">
           <div className="pdp-main-image">
-            {displayImages[activeImage] ? (
-              <Image
-                src={displayImages[activeImage].url}
-                alt={displayImages[activeImage].altText ?? product.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 40vw"
-                style={{ objectFit: 'contain' }}
-                priority
-              />
+            {displayImages.length > 0 ? (
+              displayImages.map((img, i) => (
+                <Image
+                  key={img.url}
+                  src={img.url}
+                  alt={img.altText ?? product.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  priority
+                  style={{
+                    objectFit: 'contain',
+                    opacity: i === activeImage ? 1 : 0,
+                    transition: 'opacity 0.2s ease',
+                  }}
+                />
+              ))
             ) : (
               <div className="product-image-placeholder prod-ph-1" style={{ height: '100%' }} />
             )}
@@ -232,7 +239,11 @@ export default function ProductDetail({ product }: Props) {
           </div>
 
           {/* ── Option selectors — dynamic, handles Size / Color / Piece / etc. ── */}
-          {hasOptions && options.map(opt => {
+          {/* Render order: other options first, then Size, then Color */}
+          {hasOptions && [...options].sort((a, b) => {
+            const rank = (name: string) => name === 'Color' ? 2 : name === 'Size' ? 1 : 0
+            return rank(a.name) - rank(b.name)
+          }).map(opt => {
             // Skip "Default Title" single-value options
             if (opt.values.length === 1 && opt.values[0] === 'Default Title') return null
 

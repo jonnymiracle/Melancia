@@ -31,15 +31,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div className="footer-col">
-          <h4>Help</h4>
-          <ul>
-            {/* <li><Link href="/size-guide">Size Guide</Link></li> */}
-            <li><Link href="/contact">Shipping Info</Link></li>
-            <li><Link href="/contact">Returns</Link></li>
-            <li><Link href="/contact">FAQ</Link></li>
-          </ul>
-        </div>
 
         <div className="footer-col">
           <h4>Company</h4>

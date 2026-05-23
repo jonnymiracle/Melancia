@@ -2129,13 +2129,24 @@ a.size-btn:visited {
   position: relative;
   overflow: hidden;
   height: 280px;
-  background: linear-gradient(135deg, var(--lavender-light) 0%, var(--coral-light) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 0 48px;
+}
+.cart-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1;
+}
+.cart-hero h1,
+.cart-hero p {
+  position: relative;
+  z-index: 2;
+  color: #fff;
 }
 
 .cart-hero h1 {

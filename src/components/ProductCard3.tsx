@@ -19,12 +19,6 @@ function isCatalogProduct(p: ProductCard3Product): p is Product {
   return 'placeholderClass' in p
 }
 
-function excerptFromDescription(html?: string, max = 120): string {
-  if (!html?.trim()) return ''
-  const plain = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
-  if (plain.length <= max) return plain
-  return `${plain.slice(0, max).trimEnd()}…`
-}
 
 function formatVariantPrice(variant: ShopifyProductVariant) {
   const n = Number(variant.price.amount)
@@ -94,7 +88,6 @@ export default function ProductCard3({ product }: ProductCard3Props) {
 
         <div className="product-info">
           <h3 className="product-name">{product.name}</h3>
-          <p className="product-desc">{product.description}</p>
           <div className="product-footer">
             <span className="product-price">
               {product.originalPrice && (
@@ -124,11 +117,6 @@ export default function ProductCard3({ product }: ProductCard3Props) {
   const handle = product.handle ?? ''
   const shopifyPromoBadge = resolveShopifyProductBadge(product.tags ?? [])
 
-  const subtitle =
-    excerptFromDescription(product.description) ||
-    (variant?.title && variant.title !== 'Default Title'
-      ? variant.title
-      : handle.replace(/-/g, ' '))
 
   const cardImage = shopifyCardImage(product)
 
@@ -186,7 +174,6 @@ export default function ProductCard3({ product }: ProductCard3Props) {
         ) : (
           <h3 className="product-name">{product.title}</h3>
         )}
-        <p className="product-desc">{subtitle}</p>
         <div className="product-footer">
           <span className="product-price">
             {variant ? formatVariantPrice(variant) : '—'}

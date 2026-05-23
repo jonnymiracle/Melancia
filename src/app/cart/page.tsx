@@ -155,6 +155,15 @@ export default function CartPage() {
   return (
     <>
       <div className="cart-hero">
+        <Image
+          src="/images/photos bottom hero/wheelbarrow.jpeg"
+          alt="Melancia Swim"
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          sizes="100vw"
+          priority
+        />
+        <div className="cart-hero-overlay" />
         <h1>Your Cart</h1>
         <p>Review your picks.</p>
       </div>
