@@ -290,7 +290,7 @@ export default function CartPage() {
                   Checkout
                 </button>
                 <p className="cart-summary-trust">
-                  Secure checkout · Easy returns within 30 days
+                  Secure checkout
                 </p>
                 <Link href="/shop" className="cart-continue">
                   ← Continue shopping
