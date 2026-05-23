@@ -22,10 +22,7 @@ const SIZE_ORDER: Record<string, number> = {
 // Exact Shopify color name (normalized: lowercase, letters only) → hex
 const COLOR_MAP: Record<string, string> = {
   // ── Melancia brand colors ──────────────────────────────────────
-  moss:           '#406F25',
-  papaya:         '#EE964F',
-  terracota:      '#C02511',
-  terracotta:     '#C02511',
+  // moss, papaya, terracota → now in PATTERN_MAP (image swatches)
   areia:          '#BB693A',
   coconut:        '#FFFFFF',
   mar:            '#14A7C8',
@@ -45,13 +42,19 @@ const COLOR_MAP: Record<string, string> = {
 // Shopify color name (normalized: lowercase, letters only) → swatch image path
 // Keys are computed via: name.toLowerCase().replace(/[^a-z]/g, '')
 const PATTERN_MAP: Record<string, string> = {
-  zebravermelhia:  '/images/Color Swatch/Zebra Vermelha.png', // "Zebra Vermelhia"
-  zebrapastel:     '/images/Color Swatch/Zebra Pastel.png',   // "Zebra pastel"
-  zebraareia:      '/images/Color Swatch/Zebra Areia.png',    // "Zebra Areia"
-  carioca:         '/images/Color Swatch/Carioca.png',        // "Carioca"
-  azulejosbainos: '/images/Color Swatch/Azulejo Baiano.png', // wrong — kept for safety
-  azulejosbaianos: '/images/Color Swatch/Azulejo Baiano.png', // "Azulejos Baianos" ✓
-  bahiatiles:      '/images/Color Swatch/Azulejo Baiano.png', // legacy alias
+  // Arpoador
+  moss:            '/images/Color Swatch/moss.png',
+  papaya:          '/images/Color Swatch/papaya.png',
+  terracota:       '/images/Color Swatch/terracota.png',
+  terracotta:      '/images/Color Swatch/terracota.png',
+  // Pedra do Sal patterns
+  zebravermelhia:  '/images/Color Swatch/Zebra Vermelha.png',
+  zebrapastel:     '/images/Color Swatch/Zebra Pastel.png',
+  zebraareia:      '/images/Color Swatch/Zebra Areia.png',
+  carioca:         '/images/Color Swatch/Carioca.png',
+  azulejosbainos:  '/images/Color Swatch/Azulejo Baiano.png',
+  azulejosbaianos: '/images/Color Swatch/Azulejo Baiano.png',
+  bahiatiles:      '/images/Color Swatch/Azulejo Baiano.png',
 }
 
 /** Returns a CSS `background` value — either a hex color or a url() for patterns. */

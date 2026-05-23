@@ -16,7 +16,7 @@ export default function Footer() {
             height={72}
             style={{ height: 52, width: 'auto', marginBottom: 12 }}
           />
-          <p>Swimwear designed for the free-spirited. Made with love, worn with confidence.</p>
+          <p>Crafted in Brasil. Made for the Sun.</p>
           <div className="footer-socials">
             <a href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
               <InstagramIcon size={17} />
