@@ -1,6 +1,7 @@
 'use client'
 
 import ProductCard3 from '@/components/ProductCard3'
+import HeroSlideshow from '@/components/HeroSlideshow'
 import type { ProductCard3Product } from '@/types/shopify'
 
 type Props = {
@@ -14,10 +15,7 @@ function productKey(p: ProductCard3Product) {
 export default function ShopCatalog({ products }: Props) {
   return (
     <>
-      <div className="shop-hero">
-        <h1>Benvindo no Brasil</h1>
-        <p>Dive into the new summer collection — bold colors, flattering fits.</p>
-      </div>
+      <HeroSlideshow />
 
       <div className="shop-layout">
         <div className="shop-main">

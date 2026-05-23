@@ -98,9 +98,6 @@ export default function CartPage() {
     lines[0]?.merchandise?.price.currencyCode ||
     'USD'
 
-  const freeShippingThreshold = 80
-  const amountToFreeShip = Math.max(0, freeShippingThreshold - subtotal)
-
   const changeQty = async (lineId: string, nextQty: number) => {
     if (!cartId) return
     const res = await fetch('/api/shopify/cart/lines', {
@@ -159,7 +156,7 @@ export default function CartPage() {
     <>
       <div className="cart-hero">
         <h1>Your Cart</h1>
-        <p>Review your picks — free US shipping on orders over $80.</p>
+        <p>Review your picks.</p>
       </div>
 
       <div className="cart-layout">
@@ -267,22 +264,6 @@ export default function CartPage() {
                   <span>Shipping</span>
                   <span>Calculated at checkout</span>
                 </div>
-                {amountToFreeShip > 0 ? (
-                  <p className="cart-summary-note">
-                    Add{' '}
-                    <strong>
-                      {new Intl.NumberFormat(undefined, {
-                        style: 'currency',
-                        currency,
-                      }).format(amountToFreeShip)}
-                    </strong>{' '}
-                    more for free US shipping.
-                  </p>
-                ) : (
-                  <p className="cart-summary-note success">
-                    You unlocked free US shipping on this order.
-                  </p>
-                )}
                 <div className="cart-summary-row total">
                   <span>Estimated total</span>
                   <span>

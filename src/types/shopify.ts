@@ -46,6 +46,11 @@ export type ShopifyProductDetail = {
   description: string
   descriptionHtml: string
   tags: string[]
+  /** Structured option axes from Shopify Admin (Size, Color, Piece, etc.) */
+  options: {
+    name: string
+    values: string[]
+  }[]
   images: {
     edges: {
       node: {
@@ -60,6 +65,11 @@ export type ShopifyProductDetail = {
         id: string
         title: string
         availableForSale: boolean
+        /** Structured option values for this variant (e.g. [{ name: 'Size', value: 'M' }, { name: 'Color', value: 'Moss' }]) */
+        selectedOptions: {
+          name: string
+          value: string
+        }[]
         image?: {
           url: string
           altText?: string | null

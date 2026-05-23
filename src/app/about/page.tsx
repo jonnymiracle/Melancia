@@ -1,6 +1,7 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { InstagramIcon } from '@/components/icons'
-import { SITE_WHATSAPP_HREF, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
+import { SITE_WHATSAPP_HREF, SITE_WHATSAPP2_HREF, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
 import AboutHero from '@/components/AboutHero'
 
 import type { Metadata } from 'next'
@@ -49,17 +50,20 @@ export default function AboutPage() {
 
       {/* ── Story ── */}
       <section className="section about-page-story">
-        <h2 className="about-melancia-title">
-          About <span className="about-melancia-sub">Melancia Swim</span>
-        </h2>
         <div className="about-page-story-grid">
           <div className="about-page-story-image">
-            <div className="about-strip-image-placeholder about-ph" style={{ height: 420, borderRadius: 20 }}>
-              <span className="placeholder-label">Brand photo</span>
-              <small style={{ opacity: 0.6, fontSize: '0.7rem' }}>public/images/about.jpg</small>
+            <div style={{ position: 'relative', height: 420, borderRadius: 20, overflow: 'hidden' }}>
+              <Image
+                src="/images/Brand photo/IMG_7518.JPG"
+                alt="Melancia Swim — brand photo"
+                fill
+                style={{ objectFit: 'cover', objectPosition: 'center' }}
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
           <div className="about-page-story-text">
+            <h2 className="about-melancia-title">About</h2>
             <p>
               Designed especially for tanning, Melancia was created with the intention of bringing
               the heart and style of Brazil to the world. The brand was born from my own experience
@@ -78,7 +82,15 @@ export default function AboutPage() {
 
       {/* ── CTA ── */}
       <section className="about-page-cta">
-        <div className="section-header">
+        <Image
+          src="/images/Get Early Access/Water.JPG"
+          alt="Melancia Swim"
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          sizes="100vw"
+        />
+        <div className="about-page-cta-overlay" />
+        <div className="section-header" style={{ position: 'relative', zIndex: 2 }}>
           <span className="eyebrow">@melanciaswim</span>
           <h2>Follow our journey</h2>
           <p>Behind-the-scenes, new drops, and summer vibes — all on Instagram.</p>
@@ -93,7 +105,10 @@ export default function AboutPage() {
               <InstagramIcon size={18} /> Instagram
             </a>
             <a href={SITE_WHATSAPP_HREF} target="_blank" rel="noopener" className="btn btn-primary">
-              WhatsApp
+              WhatsApp (SV)
+            </a>
+            <a href={SITE_WHATSAPP2_HREF} target="_blank" rel="noopener" className="btn btn-primary">
+              WhatsApp (US)
             </a>
             <a href={SITE_EMAIL_MAILTO} className="btn btn-primary">
               Email

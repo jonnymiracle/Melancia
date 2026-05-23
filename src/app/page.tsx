@@ -124,9 +124,19 @@ export default async function HomePage() {
 
       {/* ── Newsletter ── */}
       <section className="newsletter-section">
-        <h2>Get Early Access</h2>
-        <p>Be the first to know about new drops, exclusive deals, and summer inspo.</p>
-        <NewsletterForm source="home-footer" />
+        <Image
+          src="/images/Get Early Access/Water.JPG"
+          alt="Melancia Swim"
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          sizes="100vw"
+        />
+        <div className="newsletter-overlay" />
+        <div className="newsletter-content">
+          <h2>Get Early Access</h2>
+          <p>Be the first to know about new drops, exclusive deals, and summer inspo.</p>
+          <NewsletterForm source="home-footer" />
+        </div>
       </section>
     </>
   )

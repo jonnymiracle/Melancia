@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import type { Product } from '@/types'
 import type {
@@ -9,10 +8,8 @@ import type {
   ShopifyProductVariant,
 } from '@/types/shopify'
 import Link from 'next/link'
-import { addToCart } from '@/lib/add-to-cart-client'
-import { getStoredCartId } from '@/lib/cart-storage'
 import { resolveCatalogProductBadge, resolveShopifyProductBadge } from '@/lib/product-badge'
-import { CartIcon, ShirtIcon } from '@/components/icons'
+import { ShirtIcon } from '@/components/icons'
 
 type ProductCard3Props = {
   product: ProductCard3Product
@@ -63,54 +60,11 @@ function shopifyCardImage(product: ShopifyProduct): {
   return null
 }
 
-/** Cart line id for this variant, if it’s already in the stored Shopify cart. */
-async function fetchCartLineIdForVariant(variantId: string): Promise<string | null> {
-  const cartId = getStoredCartId()
-  if (!cartId) return null
-  try {
-    const res = await fetch(
-      `/api/shopify/cart?cartId=${encodeURIComponent(cartId)}`,
-    )
-    const body = await res.json()
-    const edges = body?.data?.cart?.lines?.edges ?? []
-    for (const edge of edges) {
-      const node = edge?.node
-      const mid = node?.merchandise?.id
-      if (mid === variantId && node?.id) return node.id as string
-    }
-  } catch {
-    /* ignore */
-  }
-  return null
-}
-
 export default function ProductCard3({ product }: ProductCard3Props) {
-  const [pending, setPending] = useState(false)
-  const [cartLineId, setCartLineId] = useState<string | null>(null)
-
   const isCatalog = isCatalogProduct(product)
   const allVariants = !isCatalog ? (product.variants?.edges ?? []).map(e => e.node) : []
   const variant = allVariants[0]
-  /** True only when every size/variant is out of stock */
   const isCompletelyOutOfStock = allVariants.length > 0 && allVariants.every(v => !v.availableForSale)
-
-  useEffect(() => {
-    if (isCatalog || !variant?.id) {
-      setCartLineId(null)
-      return
-    }
-    let cancelled = false
-    const sync = async () => {
-      const id = await fetchCartLineIdForVariant(variant.id)
-      if (!cancelled) setCartLineId(id)
-    }
-    void sync()
-    window.addEventListener('melancia-cart-updated', sync)
-    return () => {
-      cancelled = true
-      window.removeEventListener('melancia-cart-updated', sync)
-    }
-  }, [isCatalog, variant?.id])
 
   if (isCatalog) {
     const catalogBadge = resolveCatalogProductBadge(product)
@@ -133,14 +87,8 @@ export default function ProductCard3({ product }: ProductCard3Props) {
             </span>
           )}
 
-          <div
-            className="product-quick-add"
-            onClick={(e) => e.stopPropagation()}
-            role="presentation"
-          >
-            <button type="button" className="btn btn-primary">
-              + Add to cart
-            </button>
+          <div className="product-quick-add" role="presentation">
+            <button type="button" className="btn btn-primary">Shop Now</button>
           </div>
         </div>
 
@@ -174,7 +122,6 @@ export default function ProductCard3({ product }: ProductCard3Props) {
   }
 
   const handle = product.handle ?? ''
-
   const shopifyPromoBadge = resolveShopifyProductBadge(product.tags ?? [])
 
   const subtitle =
@@ -183,67 +130,10 @@ export default function ProductCard3({ product }: ProductCard3Props) {
       ? variant.title
       : handle.replace(/-/g, ' '))
 
-  const canAdd = Boolean(variant?.id && !isCompletelyOutOfStock && allVariants.some(v => v.availableForSale))
-
-  const handleAddToCart = async () => {
-    if (!variant?.id || !variant.availableForSale) return
-    setPending(true)
-    const result = await addToCart(variant.id, 1)
-    setPending(false)
-    if (!result.ok) {
-      alert(result.error)
-      return
-    }
-    const lineId = await fetchCartLineIdForVariant(variant.id)
-    setCartLineId(lineId)
-  }
-
-  const handleRemoveFromCart = async () => {
-    const cartId = getStoredCartId()
-    if (!cartId || !cartLineId) return
-    setPending(true)
-    try {
-      const res = await fetch('/api/shopify/cart/lines', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'remove',
-          cartId,
-          lineIds: [cartLineId],
-        }),
-      })
-      const body = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        alert(body.error || 'Could not remove from bag')
-        return
-      }
-      setCartLineId(null)
-      window.dispatchEvent(new CustomEvent('melancia-cart-updated', { detail: {} }))
-    } finally {
-      setPending(false)
-    }
-  }
-
-  const handleBagClick = () => {
-    if (cartLineId) void handleRemoveFromCart()
-    else void handleAddToCart()
-  }
-
-  const bagLabel = pending
-    ? cartLineId
-      ? 'Removing…'
-      : 'Adding…'
-    : cartLineId
-      ? '- remove from cart'
-      : !canAdd
-        ? 'Sold Out'
-        : '+ Add to cart'
-
   const cardImage = shopifyCardImage(product)
 
   return (
     <div className="product-card">
-      {/* Invisible full-card link — button sits above it via z-index */}
       {handle && (
         <Link href={`/shop/${handle}`} className="product-card-link" aria-label={product.title} tabIndex={-1} />
       )}
@@ -275,33 +165,14 @@ export default function ProductCard3({ product }: ProductCard3Props) {
           )
         )}
 
-        {cartLineId && (
-          <span
-            className="product-wishlist active product-in-bag-icon"
-            aria-label="In your bag"
-            role="img"
-          >
-            <CartIcon size={16} />
-          </span>
-        )}
-
-        <div
-          className="product-quick-add"
-          onClick={(e) => e.stopPropagation()}
-          role="presentation"
-        >
-          {variant ? (
-            <button
-              type="button"
-              className={`btn ${!cartLineId && !canAdd ? 'btn-sold-out' : 'btn-primary'}`}
-              disabled={pending || (!cartLineId && !canAdd)}
-              onClick={() => void handleBagClick()}
-            >
-              {bagLabel}
-            </button>
+        <div className="product-quick-add" role="presentation">
+          {handle ? (
+            <Link href={`/shop/${handle}`} className="btn btn-primary">
+              Shop Now
+            </Link>
           ) : (
-            <button type="button" className="btn btn-sold-out" disabled>
-              Unavailable
+            <button type="button" className="btn btn-primary" disabled>
+              Shop Now
             </button>
           )}
         </div>

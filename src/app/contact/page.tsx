@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { EnvelopeIcon, PhoneIcon, MapPinIcon, ClockIcon, InstagramIcon, GlobeIcon } from '@/components/icons'
 import {
@@ -9,13 +10,16 @@ import {
   SITE_EMAIL_MAILTO,
   SITE_WHATSAPP_DISPLAY,
   SITE_WHATSAPP_HREF,
+  SITE_WHATSAPP2_DISPLAY,
+  SITE_WHATSAPP2_HREF,
 } from '@/lib/site-contact'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim'
 
 const retailers = [
   { icon: <GlobeIcon />, name: 'Our Online Store', detail: 'Browse and shop the full Melancia collection.', badge: 'Shop Now', online: true, href: '/shop' },
-  { icon: <PhoneIcon />, name: 'WhatsApp', detail: 'Message us directly — we reply fast.', badge: 'Message Us', online: true, href: SITE_WHATSAPP_HREF },
+  { icon: <PhoneIcon />, name: 'WhatsApp (SV)', detail: 'Message us directly — we reply fast.', badge: 'Message Us', online: true, href: SITE_WHATSAPP_HREF },
+  { icon: <PhoneIcon />, name: 'WhatsApp (US)', detail: 'Message us from the US.', badge: 'Message Us', online: true, href: SITE_WHATSAPP2_HREF },
   { icon: <InstagramIcon size={24} />, name: 'Instagram', detail: 'Slide into our DMs on @melanciaswim.', badge: 'Send a DM', online: true, href: 'https://ig.me/m/melanciaswim' },
 ]
 
@@ -59,6 +63,15 @@ export default function ContactPage() {
     <>
       {/* Hero */}
       <div className="contact-hero">
+        <Image
+          src="/images/Brand photo/book.JPG"
+          alt="Melancia Swim"
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center calc(50% + 70px)' }}
+          sizes="100vw"
+          priority
+        />
+        <div className="contact-hero-overlay" />
         <h1>Get in Touch</h1>
         <p>We&apos;d love to hear from you — questions, collaborations, or just to say hi!</p>
       </div>
@@ -73,7 +86,8 @@ export default function ContactPage() {
           <div className="contact-cards">
             {[
               { icon: <EnvelopeIcon />, title: 'Email Us', main: SITE_EMAIL, sub: 'We reply within 24 hours', href: SITE_EMAIL_MAILTO },
-              { icon: <PhoneIcon />, title: 'WhatsApp / Phone', main: SITE_WHATSAPP_DISPLAY, sub: 'Message us anytime', href: SITE_WHATSAPP_HREF },
+              { icon: <PhoneIcon />, title: 'WhatsApp (SV)', main: SITE_WHATSAPP_DISPLAY, sub: 'Message us anytime', href: SITE_WHATSAPP_HREF },
+              { icon: <PhoneIcon />, title: 'WhatsApp (US)', main: SITE_WHATSAPP2_DISPLAY, sub: 'Message us anytime', href: SITE_WHATSAPP2_HREF },
               { icon: <MapPinIcon />, title: 'Based In', main: 'Puerto Rico & El Salvador', sub: 'Shipping within the USA' },
               { icon: <ClockIcon />, title: 'Response Time', main: 'Within 24 business hours', sub: 'Faster via Instagram DM' },
             ].map(card => (

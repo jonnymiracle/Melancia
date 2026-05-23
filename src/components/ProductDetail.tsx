@@ -19,142 +19,132 @@ const SIZE_ORDER: Record<string, number> = {
   L: 6, Large: 7, XL: 8, XXL: 9, '2XL': 10, '3XL': 11,
 }
 
-// Color name → CSS hex swatch
+// Exact Shopify color name (normalized: lowercase, letters only) → hex
 const COLOR_MAP: Record<string, string> = {
-  moss:       '#6B7F5A',
-  papaya:     '#E8834A',
-  terracota:  '#C85A35',
-  terracotta: '#C85A35',
-  black:      '#1A1A1A',
-  white:      '#F5F5F0',
-  nude:       '#E8C4A0',
-  coral:      '#F5A28F',
-  turquoise:  '#40C4B0',
-  navy:       '#1B2A4A',
-  red:        '#D94040',
-  blue:       '#4A7FC1',
-  green:      '#4A8C5A',
-  pink:       '#F5A0C0',
-  yellow:     '#F5D040',
-  orange:     '#F08030',
-  purple:     '#8050C0',
-  brown:      '#8C5A35',
-  gray:       '#8C8C8C',
-  grey:       '#8C8C8C',
-  sand:       '#D4BC8A',
-  olive:      '#6B7F5A',
+  // ── Melancia brand colors ──────────────────────────────────────
+  moss:           '#406F25',
+  papaya:         '#EE964F',
+  terracota:      '#C02511',
+  terracotta:     '#C02511',
+  areia:          '#BB693A',
+  coconut:        '#FFFFFF',
+  mar:            '#14A7C8',
+  riored:         '#F61F1F',
+  dragonfruit:    '#F70893',
+  amazonia:       '#306C2D',
+  lemoncream:     '#FCFAB1',  // "Lemon cream" in Shopify
+  cremedlimo:     '#FCFAB1',  // fallback for Portuguese name variant
+  ceu:            '#AAF2FD',
+  burgandy:       '#6B0F1A',  // Leblon Glow (typo of Burgundy kept to match Shopify)
+  burgundy:       '#6B0F1A',
+  // ── Patterns — placeholder until images are provided ──────────
+  // zebravermelhia, zebrapastel, zebraareia, carioca, bahiatiles,
+  // tropicalia, junglemuse  →  will be added to PATTERN_MAP below
 }
 
+// Shopify color name (normalized: lowercase, letters only) → swatch image path
+const PATTERN_MAP: Record<string, string> = {
+  zebravermelhia:  '/images/Color Swatch/Zebra Vermelha.png',
+  zebravermehia:   '/images/Color Swatch/Zebra Vermelha.png',
+  zebrapastel:     '/images/Color Swatch/Zebra Pastel.png',
+  zebraareia:      '/images/Color Swatch/Zebra Areia.png',
+  carioca:         '/images/Color Swatch/Carioca.png',
+  azulejosbaiano:  '/images/Color Swatch/Azulejo Baiano.png',
+  azulejobaianos:  '/images/Color Swatch/Azulejo Baiano.png',
+  bahiatiles:      '/images/Color Swatch/Azulejo Baiano.png',
+}
+
+/** Returns a CSS `background` value — either a hex color or a url() for patterns. */
 function getColorSwatch(name: string): string {
   const key = name.toLowerCase().replace(/[^a-z]/g, '')
+  if (PATTERN_MAP[key]) return `url('${PATTERN_MAP[key]}') center/cover`
   return COLOR_MAP[key] ?? '#D0C8B8'
-}
-
-/** Parse "Size / Color" title. Returns null if not that format. */
-function parseTitle(title: string): { size: string; color: string } | null {
-  const idx = title.indexOf(' / ')
-  if (idx === -1) return null
-  return { size: title.slice(0, idx).trim(), color: title.slice(idx + 3).trim() }
 }
 
 export default function ProductDetail({ product }: Props) {
   const images = product.images.edges.map((e) => e.node)
   const variants = product.variants.edges.map((e) => e.node)
+  const options = product.options ?? []
 
   const firstAvailable = variants.find((v) => v.availableForSale) ?? variants[0] ?? null
 
-  // Detect "Size / Color" variant format (e.g. "Medium / Moss")
-  const isColorSizeFormat = variants.length > 0 && variants.every(v => parseTitle(v.title) !== null)
+  // Build initial selection from firstAvailable.selectedOptions
+  const initSelection: Record<string, string> = {}
+  if (firstAvailable?.selectedOptions) {
+    for (const opt of firstAvailable.selectedOptions) {
+      initSelection[opt.name] = opt.value
+    }
+  }
 
-  // Unique sizes sorted by SIZE_ORDER
-  const uniqueSizes = isColorSizeFormat
-    ? Array.from(new Set(variants.map(v => parseTitle(v.title)!.size))).sort(
-        (a, b) => (SIZE_ORDER[a] ?? 99) - (SIZE_ORDER[b] ?? 99)
-      )
-    : []
-
-  // Unique colors (in order they first appear)
-  const uniqueColors = isColorSizeFormat
-    ? Array.from(new Set(variants.map(v => parseTitle(v.title)!.color)))
-    : []
-
-  // Initial size + color from first available variant
-  const initParsed = firstAvailable ? parseTitle(firstAvailable.title) : null
-
-  const [selectedSize, setSelectedSize] = useState(initParsed?.size ?? uniqueSizes[0] ?? '')
-  const [selectedColor, setSelectedColor] = useState(initParsed?.color ?? uniqueColors[0] ?? '')
+  const [selection, setSelection] = useState<Record<string, string>>(initSelection)
   const [activeImage, setActiveImage] = useState(0)
-  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(firstAvailable)
   const [pending, setPending] = useState(false)
   const [added, setAdded] = useState(false)
+  const [notifyEmail, setNotifyEmail] = useState('')
+  const [notifyPending, setNotifyPending] = useState(false)
+  const [notifyDone, setNotifyDone] = useState(false)
+  const [notifyError, setNotifyError] = useState('')
+
+  // Derive the currently selected variant from the selection state
+  const selectedVariant: Variant | null = variants.find(v =>
+    (v.selectedOptions ?? []).every(opt => selection[opt.name] === opt.value)
+  ) ?? null
 
   const isSoldOut = !variants.some((v) => v.availableForSale)
-
-  // Fallback pill mode (no "Size / Color" format)
-  const showSizes = !isColorSizeFormat && (
-    variants.length > 1 ||
-    (variants.length === 1 && variants[0].title !== 'Default Title')
-  )
 
   const isOnSale =
     selectedVariant?.compareAtPrice &&
     Number(selectedVariant.compareAtPrice.amount) > Number(selectedVariant.price.amount)
 
-  // Size change — keep same color if possible, else fall back to first available
-  function handleSizeChange(size: string) {
-    setSelectedSize(size)
-    const sameColor = variants.find(v => {
-      const p = parseTitle(v.title)
-      return p?.size === size && p?.color === selectedColor
-    })
-    const fallback = variants.find(v => {
-      const p = parseTitle(v.title)
-      return p?.size === size && v.availableForSale
-    })
-    const target = sameColor ?? fallback ?? null
-    if (target) {
-      const p = parseTitle(target.title)!
-      // If color had to change, reset gallery
-      if (p.color !== selectedColor) setActiveImage(0)
-      setSelectedColor(p.color)
-      setSelectedVariant(target)
-    }
+  function handleOptionChange(optName: string, value: string) {
+    setSelection(prev => ({ ...prev, [optName]: value }))
+    // Reset gallery to first image when color changes
+    if (optName === 'Color') setActiveImage(0)
   }
 
-  // Color change — find the matching variant for selected size, reset gallery to first image
-  function handleColorChange(color: string) {
-    setSelectedColor(color)
-    setActiveImage(0)
-    const target = variants.find(v => {
-      const p = parseTitle(v.title)
-      return p?.size === selectedSize && p?.color === color
-    })
-    if (target) setSelectedVariant(target)
-  }
-
-  // Images for the selected color: collect one image per variant that matches the color.
-  // Deduped by URL. Falls back to all product images if no variant images are set.
-  const colorImages = isColorSizeFormat
+  // Color-filtered gallery: show only images for the selected color
+  const selectedColor = selection['Color'] ?? null
+  const colorImages = selectedColor
     ? variants
         .filter(v => {
-          const p = parseTitle(v.title)
-          return p?.color === selectedColor && Boolean(v.image?.url)
+          const colorOpt = (v.selectedOptions ?? []).find(o => o.name === 'Color')
+          return colorOpt?.value === selectedColor && Boolean(v.image?.url)
         })
         .map(v => ({ url: v.image!.url, altText: v.image?.altText ?? null }))
         .filter((img, i, arr) => arr.findIndex(x => x.url === img.url) === i)
     : []
   const displayImages = colorImages.length > 0 ? colorImages : images
 
-  // Colors available for the currently selected size
-  const colorsForSelectedSize = isColorSizeFormat
-    ? uniqueColors.map(color => ({
-        color,
-        available: variants.some(v => {
-          const p = parseTitle(v.title)
-          return p?.size === selectedSize && p?.color === color && v.availableForSale
+  const handleNotifySubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!notifyEmail) return
+    setNotifyPending(true)
+    setNotifyError('')
+    try {
+      const res = await fetch('/api/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: notifyEmail,
+          productId: product.id,
+          productTitle: product.title,
+          variantId: selectedVariant?.id ?? null,
+          variantTitle: selectedVariant?.title ?? null,
+          selection,
         }),
-      }))
-    : []
+      })
+      if (res.ok) {
+        setNotifyDone(true)
+        setNotifyEmail('')
+      } else {
+        setNotifyError('Something went wrong. Please try again.')
+      }
+    } catch {
+      setNotifyError('Something went wrong. Please try again.')
+    } finally {
+      setNotifyPending(false)
+    }
+  }
 
   const handleAddToCart = async () => {
     if (!selectedVariant?.id || !selectedVariant.availableForSale) return
@@ -169,6 +159,9 @@ export default function ProductDetail({ product }: Props) {
       alert(result.error)
     }
   }
+
+  // Whether this product has meaningful variant options (not just "Default Title")
+  const hasOptions = options.length > 0 && !(options.length === 1 && options[0].values.length === 1 && options[0].values[0] === 'Default Title')
 
   return (
     <>
@@ -188,7 +181,7 @@ export default function ProductDetail({ product }: Props) {
                 alt={displayImages[activeImage].altText ?? product.title}
                 fill
                 sizes="(max-width: 768px) 100vw, 40vw"
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: 'contain' }}
                 priority
               />
             ) : (
@@ -238,76 +231,105 @@ export default function ProductDetail({ product }: Props) {
             </span>
           </div>
 
-          {/* ── Size pills (Color+Size format) ── */}
-          {isColorSizeFormat && uniqueSizes.length > 0 && (
-            <div className="pdp-variants">
-              <span className="pdp-variants-label">SIZE</span>
-              <div className="pdp-size-pills">
-                {uniqueSizes.map(size => (
-                  <button
-                    key={size}
-                    type="button"
-                    className={`pdp-size-pill${selectedSize === size ? ' selected' : ''}`}
-                    onClick={() => handleSizeChange(size)}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* ── Option selectors — dynamic, handles Size / Color / Piece / etc. ── */}
+          {hasOptions && options.map(opt => {
+            // Skip "Default Title" single-value options
+            if (opt.values.length === 1 && opt.values[0] === 'Default Title') return null
 
-          {/* ── Color circles (Color+Size format) ── */}
-          {isColorSizeFormat && colorsForSelectedSize.length > 0 && (
-            <div className="pdp-variants">
-              <span className="pdp-variants-label">COLOR — {selectedColor.toUpperCase()}</span>
-              <div className="pdp-color-circles">
-                {colorsForSelectedSize.map(({ color, available }) => (
-                  <button
-                    key={color}
-                    type="button"
-                    className={`pdp-color-circle${selectedColor === color ? ' selected' : ''}${!available ? ' unavailable' : ''}`}
-                    style={{ '--swatch': getColorSwatch(color) } as React.CSSProperties}
-                    onClick={() => { if (available) handleColorChange(color) }}
-                    disabled={!available}
-                    title={color}
-                    aria-label={`${color}${!available ? ' (sold out)' : ''}`}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+            if (opt.name === 'Color') {
+              return (
+                <div key={opt.name} className="pdp-variants">
+                  <span className="pdp-variants-label">
+                    COLOR{selection['Color'] ? ` — ${selection['Color'].toUpperCase()}` : ''}
+                  </span>
+                  <div className="pdp-color-circles">
+                    {opt.values.map(color => (
+                      <button
+                        key={color}
+                        type="button"
+                        className={`pdp-color-circle${selection['Color'] === color ? ' selected' : ''}`}
+                        style={{ background: getColorSwatch(color) }}
+                        onClick={() => handleOptionChange('Color', color)}
+                        title={color}
+                        aria-label={color}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )
+            }
 
-          {/* ── Fallback: plain pills if not Color+Size format ── */}
-          {showSizes && (
-            <div className="pdp-variants">
-              <span className="pdp-variants-label">
-                Size{selectedVariant && selectedVariant.title !== 'Default Title'
-                  ? ` — ${selectedVariant.title}`
-                  : ''}
-              </span>
-              <div className="pdp-size-pills">
-                {variants.map((v) => (
-                  <button
-                    key={v.id}
-                    type="button"
-                    className={`pdp-size-pill${selectedVariant?.id === v.id ? ' selected' : ''}`}
-                    onClick={() => { if (v.availableForSale) setSelectedVariant(v) }}
-                    disabled={!v.availableForSale}
-                    title={!v.availableForSale ? 'Sold out' : undefined}
-                  >
-                    {v.title}
-                  </button>
-                ))}
+            if (opt.name === 'Size') {
+              const sortedValues = Array.from(opt.values).sort(
+                (a, b) => (SIZE_ORDER[a] ?? 99) - (SIZE_ORDER[b] ?? 99)
+              )
+              return (
+                <div key={opt.name} className="pdp-variants">
+                  <span className="pdp-variants-label">SIZE</span>
+                  <div className="pdp-size-pills">
+                    {sortedValues.map(size => (
+                      <button
+                        key={size}
+                        type="button"
+                        className={`pdp-size-pill${selection['Size'] === size ? ' selected' : ''}`}
+                        onClick={() => handleOptionChange('Size', size)}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )
+            }
+
+            // Generic pills for any other option (Piece: Top / Bottom, etc.)
+            return (
+              <div key={opt.name} className="pdp-variants">
+                <span className="pdp-variants-label">{opt.name.toUpperCase()}</span>
+                <div className="pdp-size-pills">
+                  {opt.values.map(value => (
+                    <button
+                      key={value}
+                      type="button"
+                      className={`pdp-size-pill${selection[opt.name] === value ? ' selected' : ''}`}
+                      onClick={() => handleOptionChange(opt.name, value)}
+                    >
+                      {value}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )
+          })}
 
           {/* ── CTA ── */}
           {isSoldOut || !selectedVariant?.availableForSale ? (
-            <button type="button" className="pdp-sold-out-btn" disabled>
-              Sold Out — Notify Me
-            </button>
+            <div className="pdp-notify">
+              <p className="pdp-notify-label">Sold out — get notified when it&apos;s back</p>
+              {notifyDone ? (
+                <p className="pdp-notify-success">✓ You&apos;re on the list! We&apos;ll email you when it&apos;s back.</p>
+              ) : (
+                <form className="pdp-notify-form" onSubmit={handleNotifySubmit}>
+                  <input
+                    type="email"
+                    className="pdp-notify-input"
+                    placeholder="your@email.com"
+                    value={notifyEmail}
+                    onChange={e => setNotifyEmail(e.target.value)}
+                    required
+                    disabled={notifyPending}
+                  />
+                  <button
+                    type="submit"
+                    className="pdp-notify-btn"
+                    disabled={notifyPending}
+                  >
+                    {notifyPending ? '…' : 'Notify Me'}
+                  </button>
+                </form>
+              )}
+              {notifyError && <p className="pdp-notify-error">{notifyError}</p>}
+            </div>
           ) : (
             <button
               type="button"

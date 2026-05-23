@@ -1325,7 +1325,9 @@ button {
 }
 .about-page-story-text h2 {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
-  margin: 12px 0 20px;
+  margin: 0 0 20px;
+  color: var(--dark);
+  text-align: left;
 }
 .about-page-story-text p {
   color: var(--text-muted);
@@ -1362,10 +1364,17 @@ button {
   line-height: 1.65;
 }
 .about-page-cta {
+  position: relative;
   padding: 80px 8vw;
-  background: linear-gradient(135deg, var(--coral) 0%, var(--lavender-dark) 100%);
   text-align: center;
   color: #fff;
+  overflow: hidden;
+}
+.about-page-cta-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1;
 }
 .about-page-cta .eyebrow,
 .about-page-cta h2,
@@ -1461,10 +1470,30 @@ button {
 
 /* ── Newsletter ── */
 .newsletter-section {
-  background: linear-gradient(135deg, var(--coral) 0%, var(--lavender-dark) 100%);
+  position: relative;
+  min-height: 490px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.newsletter-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.newsletter-content {
+  position: relative;
+  z-index: 2;
   padding: 80px 48px;
   text-align: center;
   color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .newsletter-section h2 {
@@ -1479,6 +1508,12 @@ button {
   max-width: 440px;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .newsletter-content {
+    padding: 60px 24px;
+  }
 }
 
 .newsletter-form {
@@ -1520,7 +1555,7 @@ button {
 
 .newsletter-form button {
   padding: 14px 28px;
-  background: var(--dark);
+  background: var(--coral);
   color: var(--white);
   border: none;
   border-radius: 0 50px 50px 0;
@@ -1532,7 +1567,7 @@ button {
   cursor: pointer;
   transition: background 0.2s;
 }
-.newsletter-form button:hover { background: #111; }
+.newsletter-form button:hover { background: var(--coral-dark); }
 
 /* ── Footer ── */
 footer {
@@ -1833,7 +1868,6 @@ a.size-btn:visited {
 .contact-hero {
   position: relative;
   height: 300px;
-  background: linear-gradient(135deg, var(--coral-light) 0%, var(--lavender-light) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1843,13 +1877,26 @@ a.size-btn:visited {
   overflow: hidden;
 }
 
+.contact-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1;
+}
+
+.contact-hero h1,
+.contact-hero p {
+  position: relative;
+  z-index: 2;
+}
+
 .contact-hero h1 {
   font-size: clamp(2rem, 4vw, 3.2rem);
-  color: var(--dark);
+  color: #fff;
   margin-bottom: 10px;
 }
 
-.contact-hero p { color: var(--mid); }
+.contact-hero p { color: rgba(255,255,255,0.85); }
 
 .contact-layout {
   display: grid;
@@ -2804,10 +2851,10 @@ a.size-btn:visited {
 
 .pdp-main-image {
   position: relative;
-  aspect-ratio: 3/4;
+  aspect-ratio: 9/16;
   border-radius: 16px;
   overflow: hidden;
-  background: var(--light-gray);
+  background: #f5f4f0;
 }
 
 .pdp-thumbnails {
@@ -2918,12 +2965,15 @@ a.size-btn:visited {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--swatch);
+  background: #D0C8B8; /* overridden inline per color */
+  background-size: cover;
+  background-position: center;
   border: 2.5px solid transparent;
   box-shadow: 0 0 0 1.5px rgba(0,0,0,0.18);
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   padding: 0;
+  flex-shrink: 0;
 }
 .pdp-color-circle:hover:not(:disabled) {
   transform: scale(1.12);
@@ -2959,6 +3009,67 @@ a.size-btn:visited {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-family: var(--font-lora), 'Lora', Georgia, serif;
+}
+
+/* ── Back-in-stock notify form ── */
+.pdp-notify {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pdp-notify-label {
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin: 0;
+}
+.pdp-notify-form {
+  display: flex;
+  gap: 8px;
+}
+.pdp-notify-input {
+  flex: 1;
+  padding: 13px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  font-size: 0.9rem;
+  background: transparent;
+  color: var(--dark);
+  font-family: var(--font-lora), 'Lora', Georgia, serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.pdp-notify-input:focus {
+  border-color: var(--dark);
+}
+.pdp-notify-input::placeholder {
+  color: var(--mid);
+}
+.pdp-notify-btn {
+  padding: 13px 22px;
+  border-radius: 50px;
+  background: var(--dark);
+  color: rgba(251,250,244,1);
+  border: none;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: var(--font-lora), 'Lora', Georgia, serif;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+.pdp-notify-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.pdp-notify-success {
+  font-size: 0.9rem;
+  color: #5a7a5a;
+  margin: 0;
+}
+.pdp-notify-error {
+  font-size: 0.82rem;
+  color: #b04040;
+  margin: 0;
 }
 
 .pdp-description {

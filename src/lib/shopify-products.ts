@@ -114,6 +114,10 @@ const PRODUCT_BY_HANDLE_QUERY = `
       description
       descriptionHtml
       tags
+      options {
+        name
+        values
+      }
       images(first: 10) {
         edges {
           node {
@@ -122,12 +126,16 @@ const PRODUCT_BY_HANDLE_QUERY = `
           }
         }
       }
-      variants(first: 20) {
+      variants(first: 30) {
         edges {
           node {
             id
             title
             availableForSale
+            selectedOptions {
+              name
+              value
+            }
             image {
               url
               altText

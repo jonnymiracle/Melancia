@@ -80,7 +80,7 @@ export default function Nav() {
       <div className="nav-links-container">
         <ul className={`nav-links${menuOpen ? ' nav-open' : ''}`} id="nav-menu">
           <li><Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link></li>
-          <li><Link href="/about" className={isActive('/about') ? 'active' : ''}>About</Link></li>
+          <li><Link href="/about" className={isActive('/about') ? 'active' : ''}>Our Story</Link></li>
           <li><Link href="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
         </ul>
       </div>
