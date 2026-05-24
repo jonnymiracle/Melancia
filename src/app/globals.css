@@ -2606,7 +2606,6 @@ a.size-btn:visited {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-color: var(--cream);
   background-image: url('/images/discount.JPG');
   background-position: center;
   background-size: cover;

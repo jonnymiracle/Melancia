@@ -64,7 +64,7 @@ export default function ContactPage() {
       {/* Hero */}
       <div className="contact-hero">
         <Image
-          src="/images/Brand photo/book.JPG"
+          src="/images/Brand Photo/book.JPG"
           alt="Melancia Swim"
           fill
           style={{ objectFit: 'cover', objectPosition: 'center calc(50% + 70px)' }}
