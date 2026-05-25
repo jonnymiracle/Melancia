@@ -67,7 +67,7 @@ export default function ContactPage() {
           src="/images/Brand Photo/book.JPG"
           alt="Melancia Swim"
           fill
-          style={{ objectFit: 'cover', objectPosition: 'center calc(50% + 70px)' }}
+          style={{ objectFit: 'cover', objectPosition: 'center center' }}
           sizes="100vw"
           priority
         />

@@ -2563,6 +2563,7 @@ a.size-btn:visited {
   .form-row { grid-template-columns: 1fr; }
   .where-we-sell { padding: 48px 20px; }
   .contact-layout { padding: 40px 20px; }
+  .contact-hero { height: 240px; padding: 0 20px; }
 }
 
 /* ── Full-screen discount modal (Tanning Club–style) ── */
