@@ -2693,7 +2693,7 @@ a.size-btn:visited {
   margin-top: 15px;
   margin-bottom: 14px;
   line-height: 1.18;
-  text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+  text-shadow: none;
 }
 
 .discount-modal-lede {
@@ -2796,12 +2796,7 @@ a.size-btn:visited {
     justify-content: center;
     flex-grow: 0;
     flex-shrink: 0;
-    /* Subtle dark scrim on mobile so text reads cleanly over the photo */
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.42) 0%,
-      rgba(0, 0, 0, 0.52) 100%
-    );
+    background: transparent;
   }
 }
 
