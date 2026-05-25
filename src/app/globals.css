@@ -2100,7 +2100,8 @@ a.size-btn:visited {
   background: rgba(0, 0, 0, 0.45);
   z-index: 1;
 }
-.where-we-sell > *:not(img):not(.where-we-sell-overlay) {
+.where-we-sell-inner,
+.where-we-sell > *:not(img):not(.where-we-sell-overlay):not(.where-we-sell-inner) {
   position: relative;
   z-index: 2;
 }
@@ -2108,6 +2109,31 @@ a.size-btn:visited {
 .where-we-sell .section-header p,
 .where-we-sell .section-header .eyebrow {
   color: #fff;
+}
+
+.where-we-sell-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.where-we-sell-col--newsletter {
+  display: flex;
+  flex-direction: column;
+  padding-top: 8px;
+}
+
+@media (max-width: 860px) {
+  .where-we-sell-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
 }
 
 .where-we-sell .section-header { text-align: left; margin-bottom: 40px; }

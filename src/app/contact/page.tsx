@@ -128,7 +128,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* ── Where We Sell ── */}
+      {/* ── Ways to reach us + Newsletter — combined section ── */}
       <section className="where-we-sell">
         <Image
           src="/images/Get Early Access/Water.JPG"
@@ -138,30 +138,36 @@ export default function ContactPage() {
           sizes="100vw"
         />
         <div className="where-we-sell-overlay" />
-        <div className="section-header" style={{ textAlign: 'left', marginBottom: 40 }}>
-          <span className="eyebrow">Find Us</span>
-          <h2>Ways to reach us</h2>
-          <p style={{ textAlign: 'left', margin: 0 }}>Shop online or reach out directly — we&apos;re always happy to help.</p>
-        </div>
-        <div className="retailers-grid">
-          {retailers.map(r => (
-            <a key={r.name} className="retailer-card" href={r.href} target={r.href.startsWith('http') ? '_blank' : undefined} rel={r.href.startsWith('http') ? 'noopener' : undefined} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-              <div className="retailer-icon" style={{ color: 'var(--coral)' }}>{r.icon}</div>
-              <h4>{r.name}</h4>
-              <p>{r.detail}</p>
-              <span className="retailer-badge online">{r.badge}</span>
-            </a>
-          ))}
-        </div>
-      </section>
 
-      {/* Newsletter */}
-      <section className="newsletter-section">
-        <div className="newsletter-overlay" />
-        <div className="newsletter-content">
-          <h2>Stay in the Loop</h2>
-          <p>New drops, exclusive deals, and summer vibes — straight to your inbox.</p>
-          <NewsletterForm source="contact-page" />
+        <div className="where-we-sell-inner">
+          {/* Left: Ways to reach us */}
+          <div className="where-we-sell-col">
+            <div className="section-header" style={{ textAlign: 'left', marginBottom: 40 }}>
+              <span className="eyebrow">Find Us</span>
+              <h2>Ways to reach us</h2>
+              <p style={{ textAlign: 'left', margin: 0 }}>Shop online or reach out directly — we&apos;re always happy to help.</p>
+            </div>
+            <div className="retailers-grid">
+              {retailers.map(r => (
+                <a key={r.name} className="retailer-card" href={r.href} target={r.href.startsWith('http') ? '_blank' : undefined} rel={r.href.startsWith('http') ? 'noopener noreferrer' : undefined} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                  <div className="retailer-icon" style={{ color: 'var(--coral)' }}>{r.icon}</div>
+                  <h4>{r.name}</h4>
+                  <p>{r.detail}</p>
+                  <span className="retailer-badge online">{r.badge}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Stay in the Loop */}
+          <div className="where-we-sell-col where-we-sell-col--newsletter">
+            <span className="eyebrow">Newsletter</span>
+            <h2 style={{ color: '#fff', marginBottom: 12 }}>Stay in the Loop</h2>
+            <p style={{ color: 'rgba(255,255,255,0.85)', marginBottom: 32, maxWidth: 380 }}>
+              New drops, exclusive deals, and summer vibes — straight to your inbox.
+            </p>
+            <NewsletterForm source="contact-page" />
+          </div>
         </div>
       </section>
     </>
