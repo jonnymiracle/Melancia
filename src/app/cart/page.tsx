@@ -145,6 +145,15 @@ export default function CartPage() {
     return (
       <>
         <div className="cart-hero">
+          <Image
+            src="/images/photos bottom hero/wheelbarrow.jpeg"
+            alt="Melancia Swim"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            sizes="100vw"
+            priority
+          />
+          <div className="cart-hero-overlay" />
           <h1>Your Cart</h1>
           <p>Loading your bag…</p>
         </div>
@@ -224,7 +233,7 @@ export default function CartPage() {
                           <div className="cart-qty" role="group" aria-label="Quantity">
                             <button
                               type="button"
-                              onClick={() => changeQty(line.id, line.quantity - 1)}
+                              onClick={() => line.quantity === 1 ? removeLine(line.id) : changeQty(line.id, line.quantity - 1)}
                               aria-label="Decrease quantity"
                             >
                               −

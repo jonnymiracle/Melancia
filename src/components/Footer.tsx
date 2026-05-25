@@ -43,7 +43,6 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <span>© 2026 Melancia Swimwear. All rights reserved.</span>
-        <span>Privacy Policy · Terms of Service</span>
       </div>
     </footer>
   )

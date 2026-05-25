@@ -352,6 +352,7 @@ body::after {
   --white: rgba(251, 250, 244);
   --dark: #2c2c2c;
   --mid: #6b6b6b;
+  --text-muted: #6b6b6b;
 }
 
 html { scroll-behavior: smooth; }
@@ -1578,7 +1579,7 @@ footer {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr;
   gap: 48px;
   margin-bottom: 48px;
 }
@@ -1900,10 +1901,10 @@ a.size-btn:visited {
 
 .contact-layout {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr;
   gap: 64px;
   padding: 72px 48px;
-  max-width: 1200px;
+  max-width: 780px;
   margin: 0 auto;
 }
 
@@ -1917,6 +1918,29 @@ a.size-btn:visited {
   line-height: 1.8;
   margin-bottom: 36px;
 }
+
+.form-success {
+  display: none;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+.form-error {
+  display: none;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}
+.form-success.show { display: block; }
+.form-error.show { display: block; }
 
 .contact-cards {
   display: flex;
@@ -2066,8 +2090,24 @@ a.size-btn:visited {
 
 /* Where We Sell */
 .where-we-sell {
-  background: var(--light-gray);
+  position: relative;
+  overflow: hidden;
   padding: 80px 48px;
+}
+.where-we-sell-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+.where-we-sell > *:not(img):not(.where-we-sell-overlay) {
+  position: relative;
+  z-index: 2;
+}
+.where-we-sell .section-header h2,
+.where-we-sell .section-header p,
+.where-we-sell .section-header .eyebrow {
+  color: #fff;
 }
 
 .where-we-sell .section-header { text-align: left; margin-bottom: 40px; }

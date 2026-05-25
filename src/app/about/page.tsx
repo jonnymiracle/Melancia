@@ -19,28 +19,6 @@ export const metadata: Metadata = {
   },
 }
 
-const VALUES = [
-  {
-    icon: '~',
-    label: 'Chlorine-Resistant',
-    body: 'Built to last through pool and ocean — our fabrics hold their color and shape season after season.',
-  },
-  {
-    icon: '◎',
-    label: 'UV Protection',
-    body: 'UPF 50+ on select styles. Sun-proof so you can stay out longer and worry less.',
-  },
-  {
-    icon: '↻',
-    label: 'Eco Fabric',
-    body: 'We use materials made from recycled fibers — because the ocean deserves to be protected, not just worn.',
-  },
-  {
-    icon: '⊟',
-    label: 'Inclusive Sizing',
-    body: 'Small through Large, designed to flatter every body. More sizes are on the way.',
-  },
-]
 
 export default function AboutPage() {
   return (

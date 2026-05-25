@@ -12,7 +12,8 @@ export default function AboutHero() {
         playsInline
         preload="auto"
       >
-        <source src="/videos/MELANCIA-REEL-01.MOV" type="video/mp4" />
+        <source src="/videos/MELANCIA-REEL-01.MOV" type="video/quicktime" />
+        <source src="/videos/MELANCIA-REEL-01.MOV" />
       </video>
 
       {/* Dark overlay so text stays readable */}

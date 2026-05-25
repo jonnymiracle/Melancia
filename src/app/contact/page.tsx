@@ -4,17 +4,11 @@ import { useState, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { NewsletterForm } from '@/components/NewsletterForm'
-import { EnvelopeIcon, PhoneIcon, MapPinIcon, ClockIcon, InstagramIcon, GlobeIcon } from '@/components/icons'
+import { GlobeIcon, InstagramIcon, PhoneIcon } from '@/components/icons'
 import {
-  SITE_EMAIL,
-  SITE_EMAIL_MAILTO,
-  SITE_WHATSAPP_DISPLAY,
   SITE_WHATSAPP_HREF,
-  SITE_WHATSAPP2_DISPLAY,
   SITE_WHATSAPP2_HREF,
 } from '@/lib/site-contact'
-
-const INSTAGRAM = 'https://www.instagram.com/melanciaswim'
 
 const retailers = [
   { icon: <GlobeIcon />, name: 'Our Online Store', detail: 'Browse and shop the full Melancia collection.', badge: 'Shop Now', online: true, href: '/shop' },
@@ -78,42 +72,7 @@ export default function ContactPage() {
 
       {/* Contact Layout */}
       <div className="contact-layout">
-        {/* Left: Info */}
-        <div className="contact-info">
-          <h2>Let&apos;s connect</h2>
-          <p>Whether you have questions about sizing, want to know where to find us, or are interested in stocking Melancia — we&apos;re here for it. We&apos;ll get back to you within 24 hours.</p>
-
-          <div className="contact-cards">
-            {[
-              { icon: <EnvelopeIcon />, title: 'Email Us', main: SITE_EMAIL, sub: 'We reply within 24 hours', href: SITE_EMAIL_MAILTO },
-              { icon: <PhoneIcon />, title: 'WhatsApp (SV)', main: SITE_WHATSAPP_DISPLAY, sub: 'Message us anytime', href: SITE_WHATSAPP_HREF },
-              { icon: <PhoneIcon />, title: 'WhatsApp (US)', main: SITE_WHATSAPP2_DISPLAY, sub: 'Message us anytime', href: SITE_WHATSAPP2_HREF },
-              { icon: <MapPinIcon />, title: 'Based In', main: 'Puerto Rico & El Salvador', sub: 'Shipping within the USA' },
-              { icon: <ClockIcon />, title: 'Response Time', main: 'Within 24 business hours', sub: 'Faster via Instagram DM' },
-            ].map(card => (
-              <div key={card.title} className="contact-card">
-                <div className="contact-card-icon">{card.icon}</div>
-                <div>
-                  <h4>{card.title}</h4>
-                  {card.href ? <a href={card.href}>{card.main}</a> : <p>{card.main}</p>}
-                  <p style={{ fontSize: '0.78rem', color: 'var(--mid)', marginTop: 2 }}>{card.sub}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="contact-socials">
-            <h3>Follow Us</h3>
-            <div className="contact-social-links">
-              <a href={INSTAGRAM} target="_blank" rel="noopener" className="contact-social-link">
-                <InstagramIcon size={16} /> Instagram
-              </a>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Right: Form */}
+        {/* Form — full width now that info cards are removed */}
         <div className="contact-form-wrapper" id="contactForm">
           <h3>Send us a message</h3>
           <p>Fill in the form below and we&apos;ll get back to you shortly.</p>
@@ -125,7 +84,7 @@ export default function ContactPage() {
           )}
 
           {error && (
-            <div className="form-success show" style={{ background: '#fee2e2', color: '#b91c1c' }}>
+            <div className="form-error show">
               Something went wrong. Please try again or email us directly.
             </div>
           )}
@@ -171,6 +130,14 @@ export default function ContactPage() {
 
       {/* ── Where We Sell ── */}
       <section className="where-we-sell">
+        <Image
+          src="/images/Get Early Access/Water.JPG"
+          alt=""
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          sizes="100vw"
+        />
+        <div className="where-we-sell-overlay" />
         <div className="section-header" style={{ textAlign: 'left', marginBottom: 40 }}>
           <span className="eyebrow">Find Us</span>
           <h2>Ways to reach us</h2>
@@ -190,9 +157,12 @@ export default function ContactPage() {
 
       {/* Newsletter */}
       <section className="newsletter-section">
-        <h2>Stay in the Loop</h2>
-        <p>New drops, exclusive deals, and summer vibes — straight to your inbox.</p>
-        <NewsletterForm source="contact-page" />
+        <div className="newsletter-overlay" />
+        <div className="newsletter-content">
+          <h2>Stay in the Loop</h2>
+          <p>New drops, exclusive deals, and summer vibes — straight to your inbox.</p>
+          <NewsletterForm source="contact-page" />
+        </div>
       </section>
     </>
   )

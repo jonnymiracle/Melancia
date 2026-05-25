@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ShopifyProductDetail } from '@/types/shopify'
@@ -85,6 +85,7 @@ export default function ProductDetail({ product }: Props) {
   const [activeImage, setActiveImage] = useState(0)
   const [pending, setPending] = useState(false)
   const [added, setAdded] = useState(false)
+  const [compositionOpen, setCompositionOpen] = useState(true)
   const [notifyEmail, setNotifyEmail] = useState('')
   const [notifyPending, setNotifyPending] = useState(false)
   const [notifyDone, setNotifyDone] = useState(false)
@@ -123,6 +124,13 @@ export default function ProductDetail({ product }: Props) {
         .filter((img, i, arr) => arr.findIndex(x => x.url === img.url) === i)
     : []
   const displayImages = variantImages.length > 0 ? variantImages : images
+
+  // Clamp activeImage if switching to a variant group with fewer images
+  useEffect(() => {
+    if (activeImage >= displayImages.length && displayImages.length > 0) {
+      setActiveImage(displayImages.length - 1)
+    }
+  }, [displayImages.length, activeImage])
 
   const handleNotifySubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -378,24 +386,21 @@ export default function ProductDetail({ product }: Props) {
             <button
               type="button"
               className="pdp-composition-toggle"
-              onClick={(e) => {
-                const el = (e.currentTarget.nextElementSibling as HTMLElement)
-                const isOpen = el.style.display !== 'none'
-                el.style.display = isOpen ? 'none' : 'block'
-                e.currentTarget.setAttribute('aria-expanded', String(!isOpen))
-              }}
-              aria-expanded="true"
+              onClick={() => setCompositionOpen(o => !o)}
+              aria-expanded={compositionOpen}
             >
               <span>Composition &amp; Care</span>
-              <span className="pdp-composition-icon">−</span>
+              <span className="pdp-composition-icon">{compositionOpen ? '−' : '+'}</span>
             </button>
-            <div className="pdp-composition-body">
-              <p>
-                Crafted in a soft, high-performance fabric (82% Polyamide, 18% Elastane)
-                that feels like a second skin — quick-drying, chlorine-resistant, and built
-                to keep its shape all season long.
-              </p>
-            </div>
+            {compositionOpen && (
+              <div className="pdp-composition-body">
+                <p>
+                  Crafted in a soft, high-performance fabric (82% Polyamide, 18% Elastane)
+                  that feels like a second skin — quick-drying, chlorine-resistant, and built
+                  to keep its shape all season long.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
