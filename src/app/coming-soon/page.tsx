@@ -20,13 +20,15 @@ const POSITION_MAP: Record<string, string> = {
 
 // Mobile-specific overrides — only add entries that differ from desktop or are new
 const MOBILE_POSITION_MAP: Record<string, string> = {
-  'IMG_3576.JPG':    'right center',
+  'IMG_3576.JPG':    'calc(50% - 300px) center',
   'IMG_3580.JPG':    'left center',
   'IMG_3582.JPG':    'left center',
   'IMG_3586.JPG':    'left center',
   'IMG_3589.JPG':    'center bottom',
-  'image00002.jpg':  'left center',
-  'image00002.jpeg': 'left center',
+  'image00005.jpg':  'calc(50% - 200px) center',
+  'image00005.jpeg': 'calc(50% - 200px) center',
+  'image00002.jpg':  'calc(50% + 20px) center',
+  'image00002.jpeg': 'calc(50% + 20px) center',
 }
 
 export default function ComingSoonPage() {

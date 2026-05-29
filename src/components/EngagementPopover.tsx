@@ -131,14 +131,14 @@ export default function EngagementPopover() {
             </div>
 
             <h2 id="discount-modal-heading" className="discount-modal-title">
-              {step === 'offer' ? 'Watch out for our discounts!' : 'Drop your email'}
+              {step === 'offer' ? 'You have a 10% discount!' : 'Drop your email'}
             </h2>
 
             {step === 'offer' && (
               <>
                 <div className="discount-modal-actions">
                   <button type="button" className="discount-modal-btn discount-modal-btn--primary" onClick={handleReady}>
-                    I&apos;m ready
+                    Claim my discount
                   </button>
                   <button type="button" className="discount-modal-btn discount-modal-btn--ghost" onClick={dismiss}>
                     No thanks
@@ -149,7 +149,7 @@ export default function EngagementPopover() {
 
             {step === 'email' && (
               <>
-                <p className="discount-modal-lede">We&apos;ll send your code — unsubscribe anytime.</p>
+                <p className="discount-modal-lede">Enter your email and we&apos;ll send your 10% discount code — unsubscribe anytime.</p>
                 <div className="discount-modal-form-wrap">
                   <NewsletterForm source="discount-popup" />
                 </div>

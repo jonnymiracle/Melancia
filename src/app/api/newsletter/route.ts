@@ -27,6 +27,15 @@ export async function POST(req: Request) {
 
   const phone = typeof rec.phone === 'string' ? normalisePhone(rec.phone) : null
 
+  // Human-readable label shown in Klaviyo profile
+  const SOURCE_LABELS: Record<string, string> = {
+    'discount-popup':  'Discount Popup',
+    'home-footer':     'Homepage — Get Early Access',
+    'contact-page':    'Contact Page — Stay in the Loop',
+    'coming-soon':     'Coming Soon Page',
+  }
+  const sourceLabel = SOURCE_LABELS[rec.source ?? ''] ?? rec.source ?? 'Unknown'
+
   const apiKey = process.env.KLAVIYO_API_KEY
   const listId = process.env.KLAVIYO_LIST_ID
 
@@ -39,7 +48,13 @@ export async function POST(req: Request) {
     email: { marketing: { consent: 'SUBSCRIBED' } },
   }
 
-  const profileAttributes: Record<string, unknown> = { email, subscriptions }
+  const profileAttributes: Record<string, unknown> = {
+    email,
+    subscriptions,
+    properties: {
+      signup_source: sourceLabel,
+    },
+  }
   if (phone) profileAttributes.phone_number = phone
 
   try {
