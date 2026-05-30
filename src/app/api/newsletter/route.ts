@@ -51,9 +51,6 @@ export async function POST(req: Request) {
   const profileAttributes: Record<string, unknown> = {
     email,
     subscriptions,
-    properties: {
-      signup_source: sourceLabel,
-    },
   }
   if (phone) profileAttributes.phone_number = phone
 
