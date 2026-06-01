@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { ShopifyProductDetail } from '@/types/shopify'
 import { addToCart } from '@/lib/add-to-cart-client'
+import { getModelSizeNote } from '@/lib/model-size'
 
 type Props = { product: ShopifyProductDetail }
 type Variant = ShopifyProductDetail['variants']['edges'][0]['node']
@@ -241,6 +242,8 @@ export default function ProductDetail({ product }: Props) {
           <Link href="/shop" className="pdp-back">← Back to shop</Link>
 
           <h1 className="pdp-title">{product.title}</h1>
+
+          <p className="pdp-model-size">{getModelSizeNote(product.handle)}</p>
 
           <div className="pdp-price">
             {isOnSale && selectedVariant?.compareAtPrice && (

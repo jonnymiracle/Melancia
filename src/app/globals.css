@@ -3216,6 +3216,15 @@ a.size-btn:visited {
   color: var(--dark);
 }
 
+.pdp-model-size {
+  margin: 8px 0 0;
+  font-family: var(--font-lora), 'Lora', Georgia, serif;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
 .pdp-price {
   font-size: 1.15rem;
   font-weight: 500;
