@@ -62,12 +62,6 @@ export async function POST(req: Request) {
                     subscriptions: {
                       email: { marketing: { consent: 'SUBSCRIBED' } },
                     },
-                    properties: {
-                      back_in_stock_product: productTitle,
-                      back_in_stock_variant: variantDesc || rec.variantTitle || '',
-                      back_in_stock_product_id: rec.productId ?? '',
-                      back_in_stock_variant_id: rec.variantId ?? '',
-                    },
                   },
                 },
               ],
