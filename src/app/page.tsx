@@ -14,12 +14,12 @@ export const metadata: Metadata = {
   title: 'Brazilian Bikinis & Swimwear Designed for Tanning',
   description: 'Melancia Swim — Brazilian-style bikinis and swimwear made for tanning. Shop small bikinis, bold colors, and minimal silhouettes. Based in Puerto Rico, shipping within the USA.',
   alternates: {
-    canonical: 'https://melanciaswim.com',
+    canonical: 'https://www.melanciaswim.com',
   },
   openGraph: {
     title: 'Melancia Swim | Brazilian Bikinis & Swimwear Designed for Tanning',
     description: 'Shop Brazilian-style bikinis and swimwear. Minimal silhouettes, bold colors — designed for tanning. Based in Puerto Rico, ships within the USA.',
-    url: 'https://melanciaswim.com',
+    url: 'https://www.melanciaswim.com',
   },
 }
 

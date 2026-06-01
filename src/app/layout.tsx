@@ -28,7 +28,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://melanciaswim.com'),
+  metadataBase: new URL('https://www.melanciaswim.com'),
   title: {
     default: 'Melancia Swim | Brazilian Bikinis & Swimwear',
     template: '%s | Melancia Swim',
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Melancia Swim',
-    url: 'https://melanciaswim.com',
+    url: 'https://www.melanciaswim.com',
     title: 'Melancia Swim | Brazilian Bikinis & Swimwear',
     description: 'Shop Brazilian-style bikinis and swimwear designed for tanning. Bold colors, minimal silhouettes — shipped within the USA.',
     images: [{ url: '/images/Logo original colors.png', width: 1200, height: 630, alt: 'Melancia Swim — Brazilian Bikinis & Swimwear' }],
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     images: ['/images/Logo original colors.png'],
   },
   alternates: {
-    canonical: 'https://melanciaswim.com',
+    canonical: 'https://www.melanciaswim.com',
   },
   robots: {
     index: true,
@@ -92,13 +92,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {
                 '@context': 'https://schema.org',
                 '@type': 'Organization',
-                '@id': 'https://melanciaswim.com/#organization',
+                '@id': 'https://www.melanciaswim.com/#organization',
                 name: 'Melancia Swim',
                 alternateName: 'Melancia Swimwear',
-                url: 'https://melanciaswim.com',
+                url: 'https://www.melanciaswim.com',
                 logo: {
                   '@type': 'ImageObject',
-                  url: 'https://melanciaswim.com/images/Logo original colors.png',
+                  url: 'https://www.melanciaswim.com/images/Logo original colors.png',
                   width: 400,
                   height: 400,
                 },
@@ -115,17 +115,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {
                 '@context': 'https://schema.org',
                 '@type': 'WebSite',
-                '@id': 'https://melanciaswim.com/#website',
-                url: 'https://melanciaswim.com',
+                '@id': 'https://www.melanciaswim.com/#website',
+                url: 'https://www.melanciaswim.com',
                 name: 'Melancia Swim',
                 publisher: {
-                  '@id': 'https://melanciaswim.com/#organization',
+                  '@id': 'https://www.melanciaswim.com/#organization',
                 },
                 potentialAction: {
                   '@type': 'SearchAction',
                   target: {
                     '@type': 'EntryPoint',
-                    urlTemplate: 'https://melanciaswim.com/shop?q={search_term_string}',
+                    urlTemplate: 'https://www.melanciaswim.com/shop?q={search_term_string}',
                   },
                   'query-input': 'required name=search_term_string',
                 },
@@ -133,10 +133,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {
                 '@context': 'https://schema.org',
                 '@type': 'ClothingStore',
-                '@id': 'https://melanciaswim.com/#store',
+                '@id': 'https://www.melanciaswim.com/#store',
                 name: 'Melancia Swim',
-                url: 'https://melanciaswim.com',
-                logo: 'https://melanciaswim.com/images/Logo original colors.png',
+                url: 'https://www.melanciaswim.com',
+                logo: 'https://www.melanciaswim.com/images/Logo original colors.png',
                 description: 'Brazilian-style bikinis and swimwear designed for tanning. Minimal silhouettes, bold colors, shipped within the USA.',
                 areaServed: 'US',
                 currenciesAccepted: 'USD',

@@ -10,12 +10,12 @@ export const metadata: Metadata = {
   title: 'Our Story — Brazilian Swimwear Born for Tanning',
   description: 'Melancia Swim was born from a love of Brazilian bikini culture — minimal silhouettes, bold colors, designed for tanning. Discover the story behind our swimwear brand, based in Puerto Rico & El Salvador.',
   alternates: {
-    canonical: 'https://melanciaswim.com/about',
+    canonical: 'https://www.melanciaswim.com/about',
   },
   openGraph: {
     title: 'Our Story | Melancia Swim — Brazilian Bikini Brand',
     description: 'Born from Brazilian bikini culture. Melancia Swim brings minimal silhouettes and bold colors designed for tanning, from Puerto Rico & El Salvador to the world.',
-    url: 'https://melanciaswim.com/about',
+    url: 'https://www.melanciaswim.com/about',
   },
 }
 

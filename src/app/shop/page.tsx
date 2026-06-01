@@ -8,12 +8,12 @@ export const metadata: Metadata = {
   title: 'Shop Bikinis & Swimwear',
   description: 'Shop Melancia Swim — Brazilian-style bikinis, small bikinis, and swimwear designed for tanning. Bold colors, minimal silhouettes, ships within the USA. Browse the full collection.',
   alternates: {
-    canonical: 'https://melanciaswim.com/shop',
+    canonical: 'https://www.melanciaswim.com/shop',
   },
   openGraph: {
     title: 'Shop Bikinis & Swimwear | Melancia Swim',
     description: 'Brazilian-style bikinis and swimwear designed for tanning. Small bikinis, bold colors, minimal silhouettes — ships within the USA.',
-    url: 'https://melanciaswim.com/shop',
+    url: 'https://www.melanciaswim.com/shop',
   },
 }
 

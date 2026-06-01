@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Shipping Policy',
   description: 'Melancia Swim ships bikinis and swimwear within the USA. Learn about shipping times, free shipping thresholds, international delivery, and our 30-day return policy.',
   alternates: {
-    canonical: 'https://melanciaswim.com/shipping-policy',
+    canonical: 'https://www.melanciaswim.com/shipping-policy',
   },
 }
 
