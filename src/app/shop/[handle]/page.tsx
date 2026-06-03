@@ -6,7 +6,7 @@ import { SITE_NAME, SITE_URL, LOGO_IMAGE } from '@/lib/site-config'
 import { buildProductJsonLd } from '@/lib/product-jsonld'
 import { buildProductTitle } from '@/lib/product-title'
 import { buildBreadcrumbJsonLd } from '@/lib/breadcrumb-jsonld'
-import { classifyProduct } from '@/lib/collections'
+import { classifyProduct, SETS_HREF, TOPS_HREF } from '@/lib/collections'
 import { getRelatedProducts } from '@/lib/related-products'
 import ProductDetail from '@/components/ProductDetail'
 import ProductCard3 from '@/components/ProductCard3'
@@ -101,7 +101,7 @@ export default async function ProductPage({ params }: Props) {
           <div className="related-products-header">
             <h2>{relatedHeading}</h2>
             <Link
-              href={kind === 'set' ? '/collections/brazilian-bikini-sets' : '/collections/brazilian-bikini-tops'}
+              href={kind === 'set' ? SETS_HREF : TOPS_HREF}
               className="btn btn-outline btn-sm"
             >
               View All

@@ -8,6 +8,7 @@ import AnnouncementBar from '@/components/AnnouncementBar'
 import HeroSlideshow from '@/components/HeroSlideshow'
 import { featuredProducts } from '@/data/products'
 import { fetchBestSellingProducts } from '@/lib/shopify-products'
+import { SETS_HREF, TOPS_HREF } from '@/lib/collections'
 import type { ProductCard3Product } from '@/types/shopify'
 
 export const metadata: Metadata = {
@@ -65,10 +66,10 @@ export default async function HomePage() {
 
         {/* ── Shop by Category ── */}
         <nav className="shop-by-category" aria-label="Shop by category">
-          <Link href="/collections/brazilian-bikini-sets" className="btn btn-outline">
+          <Link href={SETS_HREF} className="btn btn-outline">
             Brazilian Bikini Sets
           </Link>
-          <Link href="/collections/brazilian-bikini-tops" className="btn btn-outline">
+          <Link href={TOPS_HREF} className="btn btn-outline">
             Brazilian Bikini Tops
           </Link>
         </nav>

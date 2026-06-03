@@ -40,6 +40,10 @@ export type ClassifiableProduct = {
 export const SETS_HANDLE = 'brazilian-bikini-sets' as const
 export const TOPS_HANDLE = 'brazilian-bikini-tops' as const
 
+/** Canonical internal hrefs for the two collections (single source of truth for links/sitemap). */
+export const SETS_HREF = `/collections/${SETS_HANDLE}` as const
+export const TOPS_HREF = `/collections/${TOPS_HANDLE}` as const
+
 /** Halfway between the $42.50 tops and the $85 sets. Documented in module header. */
 export const PRICE_THRESHOLD = 60
 

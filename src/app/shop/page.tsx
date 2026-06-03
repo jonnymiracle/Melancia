@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { fetchAllStorefrontProducts } from '@/lib/shopify-products'
+import { SETS_HREF, TOPS_HREF } from '@/lib/collections'
 import { allProducts } from '@/data/products'
 import type { ProductCard3Product } from '@/types/shopify'
 import ShopCatalog from './ShopCatalog'
@@ -43,10 +44,10 @@ export default async function ShopPage() {
       </p>
       {/* Collection hub links — internal linking for SEO */}
       <nav className="collection-chips" aria-label="Shop by collection">
-        <Link href="/collections/brazilian-bikini-sets" className="btn btn-outline btn-sm">
+        <Link href={SETS_HREF} className="btn btn-outline btn-sm">
           Bikini Sets
         </Link>
-        <Link href="/collections/brazilian-bikini-tops" className="btn btn-outline btn-sm">
+        <Link href={TOPS_HREF} className="btn btn-outline btn-sm">
           Bikini Tops
         </Link>
       </nav>
