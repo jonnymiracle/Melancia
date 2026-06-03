@@ -60,6 +60,8 @@ export default async function ProductPage({ params }: Props) {
 
   const jsonLd = buildProductJsonLd(product)
 
+  // Keep this trail in sync with the visible breadcrumb rendered in
+  // ProductDetail.tsx (.pdp-breadcrumb): Home / Shop / {product.title}.
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: 'Home', url: `${SITE_URL}/` },
     { name: 'Shop', url: `${SITE_URL}/shop` },

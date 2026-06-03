@@ -26,6 +26,13 @@ describe('buildBreadcrumbJsonLd', () => {
     expect(roundTripped).toEqual(schema)
   })
 
+  // 1b. Empty input still produces a valid BreadcrumbList with an empty list
+  it('returns a valid BreadcrumbList with an empty itemListElement for empty input', () => {
+    const schema = buildBreadcrumbJsonLd([])
+    expect(schema['@type']).toBe('BreadcrumbList')
+    expect(schema.itemListElement).toEqual([])
+  })
+
   // 2. Top-level type fields
   it('sets @context to https://schema.org', () => {
     const schema = buildBreadcrumbJsonLd(threeItems)
