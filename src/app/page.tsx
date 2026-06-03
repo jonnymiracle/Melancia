@@ -70,7 +70,7 @@ export default async function HomePage() {
       <section className="about-strip">
         <div className="about-strip-image">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/photos bottom hero/wheelbarrow.jpeg" alt="Brazilian bikini swimwear lifestyle — Melancia Swim" style={{ width: '100%', height: 'calc(100% + 200px)', objectFit: 'cover', display: 'block', marginTop: '-200px' }} />
+          <img src="/images/photos bottom hero/wheelbarrow.jpeg" alt="Brazilian bikini swimwear lifestyle — Melancia Swim" loading="lazy" decoding="async" style={{ width: '100%', height: 'calc(100% + 200px)', objectFit: 'cover', display: 'block', marginTop: '-200px' }} />
         </div>
         <div className="about-strip-content">
           <h2>Made for the sun.<br /><em>Made for you.</em></h2>

@@ -67,7 +67,13 @@ export default function ProductCard3({ product }: ProductCard3Props) {
       <div className="product-card">
         <div className="product-image">
           {product.image ? (
-            <Image src={product.image} alt={product.name} fill style={{ objectFit: 'cover' }} />
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes="(max-width: 768px) 50vw, 400px"
+              style={{ objectFit: 'cover' }}
+            />
           ) : (
             <div className={`product-image-placeholder ${product.placeholderClass}`}>
               <ShirtIcon />
