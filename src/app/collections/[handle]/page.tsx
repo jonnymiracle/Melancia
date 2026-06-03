@@ -17,8 +17,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!collection) return { title: 'Collection Not Found' }
 
   const url = `/collections/${handle}`
+  const ogImages = [{ url: LOGO_IMAGE, width: 1200, height: 630, alt: `${SITE_NAME} logo` }]
   return {
-    title: collection.title,
+    // `collection.title` already ends with "| Melancia Swim"; use `absolute`
+    // so the root layout's "%s | Melancia Swim" template doesn't append it twice.
+    title: { absolute: collection.title },
     description: collection.metaDescription,
     alternates: {
       canonical: url,
@@ -30,7 +33,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url,
       title: collection.title,
       description: collection.metaDescription,
-      images: [{ url: LOGO_IMAGE, width: 1200, height: 630, alt: `${SITE_NAME} logo` }],
+      images: ogImages,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: collection.title,
+      description: collection.metaDescription,
+      images: ogImages,
     },
   }
 }
