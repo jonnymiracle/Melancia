@@ -82,6 +82,13 @@ const noDescriptionProduct: ShopifyProductDetail = {
   description: '',
 }
 
+/** No variants at all (defensive edge — real products always have one) */
+const noVariantsProduct: ShopifyProductDetail = {
+  ...baseProduct,
+  handle: 'no-variants',
+  variants: { edges: [] },
+}
+
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
@@ -224,5 +231,15 @@ describe('buildProductJsonLd', () => {
     const schema = buildProductJsonLd(noImageProduct)
     expect(Array.isArray(schema.image)).toBe(true)
     expect((schema.image as string[]).length).toBeGreaterThan(0)
+  })
+
+  // 8. No-variants edge: valid price (never "NaN") and OutOfStock
+  it('emits a valid price and OutOfStock when the product has no variants', () => {
+    const schema = buildProductJsonLd(noVariantsProduct)
+    const offers = schema.offers as Record<string, unknown>
+    expect(offers.price).toBe('0.00')
+    expect(offers.price).not.toBe('NaN')
+    expect(offers.priceCurrency).toBe('USD')
+    expect(offers.availability).toBe('https://schema.org/OutOfStock')
   })
 })

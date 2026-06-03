@@ -38,11 +38,11 @@ export function buildProductJsonLd(
   const firstVariant = product.variants.edges[0]?.node
 
   // Price: use a 2-decimal string that matches the Shopify amount format.
-  // If somehow there are no variants, default to '0.00' so the schema
-  // remains valid — real product pages always have at least one variant.
-  const price = firstVariant
-    ? parseFloat(firstVariant.price.amount).toFixed(2)
-    : '0.00'
+  // Guard against a missing variant or a non-numeric amount so the schema
+  // never emits "NaN" (an invalid schema.org price). Real product pages
+  // always have at least one variant, so '0.00' is just a safe fallback.
+  const parsedPrice = firstVariant ? parseFloat(firstVariant.price.amount) : NaN
+  const price = Number.isFinite(parsedPrice) ? parsedPrice.toFixed(2) : '0.00'
   const priceCurrency = firstVariant?.price.currencyCode ?? 'USD'
 
   // --- availability -------------------------------------------------------
