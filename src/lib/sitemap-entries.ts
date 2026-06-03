@@ -13,8 +13,7 @@
 import type { MetadataRoute } from 'next'
 import { SETS_HREF, TOPS_HREF } from '@/lib/collections'
 import { blogArticleHref } from '@/lib/blog-href'
-
-const BASE_URL = 'https://www.melanciaswim.com'
+import { SITE_URL as BASE_URL } from '@/lib/site-config'
 
 // Minimal shapes that the builder requires — keeps the function fully testable
 // without importing the full Shopify types.
