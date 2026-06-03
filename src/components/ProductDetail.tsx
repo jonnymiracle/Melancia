@@ -227,9 +227,11 @@ export default function ProductDetail({ product }: Props) {
                   onClick={() => setActiveImage(i)}
                   aria-label={`View photo ${i + 1}`}
                 >
+                  {/* Decorative: the button's aria-label already names the photo,
+                      so an empty alt avoids screen-reader double-announcing. */}
                   <Image
                     src={img.url}
-                    alt={buildImageAlt(product, img, i)}
+                    alt=""
                     fill
                     style={{ objectFit: 'cover' }}
                     sizes="72px"
