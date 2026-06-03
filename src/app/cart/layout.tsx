@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Your Cart',
   description: 'Review your Melancia swimwear and head to checkout.',
   alternates: {
-    canonical: '/cart',
+    canonical: 'https://www.melanciaswim.com/cart',
   },
 }
 
