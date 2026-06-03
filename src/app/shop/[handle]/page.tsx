@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { fetchProductByHandle } from '@/lib/shopify-products'
 import { SITE_NAME, LOGO_IMAGE } from '@/lib/site-config'
+import { buildProductJsonLd } from '@/lib/product-jsonld'
 import ProductDetail from '@/components/ProductDetail'
 
 export const dynamic = 'force-dynamic'
@@ -55,5 +56,16 @@ export default async function ProductPage({ params }: Props) {
   const { handle } = await params
   const product = await fetchProductByHandle(handle)
   if (!product) notFound()
-  return <ProductDetail product={product} />
+
+  const jsonLd = buildProductJsonLd(product)
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ProductDetail product={product} />
+    </>
+  )
 }
