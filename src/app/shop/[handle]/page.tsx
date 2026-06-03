@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { fetchProductByHandle } from '@/lib/shopify-products'
-import { SITE_NAME, LOGO_IMAGE } from '@/lib/site-config'
+import { SITE_NAME, SITE_URL, LOGO_IMAGE } from '@/lib/site-config'
 import { buildProductJsonLd } from '@/lib/product-jsonld'
+import { buildBreadcrumbJsonLd } from '@/lib/breadcrumb-jsonld'
 import ProductDetail from '@/components/ProductDetail'
 
 export const dynamic = 'force-dynamic'
@@ -59,11 +60,21 @@ export default async function ProductPage({ params }: Props) {
 
   const jsonLd = buildProductJsonLd(product)
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Home', url: `${SITE_URL}/` },
+    { name: 'Shop', url: `${SITE_URL}/shop` },
+    { name: product.title, url: `${SITE_URL}/shop/${handle}` },
+  ])
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <ProductDetail product={product} />
     </>

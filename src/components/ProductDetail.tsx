@@ -184,6 +184,8 @@ export default function ProductDetail({ product }: Props) {
   return (
     <>
       <p className="pdp-breadcrumb">
+        <Link href="/">Home</Link>
+        {' / '}
         <Link href="/shop">Shop</Link>
         {' / '}
         {product.title}
