@@ -27,6 +27,16 @@
 import type { ShopifyProduct } from '@/types/shopify'
 import { SITE_NAME } from '@/lib/site-config'
 
+/**
+ * Minimal structural type accepted by the classifier helpers.
+ * Both `ShopifyProduct` and `ShopifyProductDetail` satisfy this shape,
+ * so both can be passed to `classifyProduct` without casting.
+ */
+export type ClassifiableProduct = {
+  tags?: string[]
+  variants?: { edges: { node: { price: { amount: string } } }[] }
+}
+
 export const SETS_HANDLE = 'brazilian-bikini-sets' as const
 export const TOPS_HANDLE = 'brazilian-bikini-tops' as const
 
@@ -55,7 +65,7 @@ export interface Collection {
 // --- representative price ----------------------------------------------------
 
 /** First variant's price.amount parsed to a number; NaN when absent/unparseable. */
-function representativePrice(product: ShopifyProduct): number {
+function representativePrice(product: ClassifiableProduct): number {
   const amount = product.variants?.edges?.[0]?.node.price.amount
   return amount === undefined ? NaN : parseFloat(amount)
 }
@@ -72,7 +82,7 @@ const TOP_TAG_RE = /\btop\b/i
  * "set" takes precedence: a product tagged as a set (even a "bikini top set")
  * is treated as a set.
  */
-function tagKind(product: ShopifyProduct): CollectionKind | null {
+function tagKind(product: ClassifiableProduct): CollectionKind | null {
   const tags = product.tags ?? []
   if (tags.some((tag) => SET_TAG_RE.test(tag))) return 'set'
   if (tags.some((tag) => TOP_TAG_RE.test(tag))) return 'top'
@@ -81,11 +91,13 @@ function tagKind(product: ShopifyProduct): CollectionKind | null {
 
 /**
  * Classify a product as a 'set' or 'top' (pure).
+ * Accepts any shape that has `tags` and `variants.edges[].node.price.amount`
+ * — both `ShopifyProduct` and `ShopifyProductDetail` satisfy `ClassifiableProduct`.
  * Tag signal wins; otherwise the price threshold decides. A product with no
  * tag signal and an unparseable price falls back to 'top' (the cheaper, more
  * conservative bucket) — it simply won't surface in the sets collection.
  */
-export function classifyProduct(product: ShopifyProduct): CollectionKind {
+export function classifyProduct(product: ClassifiableProduct): CollectionKind {
   const fromTag = tagKind(product)
   if (fromTag) return fromTag
   const price = representativePrice(product)

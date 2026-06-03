@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { fetchProductByHandle } from '@/lib/shopify-products'
 import { SITE_NAME, SITE_URL, LOGO_IMAGE } from '@/lib/site-config'
 import { buildProductJsonLd } from '@/lib/product-jsonld'
+import { buildProductTitle } from '@/lib/product-title'
 import { buildBreadcrumbJsonLd } from '@/lib/breadcrumb-jsonld'
 import ProductDetail from '@/components/ProductDetail'
 
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return { title: 'Product Not Found' }
 
   const description = product.description?.slice(0, 160) || undefined
-  const ogTitle = `${product.title} Brazilian Bikini | ${SITE_NAME}`
+  const keywordTitle = buildProductTitle(product)
   const productUrl = `/shop/${handle}`
 
   const firstImageUrl = product.images.edges[0]?.node.url ?? null
@@ -28,7 +29,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : [{ url: LOGO_IMAGE, width: 1200, height: 630, alt: `${SITE_NAME} logo` }]
 
   return {
-    title: product.title,
+    // Absolute title — already ends with "| Melancia Swim", so we use { absolute }
+    // to prevent the root layout's "%s | Melancia Swim" template from doubling it.
+    title: { absolute: keywordTitle },
     description,
     alternates: {
       canonical: productUrl,
@@ -40,13 +43,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: SITE_NAME,
       locale: 'en_US',
       url: productUrl,
-      title: ogTitle,
+      title: keywordTitle,
       description,
       images: ogImages,
     },
     twitter: {
       card: 'summary_large_image',
-      title: ogTitle,
+      title: keywordTitle,
       description,
       images: ogImages,
     },
