@@ -5,14 +5,14 @@ import type { ProductCard3Product } from '@/types/shopify'
 import ShopCatalog from './ShopCatalog'
 
 export const metadata: Metadata = {
-  title: 'Shop Bikinis & Swimwear',
-  description: 'Shop Melancia Swim — Brazilian-style bikinis, small bikinis, and swimwear designed for tanning. Bold colors, minimal silhouettes, ships within the USA. Browse the full collection.',
+  title: 'Brazilian Bikinis',
+  description: 'Shop Brazilian bikinis from Melancia Swim — cheeky, high-cut, minimal-coverage swimwear made in Brazil. Bold colors, sets and tops, ships within the USA. Browse the full collection.',
   alternates: {
     canonical: 'https://www.melanciaswim.com/shop',
   },
   openGraph: {
-    title: 'Shop Bikinis & Swimwear | Melancia Swim',
-    description: 'Brazilian-style bikinis and swimwear designed for tanning. Small bikinis, bold colors, minimal silhouettes — ships within the USA.',
+    title: 'Brazilian Bikinis | Melancia Swim',
+    description: 'Brazilian bikinis made in Brazil — cheeky, high-cut, minimal-coverage swimwear. Bold colors, sets and tops, ships within the USA.',
     url: 'https://www.melanciaswim.com/shop',
   },
 }
@@ -31,5 +31,17 @@ export default async function ShopPage() {
     /* missing env or network — keep catalog */
   }
 
-  return <ShopCatalog products={products} />
+  // PLACEHOLDER intro copy — replaced by the long-form content track.
+  const intro = (
+    <header className="collection-intro">
+      <h1>Brazilian Bikinis</h1>
+      <p>
+        PLACEHOLDER: Discover Brazilian bikinis made in Brazil — cheeky,
+        high-cut, minimal-coverage swimwear in bold colors. Shop coordinated
+        sets and mix-and-match tops designed to move with you from sand to sea.
+      </p>
+    </header>
+  )
+
+  return <ShopCatalog products={products} intro={intro} />
 }

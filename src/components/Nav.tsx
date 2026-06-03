@@ -80,6 +80,8 @@ export default function Nav() {
       <div className="nav-links-container">
         <ul className={`nav-links${menuOpen ? ' nav-open' : ''}`} id="nav-menu">
           <li><Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link></li>
+          <li><Link href="/collections/brazilian-bikini-sets" className={isActive('/collections/brazilian-bikini-sets') ? 'active' : ''}>Sets</Link></li>
+          <li><Link href="/collections/brazilian-bikini-tops" className={isActive('/collections/brazilian-bikini-tops') ? 'active' : ''}>Tops</Link></li>
           <li><Link href="/about" className={isActive('/about') ? 'active' : ''}>Our Story</Link></li>
           <li><Link href="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
         </ul>

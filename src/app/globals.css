@@ -1825,6 +1825,22 @@ footer {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
 
+/* Collection / hub intro region above the product grid */
+.collection-intro {
+  margin-bottom: 24px;
+  max-width: 720px;
+}
+.collection-intro h1 {
+  font-size: 1.8rem;
+  margin: 0 0 8px;
+}
+.collection-intro p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin: 0;
+}
+
 /* Size buttons (used for pagination) */
 .size-btn {
   min-width: 42px;

@@ -27,7 +27,9 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Shop</h4>
           <ul>
-            <li><Link href="/shop">All Swimwear</Link></li>
+            <li><Link href="/shop">Brazilian Bikinis</Link></li>
+            <li><Link href="/collections/brazilian-bikini-sets">Bikini Sets</Link></li>
+            <li><Link href="/collections/brazilian-bikini-tops">Bikini Tops</Link></li>
           </ul>
         </div>
 
