@@ -62,17 +62,20 @@ function representativePrice(product: ShopifyProduct): number {
 
 // --- tag signal --------------------------------------------------------------
 
-/** Returns 'set' / 'top' from an explicit tag, or null when no tag signal. */
+// Match "set" / "top" as whole words so substrings like "sunset" or
+// "laptop" don't accidentally classify a product.
+const SET_TAG_RE = /\bset\b/i
+const TOP_TAG_RE = /\btop\b/i
+
+/**
+ * Returns 'set' / 'top' from an explicit tag, or null when no tag signal.
+ * "set" takes precedence: a product tagged as a set (even a "bikini top set")
+ * is treated as a set.
+ */
 function tagKind(product: ShopifyProduct): CollectionKind | null {
   const tags = product.tags ?? []
-  for (const tag of tags) {
-    const t = tag.toLowerCase()
-    // "set" is checked first; a product tagged as a set is a set.
-    if (t.includes('set')) return 'set'
-  }
-  for (const tag of tags) {
-    if (tag.toLowerCase().includes('top')) return 'top'
-  }
+  if (tags.some((tag) => SET_TAG_RE.test(tag))) return 'set'
+  if (tags.some((tag) => TOP_TAG_RE.test(tag))) return 'top'
   return null
 }
 

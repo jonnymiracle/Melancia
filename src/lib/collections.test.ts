@@ -129,6 +129,26 @@ describe('filterProductsForCollection', () => {
   it('returns an empty array for an unknown handle', () => {
     expect(filterProductsForCollection(allProducts, 'tanning-bikinis')).toEqual([])
   })
+
+  it('a product with no variants falls back to the "top" bucket', () => {
+    const noVariants = {
+      id: 'no-variants',
+      title: 'No Variants',
+      tags: [],
+      variants: undefined,
+    } as unknown as ShopifyProduct
+    expect(filterProductsForCollection([noVariants], TOPS_HANDLE)).toHaveLength(1)
+    expect(filterProductsForCollection([noVariants], SETS_HANDLE)).toHaveLength(0)
+  })
+
+  it('does not misclassify substring tags ("sunset" / "laptop") as set/top', () => {
+    // 'sunset' contains "set", 'laptop' contains "top" — neither is a real signal,
+    // so price (here $42.50) must decide → both are tops.
+    const sunset = makeProduct({ id: 'sunset', title: 'Sunset', tags: ['sunset'], price: '42.50' })
+    const laptop = makeProduct({ id: 'laptop', title: 'Laptop', tags: ['laptop'], price: '42.50' })
+    expect(filterProductsForCollection([sunset, laptop], SETS_HANDLE)).toHaveLength(0)
+    expect(filterProductsForCollection([sunset, laptop], TOPS_HANDLE)).toHaveLength(2)
+  })
 })
 
 // ---------------------------------------------------------------------------
