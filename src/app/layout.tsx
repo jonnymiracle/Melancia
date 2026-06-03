@@ -7,6 +7,7 @@ import PageLoader from '@/components/PageLoader'
 import EngagementPopover from '@/components/EngagementPopover'
 import BackgroundDecor from '@/components/BackgroundDecor'
 import { brandTabIconHref } from '@/components/icons'
+import { SITE_NAME, LOGO_IMAGE } from '@/lib/site-config'
 
 const lora = Lora({
   subsets: ['latin'],
@@ -54,18 +55,18 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     type: 'website',
-    siteName: 'Melancia Swim',
+    siteName: SITE_NAME,
     url: 'https://www.melanciaswim.com',
     title: 'Melancia Swim | Brazilian Bikinis & Swimwear',
     description: 'Shop Brazilian-style bikinis and swimwear designed for tanning. Bold colors, minimal silhouettes — shipped within the USA.',
-    images: [{ url: '/images/Logo original colors.png', width: 1200, height: 630, alt: 'Melancia Swim — Brazilian Bikinis & Swimwear' }],
+    images: [{ url: LOGO_IMAGE, width: 1200, height: 630, alt: 'Melancia Swim — Brazilian Bikinis & Swimwear' }],
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Melancia Swim | Brazilian Bikinis & Swimwear',
     description: 'Shop Brazilian-style bikinis and swimwear designed for tanning. Bold colors, minimal silhouettes — shipped within the USA.',
-    images: ['/images/Logo original colors.png'],
+    images: [LOGO_IMAGE],
   },
   robots: {
     index: true,

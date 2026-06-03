@@ -1,14 +1,12 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { fetchProductByHandle } from '@/lib/shopify-products'
+import { SITE_NAME, LOGO_IMAGE } from '@/lib/site-config'
 import ProductDetail from '@/components/ProductDetail'
 
 export const dynamic = 'force-dynamic'
 
 type Props = { params: Promise<{ handle: string }> }
-
-const LOGO_IMAGE = '/images/Logo original colors.png'
-const SITE_NAME = 'Melancia Swim'
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle } = await params
@@ -20,8 +18,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const productUrl = `/shop/${handle}`
 
   const firstImageUrl = product.images.edges[0]?.node.url ?? null
+  // Product images come from the Shopify CDN at varying (non-square)
+  // dimensions, so we omit width/height hints and let crawlers read the
+  // real image. The logo has known dimensions, so we keep them there.
   const ogImages = firstImageUrl
-    ? [{ url: firstImageUrl, width: 1200, height: 1200, alt: product.title }]
+    ? [{ url: firstImageUrl, alt: product.title }]
     : [{ url: LOGO_IMAGE, width: 1200, height: 630, alt: `${SITE_NAME} logo` }]
 
   return {
@@ -31,6 +32,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: productUrl,
     },
     openGraph: {
+      // Next.js 14's OpenGraph type union does not include 'product';
+      // 'website' is the closest valid value and degrades gracefully.
       type: 'website',
       siteName: SITE_NAME,
       locale: 'en_US',
