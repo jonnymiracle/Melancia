@@ -67,9 +67,6 @@ export const metadata: Metadata = {
     description: 'Shop Brazilian-style bikinis and swimwear designed for tanning. Bold colors, minimal silhouettes — shipped within the USA.',
     images: ['/images/Logo original colors.png'],
   },
-  alternates: {
-    canonical: 'https://www.melanciaswim.com',
-  },
   robots: {
     index: true,
     follow: true,

@@ -14,6 +14,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: product.title,
     description: product.description?.slice(0, 160) || undefined,
+    alternates: {
+      canonical: `/shop/${handle}`,
+    },
   }
 }
 
