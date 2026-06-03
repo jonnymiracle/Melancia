@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import { fetchBlogArticles } from '@/lib/shopify-blog'
 import { blogArticleHref } from '@/lib/blog-href'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Blog — Swimwear Tips, Style Guides & Beach Life',
   description: 'Swimwear tips, tanning guides, Brazilian bikini style inspiration, and more — from Melancia Swim.',

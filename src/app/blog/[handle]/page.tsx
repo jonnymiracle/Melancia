@@ -5,7 +5,9 @@ import type { Metadata } from 'next'
 import { fetchArticleByHandle, fetchBlogArticles } from '@/lib/shopify-blog'
 import { blogArticleHref } from '@/lib/blog-href'
 
-type Props = { params: { handle: string } }
+export const dynamic = 'force-dynamic'
+
+type Props = { params: Promise<{ handle: string }> }
 
 // handle = "news--my-post-slug" (blogHandle--articleHandle)
 function splitHandle(combined: string): [string, string] {
@@ -15,18 +17,19 @@ function splitHandle(combined: string): [string, string] {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const [blogHandle, articleHandle] = splitHandle(params.handle)
+  const { handle } = await params
+  const [blogHandle, articleHandle] = splitHandle(handle)
   const article = await fetchArticleByHandle(blogHandle, articleHandle)
   if (!article) return {}
 
   return {
     title: article.title,
     description: article.excerpt || article.title,
-    alternates: { canonical: `https://www.melanciaswim.com/blog/${params.handle}` },
+    alternates: { canonical: `https://www.melanciaswim.com/blog/${handle}` },
     openGraph: {
       title: article.title,
       description: article.excerpt || article.title,
-      url: `https://www.melanciaswim.com/blog/${params.handle}`,
+      url: `https://www.melanciaswim.com/blog/${handle}`,
       type: 'article',
       publishedTime: article.publishedAt,
       images: article.image?.url
@@ -37,7 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const [blogHandle, articleHandle] = splitHandle(params.handle)
+  const { handle } = await params
+  const [blogHandle, articleHandle] = splitHandle(handle)
   const [article, related] = await Promise.all([
     fetchArticleByHandle(blogHandle, articleHandle),
     fetchBlogArticles(4),
