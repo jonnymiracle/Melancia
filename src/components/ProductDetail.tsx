@@ -6,6 +6,7 @@ import Link from 'next/link'
 import type { ShopifyProductDetail } from '@/types/shopify'
 import { addToCart } from '@/lib/add-to-cart-client'
 import { getModelSizeNote } from '@/lib/model-size'
+import { buildImageAlt } from '@/lib/image-alt'
 
 type Props = { product: ShopifyProductDetail }
 type Variant = ShopifyProductDetail['variants']['edges'][0]['node']
@@ -200,7 +201,7 @@ export default function ProductDetail({ product }: Props) {
                 <Image
                   key={img.url}
                   src={img.url}
-                  alt={img.altText ?? product.title}
+                  alt={buildImageAlt(product, img, i)}
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                   priority
@@ -228,7 +229,7 @@ export default function ProductDetail({ product }: Props) {
                 >
                   <Image
                     src={img.url}
-                    alt={img.altText ?? product.title}
+                    alt={buildImageAlt(product, img, i)}
                     fill
                     style={{ objectFit: 'cover' }}
                     sizes="72px"

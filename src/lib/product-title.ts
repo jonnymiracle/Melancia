@@ -25,7 +25,7 @@ import { SITE_NAME } from '@/lib/site-config'
  * Derive a single Color value to inject into the title, or null when the
  * product has zero or multiple colors (ambiguous → omit for safety).
  */
-function singleColorValue(product: ShopifyProductDetail): string | null {
+export function singleColorValue(product: ShopifyProductDetail): string | null {
   const colorOption = product.options.find(
     (opt) => opt.name.toLowerCase() === 'color',
   )
