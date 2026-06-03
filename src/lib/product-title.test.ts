@@ -77,6 +77,12 @@ const zeroColorProduct = makeDetail({
   ],
 })
 
+const whitespaceColorProduct = makeDetail({
+  title: 'Test',
+  price: '42.50',
+  options: [{ name: 'Color', values: ['   '] }],
+})
+
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
@@ -136,6 +142,12 @@ describe('buildProductTitle', () => {
     expect(title).toContain('Black')
     // "Carvão Black Brazilian Bikini Top | Melancia Swim"
     expect(title).toBe('Carvão Black Brazilian Bikini Top | Melancia Swim')
+  })
+
+  it('whitespace-only Color value → color NOT injected (no stray spaces)', () => {
+    expect(buildProductTitle(whitespaceColorProduct)).toBe(
+      'Test Brazilian Bikini Top | Melancia Swim',
+    )
   })
 
   it('multiple Color option values → color NOT injected', () => {

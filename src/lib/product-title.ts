@@ -30,7 +30,8 @@ function singleColorValue(product: ShopifyProductDetail): string | null {
     (opt) => opt.name.toLowerCase() === 'color',
   )
   if (!colorOption || colorOption.values.length !== 1) return null
-  return colorOption.values[0]
+  const value = colorOption.values[0].trim()
+  return value || null
 }
 
 /**
