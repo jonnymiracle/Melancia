@@ -1,11 +1,15 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { fetchProductByHandle } from '@/lib/shopify-products'
+import Link from 'next/link'
+import { fetchProductByHandle, fetchAllStorefrontProducts } from '@/lib/shopify-products'
 import { SITE_NAME, SITE_URL, LOGO_IMAGE } from '@/lib/site-config'
 import { buildProductJsonLd } from '@/lib/product-jsonld'
 import { buildProductTitle } from '@/lib/product-title'
 import { buildBreadcrumbJsonLd } from '@/lib/breadcrumb-jsonld'
+import { classifyProduct } from '@/lib/collections'
+import { getRelatedProducts } from '@/lib/related-products'
 import ProductDetail from '@/components/ProductDetail'
+import ProductCard3 from '@/components/ProductCard3'
 
 export const dynamic = 'force-dynamic'
 
@@ -71,6 +75,15 @@ export default async function ProductPage({ params }: Props) {
     { name: product.title, url: `${SITE_URL}/shop/${handle}` },
   ])
 
+  // Fetch full catalog for related products; degrade gracefully on error.
+  const catalog = await fetchAllStorefrontProducts({ maxProducts: 1000 }).catch(() => [])
+  const relatedProducts = getRelatedProducts(product, catalog, 4)
+
+  // Derive a human-readable heading — ad-safe, never "tiny".
+  const kind = classifyProduct(product)
+  const relatedHeading =
+    kind === 'set' ? 'More Brazilian Bikini Sets' : 'More Brazilian Bikini Tops'
+
   return (
     <>
       <script
@@ -82,6 +95,25 @@ export default async function ProductPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <ProductDetail product={product} />
+
+      {relatedProducts.length > 0 && (
+        <section className="related-products-section">
+          <div className="related-products-header">
+            <h2>{relatedHeading}</h2>
+            <Link
+              href={kind === 'set' ? '/collections/brazilian-bikini-sets' : '/collections/brazilian-bikini-tops'}
+              className="btn btn-outline btn-sm"
+            >
+              View All
+            </Link>
+          </div>
+          <div className="product-grid">
+            {relatedProducts.map((p) => (
+              <ProductCard3 key={p.id} product={p} />
+            ))}
+          </div>
+        </section>
+      )}
     </>
   )
 }

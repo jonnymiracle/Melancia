@@ -3891,4 +3891,50 @@ a.size-btn:visited {
   .cs-center > *, .cs-title { animation: none; }
 }
 
+/* ── A10: Internal linking ─────────────────────────────────────────── */
+
+/* Home page "Shop by Category" chips below the featured grid CTA */
+.shop-by-category {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+/* Shop hub collection chips inside .collection-intro */
+.collection-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* Related products section on product detail page */
+.related-products-section {
+  max-width: 1200px;
+  margin: 48px auto 0;
+  padding: 0 24px 64px;
+}
+.related-products-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.related-products-header h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .related-products-section {
+    padding: 0 16px 48px;
+  }
+  .related-products-header h2 {
+    font-size: 1.2rem;
+  }
+}
+
 /* ── End Coming Soon Page ── */

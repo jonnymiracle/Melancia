@@ -62,6 +62,16 @@ export default async function HomePage() {
         <div style={{ textAlign: 'center', marginTop: 48 }}>
           <Link href="/shop" className="btn btn-outline">View All Products</Link>
         </div>
+
+        {/* ── Shop by Category ── */}
+        <nav className="shop-by-category" aria-label="Shop by category">
+          <Link href="/collections/brazilian-bikini-sets" className="btn btn-outline">
+            Brazilian Bikini Sets
+          </Link>
+          <Link href="/collections/brazilian-bikini-tops" className="btn btn-outline">
+            Brazilian Bikini Tops
+          </Link>
+        </nav>
       </section>
 
 

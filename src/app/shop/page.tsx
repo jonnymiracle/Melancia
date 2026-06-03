@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { fetchAllStorefrontProducts } from '@/lib/shopify-products'
 import { allProducts } from '@/data/products'
 import type { ProductCard3Product } from '@/types/shopify'
@@ -40,6 +41,15 @@ export default async function ShopPage() {
         high-cut, minimal-coverage swimwear in bold colors. Shop coordinated
         sets and mix-and-match tops designed to move with you from sand to sea.
       </p>
+      {/* Collection hub links — internal linking for SEO */}
+      <nav className="collection-chips" aria-label="Shop by collection">
+        <Link href="/collections/brazilian-bikini-sets" className="btn btn-outline btn-sm">
+          Bikini Sets
+        </Link>
+        <Link href="/collections/brazilian-bikini-tops" className="btn btn-outline btn-sm">
+          Bikini Tops
+        </Link>
+      </nav>
     </header>
   )
 
