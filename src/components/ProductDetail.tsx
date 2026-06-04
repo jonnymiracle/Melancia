@@ -314,6 +314,9 @@ export default function ProductDetail({ product }: Props) {
                       </button>
                     ))}
                   </div>
+                  <Link href="/size-guide" className="pdp-size-guide-link">
+                    Size Guide →
+                  </Link>
                 </div>
               )
             }
@@ -376,6 +379,10 @@ export default function ProductDetail({ product }: Props) {
               {pending ? 'Adding…' : added ? '✓ Added to bag!' : 'Add to Bag'}
             </button>
           )}
+
+          <p className="pdp-shipping-note">
+            <Link href="/shipping-policy">Free shipping on orders $80+&nbsp;·&nbsp;30-day returns</Link>
+          </p>
 
           {/* Description */}
           {product.descriptionHtml ? (

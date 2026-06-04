@@ -40,6 +40,8 @@ export default function Footer() {
             <li><Link href="/about">Our Story</Link></li>
             <li><Link href="/blog">Journal</Link></li>
             <li><Link href="/contact">Contact Us</Link></li>
+            <li><Link href="/size-guide">Size Guide</Link></li>
+            <li><Link href="/shipping-policy">Shipping &amp; Returns</Link></li>
           </ul>
         </div>
       </div>

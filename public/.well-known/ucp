@@ -1,0 +1,47 @@
+{
+  "version": "1.0",
+  "store": {
+    "name": "Melancia Swim",
+    "url": "https://www.melanciaswim.com",
+    "description": "Brazilian-style bikinis and swimwear designed for tanning. Minimal silhouettes, bold colors, shipped within the USA.",
+    "logo": "https://www.melanciaswim.com/images/Logo original colors.png",
+    "currency": "USD",
+    "locale": "en-US",
+    "contactEmail": "contact@melanciaswim.com"
+  },
+  "protocols": {
+    "mcp": {
+      "enabled": true,
+      "endpoint": "https://melanciaswim.myshopify.com/api/mcp"
+    },
+    "storefront_api": {
+      "enabled": true,
+      "endpoint": "https://melanciaswim.myshopify.com/api/2024-01/graphql.json"
+    }
+  },
+  "capabilities": {
+    "product_discovery": true,
+    "cart": true,
+    "checkout": true,
+    "inventory": true
+  },
+  "payments": {
+    "provider": "shopify_payments",
+    "currencies": ["USD"]
+  },
+  "shipping": {
+    "domestic": {
+      "regions": ["US"],
+      "free_threshold_usd": 80,
+      "estimated_days": "3-5"
+    },
+    "international": {
+      "free_threshold_usd": 120,
+      "estimated_days": "7-14"
+    }
+  },
+  "returns": {
+    "window_days": 30,
+    "policy_url": "https://www.melanciaswim.com/shipping-policy"
+  }
+}

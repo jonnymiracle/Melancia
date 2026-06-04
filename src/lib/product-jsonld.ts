@@ -34,32 +34,46 @@ export function buildProductJsonLd(
       ? imageUrls
       : [`${SITE_URL}${LOGO_IMAGE}`]
 
-  // --- first variant (price / currency) ----------------------------------
-  const firstVariant = product.variants.edges[0]?.node
-
-  // Price: use a 2-decimal string that matches the Shopify amount format.
-  // Guard against a missing variant or a non-numeric amount so the schema
-  // never emits "NaN" (an invalid schema.org price). Real product pages
-  // always have at least one variant, so '0.00' is just a safe fallback.
-  const parsedPrice = firstVariant ? parseFloat(firstVariant.price.amount) : NaN
-  const price = Number.isFinite(parsedPrice) ? parsedPrice.toFixed(2) : '0.00'
-  const priceCurrency = firstVariant?.price.currencyCode ?? 'USD'
-
-  // --- availability -------------------------------------------------------
-  const anyInStock = product.variants.edges.some((e) => e.node.availableForSale)
-  const availability = anyInStock
-    ? 'https://schema.org/InStock'
-    : 'https://schema.org/OutOfStock'
-
-  // --- offers -------------------------------------------------------------
+  // --- offers (per-variant) ----------------------------------------------
+  // AI agents need one Offer per variant so they can tell whether a specific
+  // size is in stock — a single aggregate Offer hides that. Each variant
+  // reuses the same 2-decimal price logic and the same product URL (we do
+  // not append variant query params).
   const productUrl = `${SITE_URL}/shop/${product.handle}`
 
-  const offers: Record<string, unknown> = {
-    '@type': 'Offer',
-    price,
-    priceCurrency,
-    availability,
-    url: productUrl,
+  const offers: Record<string, unknown>[] = product.variants.edges.map((e) => {
+    const variant = e.node
+    // Guard against a non-numeric amount so the schema never emits "NaN"
+    // (an invalid schema.org price).
+    const parsedPrice = parseFloat(variant.price.amount)
+    const price = Number.isFinite(parsedPrice) ? parsedPrice.toFixed(2) : '0.00'
+
+    return {
+      '@type': 'Offer',
+      name: variant.title,
+      sku: variant.id,
+      price,
+      priceCurrency: variant.price.currencyCode,
+      availability: variant.availableForSale
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+      url: productUrl,
+      itemCondition: 'https://schema.org/NewCondition',
+    }
+  })
+
+  // Defensive fallback: real product pages always have at least one variant,
+  // but if none exist we still emit a single safe Offer (price '0.00',
+  // OutOfStock, no name/sku) so the schema stays valid.
+  if (offers.length === 0) {
+    offers.push({
+      '@type': 'Offer',
+      price: '0.00',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/OutOfStock',
+      url: productUrl,
+      itemCondition: 'https://schema.org/NewCondition',
+    })
   }
 
   // --- schema object ------------------------------------------------------

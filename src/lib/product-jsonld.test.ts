@@ -142,42 +142,66 @@ describe('buildProductJsonLd', () => {
     expect(brand['@type']).toBe('Brand')
   })
 
-  // 3. Offers — price matches input
-  it('offers.price equals the first variant price amount', () => {
+  // 3. Offers — array of per-variant offers
+  it('offers is an array with one entry per variant', () => {
     const schema = buildProductJsonLd(baseProduct)
-    const offers = schema.offers as Record<string, unknown>
-    expect(offers.price).toBe('68.00')
+    expect(Array.isArray(schema.offers)).toBe(true)
+    expect((schema.offers as unknown[]).length).toBe(
+      baseProduct.variants.edges.length,
+    )
   })
 
-  it('offers.priceCurrency equals the first variant currencyCode (USD)', () => {
+  it('each offer has @type Offer, price, priceCurrency, availability, sku, and url', () => {
     const schema = buildProductJsonLd(baseProduct)
-    const offers = schema.offers as Record<string, unknown>
-    expect(offers.priceCurrency).toBe('USD')
+    const offers = schema.offers as Record<string, unknown>[]
+    for (const offer of offers) {
+      expect(offer['@type']).toBe('Offer')
+      expect(typeof offer.price).toBe('string')
+      expect(offer.priceCurrency).toBe('USD')
+      expect(typeof offer.availability).toBe('string')
+      expect(typeof offer.sku).toBe('string')
+      expect(offer.url).toBe('https://www.melanciaswim.com/shop/leblon-glow')
+    }
   })
 
-  it('offers.url is the absolute product URL', () => {
+  it('first offer price equals the first variant price amount', () => {
     const schema = buildProductJsonLd(baseProduct)
-    const offers = schema.offers as Record<string, unknown>
-    expect(offers.url).toBe('https://www.melanciaswim.com/shop/leblon-glow')
+    const offers = schema.offers as Record<string, unknown>[]
+    expect(offers[0].price).toBe('68.00')
   })
 
-  it('offers has @type Offer', () => {
+  it('first offer priceCurrency equals the first variant currencyCode (USD)', () => {
     const schema = buildProductJsonLd(baseProduct)
-    const offers = schema.offers as Record<string, unknown>
-    expect(offers['@type']).toBe('Offer')
+    const offers = schema.offers as Record<string, unknown>[]
+    expect(offers[0].priceCurrency).toBe('USD')
   })
 
-  // 4. Availability
-  it('offers.availability is InStock when at least one variant is availableForSale', () => {
-    const schema = buildProductJsonLd(baseProduct) // has one in-stock variant
-    const offers = schema.offers as Record<string, unknown>
-    expect(offers.availability).toBe('https://schema.org/InStock')
+  it('first offer url is the absolute product URL', () => {
+    const schema = buildProductJsonLd(baseProduct)
+    const offers = schema.offers as Record<string, unknown>[]
+    expect(offers[0].url).toBe('https://www.melanciaswim.com/shop/leblon-glow')
   })
 
-  it('offers.availability is OutOfStock when no variant is availableForSale', () => {
+  it('first offer has @type Offer', () => {
+    const schema = buildProductJsonLd(baseProduct)
+    const offers = schema.offers as Record<string, unknown>[]
+    expect(offers[0]['@type']).toBe('Offer')
+  })
+
+  // 4. Per-variant availability
+  it('per-variant availability is InStock for availableForSale:true and OutOfStock for availableForSale:false', () => {
+    const schema = buildProductJsonLd(baseProduct) // one in-stock, one out-of-stock
+    const offers = schema.offers as Record<string, unknown>[]
+    expect(offers[0].availability).toBe('https://schema.org/InStock')
+    expect(offers[1].availability).toBe('https://schema.org/OutOfStock')
+  })
+
+  it('every offer is OutOfStock when no variant is availableForSale', () => {
     const schema = buildProductJsonLd(outOfStockProduct)
-    const offers = schema.offers as Record<string, unknown>
-    expect(offers.availability).toBe('https://schema.org/OutOfStock')
+    const offers = schema.offers as Record<string, unknown>[]
+    for (const offer of offers) {
+      expect(offer.availability).toBe('https://schema.org/OutOfStock')
+    }
   })
 
   // 5. aggregateRating — absent without rating, present with rating
@@ -233,13 +257,19 @@ describe('buildProductJsonLd', () => {
     expect((schema.image as string[]).length).toBeGreaterThan(0)
   })
 
-  // 8. No-variants edge: valid price (never "NaN") and OutOfStock
+  // 8. No-variants edge: still an array with one safe fallback offer
+  it('empty variants edge case still produces an offers array with one fallback entry', () => {
+    const schema = buildProductJsonLd(noVariantsProduct)
+    expect(Array.isArray(schema.offers)).toBe(true)
+    expect((schema.offers as unknown[]).length).toBe(1)
+  })
+
   it('emits a valid price and OutOfStock when the product has no variants', () => {
     const schema = buildProductJsonLd(noVariantsProduct)
-    const offers = schema.offers as Record<string, unknown>
-    expect(offers.price).toBe('0.00')
-    expect(offers.price).not.toBe('NaN')
-    expect(offers.priceCurrency).toBe('USD')
-    expect(offers.availability).toBe('https://schema.org/OutOfStock')
+    const offers = schema.offers as Record<string, unknown>[]
+    expect(offers[0].price).toBe('0.00')
+    expect(offers[0].price).not.toBe('NaN')
+    expect(offers[0].priceCurrency).toBe('USD')
+    expect(offers[0].availability).toBe('https://schema.org/OutOfStock')
   })
 })

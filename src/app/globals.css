@@ -3396,6 +3396,35 @@ a.size-btn:visited {
   text-decoration: line-through;
 }
 
+.pdp-size-guide-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--color-accent, #b5823a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.85;
+}
+.pdp-size-guide-link:hover {
+  opacity: 1;
+}
+
+.pdp-shipping-note {
+  margin-top: 10px;
+  font-size: 0.76rem;
+  letter-spacing: 0.03em;
+  color: var(--color-muted, #888);
+}
+.pdp-shipping-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pdp-shipping-note a:hover {
+  color: var(--color-accent, #b5823a);
+}
+
 /* ── Color swatches on PDP ── */
 .pdp-color-circles { display: flex; flex-wrap: wrap; gap: 10px; }
 

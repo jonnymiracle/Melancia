@@ -6,6 +6,7 @@ import { SITE_NAME, SITE_URL, LOGO_IMAGE } from '@/lib/site-config'
 import { buildProductJsonLd } from '@/lib/product-jsonld'
 import { buildProductTitle } from '@/lib/product-title'
 import { buildBreadcrumbJsonLd } from '@/lib/breadcrumb-jsonld'
+import { buildProductFaqJsonLd } from '@/lib/faq-jsonld'
 import { classifyProduct, SETS_HREF, TOPS_HREF } from '@/lib/collections'
 import { getRelatedProducts } from '@/lib/related-products'
 import ProductDetail from '@/components/ProductDetail'
@@ -75,6 +76,8 @@ export default async function ProductPage({ params }: Props) {
     { name: product.title, url: `${SITE_URL}/shop/${handle}` },
   ])
 
+  const faqJsonLd = buildProductFaqJsonLd()
+
   // Fetch full catalog for related products; degrade gracefully on error.
   const catalog = await fetchAllStorefrontProducts({ maxProducts: 1000 }).catch(() => [])
   const relatedProducts = getRelatedProducts(product, catalog, 4)
@@ -93,6 +96,10 @@ export default async function ProductPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <ProductDetail product={product} />
 
