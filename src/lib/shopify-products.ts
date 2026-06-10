@@ -25,6 +25,10 @@ const PRODUCT_NODE_FIELDS = `
         id
         title
         availableForSale
+        selectedOptions {
+          name
+          value
+        }
         image {
           url
           altText

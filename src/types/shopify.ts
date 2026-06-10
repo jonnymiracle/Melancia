@@ -14,6 +14,10 @@ export type ShopifyProductVariant = {
     amount: string
     currencyCode: string
   }
+  selectedOptions?: {
+    name: string
+    value: string
+  }[]
 }
 
 /** Product node from Storefront API `products.edges[].node` — matches your query shape */

@@ -7,6 +7,8 @@ import type { ShopifyProductDetail } from '@/types/shopify'
 import { addToCart } from '@/lib/add-to-cart-client'
 import { getModelSizeNote } from '@/lib/model-size'
 import { buildImageAlt } from '@/lib/image-alt'
+import { classifyProduct } from '@/lib/collections'
+import PdpSizeChart from '@/components/PdpSizeChart'
 
 type Props = { product: ShopifyProductDetail }
 type Variant = ShopifyProductDetail['variants']['edges'][0]['node']
@@ -314,9 +316,6 @@ export default function ProductDetail({ product }: Props) {
                       </button>
                     ))}
                   </div>
-                  <Link href="/size-guide" className="pdp-size-guide-link">
-                    Size Guide →
-                  </Link>
                 </div>
               )
             }
@@ -395,6 +394,9 @@ export default function ProductDetail({ product }: Props) {
               <p>{product.description}</p>
             </div>
           ) : null}
+
+          {/* Inline size chart */}
+          <PdpSizeChart kind={classifyProduct(product)} />
 
           {/* Composition & Care */}
           <div className="pdp-composition">

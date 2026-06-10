@@ -3966,4 +3966,113 @@ a.size-btn:visited {
   }
 }
 
+/* ── VariantCard color label ── */
+.variant-card-color {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: var(--mid);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── PDP inline size chart ── */
+.pdp-size-chart {
+  border-top: 1px solid var(--border);
+}
+
+.pdp-size-chart-body {
+  padding-bottom: 18px;
+}
+
+.pdp-size-chart-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.pdp-size-chart-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.pdp-size-chart-tab {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--mid);
+  transition: all 0.15s;
+}
+.pdp-size-chart-tab.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.pdp-size-chart-unit-toggle {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.pdp-size-chart-unit {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  color: var(--mid);
+  transition: all 0.15s;
+}
+.pdp-size-chart-unit.active {
+  background: var(--coral);
+  border-color: var(--coral);
+  color: #fff;
+}
+
+.pdp-size-chart-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 4px;
+}
+
+.pdp-size-chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.pdp-size-chart-table th,
+.pdp-size-chart-table td {
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.pdp-size-chart-table th {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.pdp-size-chart-table td {
+  color: var(--mid);
+}
+
+.pdp-size-chart-fulllink {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--coral);
+  text-decoration: none;
+  opacity: 0.9;
+}
+.pdp-size-chart-fulllink:hover { opacity: 1; text-decoration: underline; }
+
 /* ── End Coming Soon Page ── */

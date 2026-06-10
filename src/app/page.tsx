@@ -1,15 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import ProductCard3 from '@/components/ProductCard3'
+import VariantCard from '@/components/VariantCard'
+import type { VariantCardData } from '@/components/VariantCard'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { InstagramIcon } from '@/components/icons'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import HeroSlideshow from '@/components/HeroSlideshow'
-import { featuredProducts } from '@/data/products'
-import { fetchBestSellingProducts } from '@/lib/shopify-products'
-import { SETS_HREF, TOPS_HREF } from '@/lib/collections'
-import type { ProductCard3Product } from '@/types/shopify'
+import { fetchAllStorefrontProducts } from '@/lib/shopify-products'
+import type { ShopifyProduct } from '@/types/shopify'
 
 export const metadata: Metadata = {
   title: 'Brazilian Bikinis & Swimwear Designed for Tanning',
@@ -26,21 +25,64 @@ export const metadata: Metadata = {
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
-/** Always fetch fresh Shopify data; avoid static page cache with stale products/images. */
 export const dynamic = 'force-dynamic'
 
-const FEATURED_ON_HOME = 6
+function expandToVariantCards(products: ShopifyProduct[]): VariantCardData[] {
+  const cards: VariantCardData[] = []
+
+  for (const product of products) {
+    if (!product.handle) continue
+    const variants = product.variants?.edges.map(e => e.node) ?? []
+    const seen = new Set<string>()
+
+    for (const v of variants) {
+      const colorOpt = v.selectedOptions?.find(o => o.name === 'Color')
+      const colorKey = colorOpt?.value ?? '__default__'
+      if (seen.has(colorKey)) continue
+      seen.add(colorKey)
+
+      const imgUrl = v.image?.url ?? product.featuredImage?.url
+      if (!imgUrl) continue
+
+      cards.push({
+        id: `${product.id}--${colorKey}`,
+        handle: product.handle,
+        title: product.title,
+        colorName: colorOpt?.value ?? null,
+        imageUrl: imgUrl,
+        imageAlt: v.image?.altText ?? product.featuredImage?.altText ?? product.title ?? '',
+        priceAmount: v.price.amount,
+        priceCurrency: v.price.currencyCode,
+      })
+    }
+
+    // Fallback: product has no variants with images
+    if (seen.size === 0 && product.featuredImage?.url) {
+      const v = variants[0]
+      cards.push({
+        id: product.id,
+        handle: product.handle,
+        title: product.title,
+        colorName: null,
+        imageUrl: product.featuredImage.url,
+        imageAlt: product.featuredImage.altText ?? product.title ?? '',
+        priceAmount: v?.price.amount ?? '0',
+        priceCurrency: v?.price.currencyCode ?? 'USD',
+      })
+    }
+  }
+
+  return cards
+}
 
 export default async function HomePage() {
-  let homeFeatured: ProductCard3Product[] = featuredProducts.slice(0, FEATURED_ON_HOME)
+  let variantCards: VariantCardData[] = []
 
   try {
-    const fromShopify = await fetchBestSellingProducts(FEATURED_ON_HOME)
-    if (fromShopify.length > 0) {
-      homeFeatured = fromShopify
-    }
+    const products = await fetchAllStorefrontProducts()
+    variantCards = expandToVariantCards(products)
   } catch {
-    /* missing env or network — keep static featuredProducts */
+    /* Shopify unavailable — empty grid */
   }
 
   return (
@@ -53,29 +95,17 @@ export default async function HomePage() {
         <AnnouncementBar />
       </div>
 
-      {/* ── Featured Products ── */}
+      {/* ── Products — all color variants ── */}
       <section className="section section-featured" id="featured">
         <div className="product-grid">
-          {homeFeatured.map(product => (
-            <ProductCard3 key={product.id} product={product} />
+          {variantCards.map(card => (
+            <VariantCard key={card.id} {...card} />
           ))}
         </div>
         <div style={{ textAlign: 'center', marginTop: 48 }}>
           <Link href="/shop" className="btn btn-outline">View All Products</Link>
         </div>
-
-        {/* ── Shop by Category ── */}
-        <nav className="shop-by-category" aria-label="Shop by category">
-          <Link href={SETS_HREF} className="btn btn-outline">
-            Brazilian Bikini Sets
-          </Link>
-          <Link href={TOPS_HREF} className="btn btn-outline">
-            Brazilian Bikini Tops
-          </Link>
-        </nav>
       </section>
-
-
 
       {/* ── About Strip ── */}
       <section className="about-strip">
@@ -94,28 +124,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ── Testimonials ── */}
-      {/* <section className="testimonials-section">
-        <div className="section-header">
-          <span className="eyebrow">Reviews</span>
-          <h2>What Our Girls Are Saying</h2>
-        </div>
-        <div className="testimonials-grid">
-          {featuredCustomerReviews.map((review) => (
-            <div key={review.id} className="testimonial-card">
-              <div className="testimonial-stars" aria-hidden>
-                {'★'.repeat(review.rating)}
-              </div>
-              <p className="testimonial-text">&ldquo;{review.text}&rdquo;</p>
-              <span className="testimonial-author">
-                — {review.name}
-                <span style={{ opacity: 0.65, fontWeight: 400 }}> · {review.year}</span>
-              </span>
-            </div>
-          ))}
-        </div>
-      </section> */}
 
       {/* ── Instagram CTA ── */}
       <section className="instagram-cta-section">
@@ -151,5 +159,4 @@ export default async function HomePage() {
       </section>
     </>
   )
-  
 }

@@ -5,15 +5,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { GlobeIcon, InstagramIcon, PhoneIcon } from '@/components/icons'
-import {
-  SITE_WHATSAPP_HREF,
-  SITE_WHATSAPP2_HREF,
-} from '@/lib/site-contact'
+import { SITE_WHATSAPP_HREF } from '@/lib/site-contact'
 
 const retailers = [
   { icon: <GlobeIcon />, name: 'Our Online Store', detail: 'Browse and shop the full Melancia collection.', badge: 'Shop Now', online: true, href: '/shop' },
-  { icon: <PhoneIcon />, name: 'WhatsApp (SV)', detail: 'Message us directly — we reply fast.', badge: 'Message Us', online: true, href: SITE_WHATSAPP_HREF },
-  { icon: <PhoneIcon />, name: 'WhatsApp (US)', detail: 'Message us from the US.', badge: 'Message Us', online: true, href: SITE_WHATSAPP2_HREF },
+  { icon: <PhoneIcon />, name: 'WhatsApp', detail: 'Message us directly — we reply fast.', badge: 'Message Us', online: true, href: SITE_WHATSAPP_HREF },
   { icon: <InstagramIcon size={24} />, name: 'Instagram', detail: 'Slide into our DMs on @melanciaswim.', badge: 'Send a DM', online: true, href: 'https://ig.me/m/melanciaswim' },
 ]
 
@@ -58,7 +54,7 @@ export default function ContactPage() {
       {/* Hero */}
       <div className="contact-hero">
         <Image
-          src="/images/Brand Photo/book.JPG"
+          src="/images/Brand Photo/book-web.jpg"
           alt="Melancia Swim"
           fill
           style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
