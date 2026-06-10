@@ -1,38 +1,33 @@
 'use client'
 
-import type { ReactNode } from 'react'
-import ProductCard3 from '@/components/ProductCard3'
+import VariantCard from '@/components/VariantCard'
+import type { VariantCardData } from '@/components/VariantCard'
 import HeroSlideshow from '@/components/HeroSlideshow'
-import type { ProductCard3Product } from '@/types/shopify'
 
 type Props = {
-  products: ProductCard3Product[]
-  /** Optional intro region (H1 + copy) rendered above the grid (e.g. the SEO hub intro). */
-  intro?: ReactNode
+  variantCards: VariantCardData[]
 }
 
-function productKey(p: ProductCard3Product) {
-  return 'placeholderClass' in p ? `cat-${p.id}` : p.id
-}
-
-export default function ShopCatalog({ products, intro }: Props) {
+export default function ShopCatalog({ variantCards }: Props) {
   return (
     <>
       <HeroSlideshow />
 
       <div className="shop-layout">
         <div className="shop-main">
-          {intro}
+          <header className="collection-intro">
+            <h1>Brazilian Bikinis</h1>
+          </header>
 
           <div className="shop-toolbar">
             <span className="shop-count">
-              <strong>{products.length}</strong> products
+              <strong>{variantCards.length}</strong> styles
             </span>
           </div>
 
           <div className="product-grid">
-            {products.map((product) => (
-              <ProductCard3 key={productKey(product)} product={product} />
+            {variantCards.map(card => (
+              <VariantCard key={card.id} {...card} />
             ))}
           </div>
         </div>

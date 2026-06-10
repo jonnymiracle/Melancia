@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { fetchAllStorefrontProducts } from '@/lib/shopify-products'
-import { SETS_HREF, TOPS_HREF } from '@/lib/collections'
-import { allProducts } from '@/data/products'
-import type { ProductCard3Product } from '@/types/shopify'
+import { expandToVariantCards } from '@/lib/variant-cards'
+import type { VariantCardData } from '@/components/VariantCard'
 import ShopCatalog from './ShopCatalog'
 
 export const metadata: Metadata = {
@@ -22,37 +20,14 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function ShopPage() {
-  let products: ProductCard3Product[] = allProducts
+  let variantCards: VariantCardData[] = []
 
   try {
-    const fromShopify = await fetchAllStorefrontProducts({ maxProducts: 1000 })
-    if (fromShopify.length > 0) {
-      products = fromShopify
-    }
+    const products = await fetchAllStorefrontProducts({ maxProducts: 1000 })
+    variantCards = expandToVariantCards(products)
   } catch {
-    /* missing env or network — keep catalog */
+    /* Shopify unavailable — empty grid */
   }
 
-  // PLACEHOLDER intro copy — replaced by the long-form content track.
-  const intro = (
-    <header className="collection-intro">
-      <h1>Brazilian Bikinis</h1>
-      <p>
-        PLACEHOLDER: Discover Brazilian bikinis made in Brazil — cheeky,
-        high-cut, minimal-coverage swimwear in bold colors. Shop coordinated
-        sets and mix-and-match tops designed to move with you from sand to sea.
-      </p>
-      {/* Collection hub links — internal linking for SEO */}
-      <nav className="collection-chips" aria-label="Shop by collection">
-        <Link href={SETS_HREF} className="btn btn-outline btn-sm">
-          Bikini Sets
-        </Link>
-        <Link href={TOPS_HREF} className="btn btn-outline btn-sm">
-          Bikini Tops
-        </Link>
-      </nav>
-    </header>
-  )
-
-  return <ShopCatalog products={products} intro={intro} />
+  return <ShopCatalog variantCards={variantCards} />
 }

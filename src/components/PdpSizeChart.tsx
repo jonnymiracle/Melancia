@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 
 type Unit = 'in' | 'cm'
 type Kind = 'set' | 'top'
@@ -114,9 +113,6 @@ export default function PdpSizeChart({ kind }: { kind: Kind }) {
             </div>
           )}
 
-          <Link href="/size-guide" className="pdp-size-chart-fulllink">
-            Full size guide →
-          </Link>
         </div>
       )}
     </div>

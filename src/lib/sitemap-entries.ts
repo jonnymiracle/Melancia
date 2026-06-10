@@ -46,7 +46,7 @@ const STATIC_PAGES: StaticEntry[] = [
   { path: '/shop',            changeFrequency: 'daily',   priority: 0.9 },
   { path: '/about',           changeFrequency: 'monthly', priority: 0.7 },
   { path: '/contact',         changeFrequency: 'monthly', priority: 0.6 },
-  { path: '/size-guide',      changeFrequency: 'monthly', priority: 0.6 },
+
   { path: '/shipping-policy', changeFrequency: 'monthly', priority: 0.5 },
 ]
 

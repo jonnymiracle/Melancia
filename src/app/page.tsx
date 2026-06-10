@@ -8,7 +8,7 @@ import { InstagramIcon } from '@/components/icons'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import HeroSlideshow from '@/components/HeroSlideshow'
 import { fetchAllStorefrontProducts } from '@/lib/shopify-products'
-import type { ShopifyProduct } from '@/types/shopify'
+import { expandToVariantCards } from '@/lib/variant-cards'
 
 export const metadata: Metadata = {
   title: 'Brazilian Bikinis & Swimwear Designed for Tanning',
@@ -27,53 +27,6 @@ const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
 export const dynamic = 'force-dynamic'
 
-function expandToVariantCards(products: ShopifyProduct[]): VariantCardData[] {
-  const cards: VariantCardData[] = []
-
-  for (const product of products) {
-    if (!product.handle) continue
-    const variants = product.variants?.edges.map(e => e.node) ?? []
-    const seen = new Set<string>()
-
-    for (const v of variants) {
-      const colorOpt = v.selectedOptions?.find(o => o.name === 'Color')
-      const colorKey = colorOpt?.value ?? '__default__'
-      if (seen.has(colorKey)) continue
-      seen.add(colorKey)
-
-      const imgUrl = v.image?.url ?? product.featuredImage?.url
-      if (!imgUrl) continue
-
-      cards.push({
-        id: `${product.id}--${colorKey}`,
-        handle: product.handle,
-        title: product.title,
-        colorName: colorOpt?.value ?? null,
-        imageUrl: imgUrl,
-        imageAlt: v.image?.altText ?? product.featuredImage?.altText ?? product.title ?? '',
-        priceAmount: v.price.amount,
-        priceCurrency: v.price.currencyCode,
-      })
-    }
-
-    // Fallback: product has no variants with images
-    if (seen.size === 0 && product.featuredImage?.url) {
-      const v = variants[0]
-      cards.push({
-        id: product.id,
-        handle: product.handle,
-        title: product.title,
-        colorName: null,
-        imageUrl: product.featuredImage.url,
-        imageAlt: product.featuredImage.altText ?? product.title ?? '',
-        priceAmount: v?.price.amount ?? '0',
-        priceCurrency: v?.price.currencyCode ?? 'USD',
-      })
-    }
-  }
-
-  return cards
-}
 
 export default async function HomePage() {
   let variantCards: VariantCardData[] = []
