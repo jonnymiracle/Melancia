@@ -29,7 +29,7 @@ export function buildProductFaqJsonLd(): Record<string, unknown> {
     },
     {
       q: 'How long does shipping take within the United States?',
-      a: 'Orders ship within 1–2 business days. Standard domestic delivery takes 3–5 business days. Free shipping is included on US orders of $80 or more. International orders typically arrive in 7–14 business days.',
+      a: 'Orders ship within 1–2 business days. Standard domestic delivery takes 3–5 business days. International orders typically arrive in 7–14 business days.',
     },
     {
       q: 'How do I care for my Melancia bikini?',

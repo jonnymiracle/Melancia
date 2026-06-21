@@ -139,11 +139,11 @@ export default function ComingSoonClient({ slides }: { slides: Slide[] }) {
         {/* Instagram */}
         <a
           className="cs-insta"
-          href="https://www.instagram.com/melanciaswim/"
+          href="https://www.instagram.com/melanciaswim_/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <InstagramIcon size={13} /> @melanciaswim
+          <InstagramIcon size={13} /> @melanciaswim_
         </a>
       </div>
     </div>

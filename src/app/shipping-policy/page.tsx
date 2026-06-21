@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Shipping Policy',
-  description: 'Melancia Swim ships bikinis and swimwear within the USA. Learn about shipping times, free shipping thresholds, international delivery, and our 30-day return policy.',
+  description: 'Melancia Swim ships bikinis and swimwear within the USA. Learn about shipping times, international delivery, and our 30-day return policy.',
   alternates: {
     canonical: 'https://www.melanciaswim.com/shipping-policy',
   },
@@ -42,14 +42,8 @@ export default function ShippingPolicyPage() {
                 <td>3–5 business days</td>
                 <td>Calculated at checkout</td>
               </tr>
-              <tr>
-                <td>Free Standard Shipping</td>
-                <td>3–5 business days</td>
-                <td>Free on orders $80+</td>
-              </tr>
             </tbody>
           </table>
-          <p>Free shipping is applied automatically at checkout on orders of <strong>$80 or more</strong> (calculated after discounts, before taxes).</p>
         </section>
 
         <section className="policy-section">

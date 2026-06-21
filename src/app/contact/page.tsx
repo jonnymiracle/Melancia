@@ -10,7 +10,7 @@ import { SITE_WHATSAPP_HREF } from '@/lib/site-contact'
 const retailers = [
   { icon: <GlobeIcon />, name: 'Our Online Store', detail: 'Browse and shop the full Melancia collection.', badge: 'Shop Now', online: true, href: '/shop' },
   { icon: <PhoneIcon />, name: 'WhatsApp', detail: 'Message us directly — we reply fast.', badge: 'Message Us', online: true, href: SITE_WHATSAPP_HREF },
-  { icon: <InstagramIcon size={24} />, name: 'Instagram', detail: 'Slide into our DMs on @melanciaswim.', badge: 'Send a DM', online: true, href: 'https://ig.me/m/melanciaswim' },
+  { icon: <InstagramIcon size={24} />, name: 'Instagram', detail: 'Slide into our DMs on @melanciaswim_.', badge: 'Send a DM', online: true, href: 'https://ig.me/m/melanciaswim_' },
 ]
 
 export default function ContactPage() {

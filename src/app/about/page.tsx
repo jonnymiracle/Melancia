@@ -69,12 +69,12 @@ export default function AboutPage() {
         />
         <div className="about-page-cta-overlay" />
         <div className="section-header" style={{ position: 'relative', zIndex: 2 }}>
-          <span className="eyebrow">@melanciaswim</span>
+          <span className="eyebrow">@melanciaswim_</span>
           <h2>Follow our journey</h2>
           <p>Behind-the-scenes, new drops, and summer vibes — all on Instagram.</p>
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginTop: 28, flexWrap: 'wrap' }}>
             <a
-              href="https://www.instagram.com/melanciaswim/"
+              href="https://www.instagram.com/melanciaswim_/"
               target="_blank"
               rel="noopener"
               className="btn btn-primary"

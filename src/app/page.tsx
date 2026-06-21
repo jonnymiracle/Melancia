@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
 }
 
-const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
+const INSTAGRAM = 'https://www.instagram.com/melanciaswim_/'
 
 export const dynamic = 'force-dynamic'
 
@@ -50,13 +50,14 @@ export default async function HomePage() {
 
       {/* ── Products — all color variants ── */}
       <section className="section section-featured" id="featured">
+        <h2 className="section-featured-heading">Shop the Collection</h2>
         <div className="product-grid">
           {variantCards.map(card => (
             <VariantCard key={card.id} {...card} />
           ))}
         </div>
         <div style={{ textAlign: 'center', marginTop: 48 }}>
-          <Link href="/shop" className="btn btn-outline">View All Products</Link>
+          <Link href="/shop" className="btn btn-outline">Shop All Bikinis</Link>
         </div>
       </section>
 
@@ -67,10 +68,11 @@ export default async function HomePage() {
           <img src="/images/photos bottom hero/wheelbarrow.jpeg" alt="Brazilian bikini swimwear lifestyle — Melancia Swim" loading="lazy" decoding="async" style={{ width: '100%', height: 'calc(100% + 200px)', objectFit: 'cover', display: 'block', marginTop: '-200px' }} />
         </div>
         <div className="about-strip-content">
-          <h2>Made for the sun.<br /><em>Made for you.</em></h2>
+          <h2>Born in Brazil.<br /><em>Made for everywhere.</em></h2>
           <p>
-            Melancia was born for the moments you never forget: beach days, boat rides,
-            pool parties and everything in between. Designed to make you feel as good as you look.
+            Melancia started when a Salvadoran fell in love with the way Brazilian women wear a bikini —
+            minimal, confident, built to tan in. We brought that cut, that attitude, and those fabrics
+            back with us. Everything we make is designed to disappear on your body and show up in every photo.
           </p>
           <div style={{ marginTop: 8, display: 'flex', justifyContent: 'center' }}>
             <Link href="/about" className="btn btn-primary btn-sm">Our Story</Link>
@@ -90,7 +92,7 @@ export default async function HomePage() {
           className="btn btn-primary instagram-cta-btn"
         >
           <InstagramIcon size={18} />
-          @melanciaswim
+          @melanciaswim_
         </a>
       </section>
 
@@ -105,8 +107,8 @@ export default async function HomePage() {
         />
         <div className="newsletter-overlay" />
         <div className="newsletter-content">
-          <h2>Get Early Access</h2>
-          <p>Be the first to know about new drops, exclusive deals, and summer inspo.</p>
+          <h2>Get 10% Off Your First Order</h2>
+          <p>Join the list for new drops, exclusive deals, and summer inspo.</p>
           <NewsletterForm source="home-footer" />
         </div>
       </section>

@@ -64,30 +64,35 @@ export default function Nav() {
 
   return (
     <nav className={`nav${scrolled ? ' scrolled' : ''}${navHidden ? ' nav-hidden' : ''}${menuOpen ? ' menu-open' : ''}`} id="mainNav">
+
+      {/* Left: Shop + Our Story */}
+      <div className="nav-links-container">
+        <Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link>
+        <Link href="/about" className={isActive('/about') ? 'active' : ''}>Our Story</Link>
+      </div>
+
+      {/* Center: logo */}
       <div className="nav-logo-container">
         <Link href="/" className="nav-logo">
           <Image
             src="/images/Logo original colors.png"
             alt="Melancia"
-            width={120}
-            height={48}
-            style={{ height: 48, width: 'auto' }}
+            width={160}
+            height={64}
+            style={{ height: 64, width: 'auto' }}
             priority
           />
         </Link>
       </div>
 
-      <div className="nav-links-container">
-        <ul className={`nav-links${menuOpen ? ' nav-open' : ''}`} id="nav-menu">
-          <li><Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link></li>
-          <li><Link href="/about" className={isActive('/about') ? 'active' : ''}>Our Story</Link></li>
-          <li><Link href="/blog" className={pathname.startsWith('/blog') ? 'active' : ''}>Journal</Link></li>
-          <li><Link href="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
-        </ul>
+      {/* Right: Journal + Contact (mirrors left column) */}
+      <div className="nav-links-right">
+        <Link href="/blog" className={pathname.startsWith('/blog') ? 'active' : ''}>Journal</Link>
+        <Link href="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link>
       </div>
 
+      {/* Cart + hamburger — absolutely positioned so they don't affect grid symmetry */}
       <div className="nav-icons">
-        {/* <a href="#" aria-label="Account"><AccountIcon /></a> */}
         <Link
           href="/cart"
           className={`nav-cart-link${isActive('/cart') ? ' active' : ''}`}
@@ -104,17 +109,25 @@ export default function Nav() {
             ) : null}
           </span>
         </Link>
+        <button
+          className={`nav-hamburger${menuOpen ? ' is-open' : ''}`}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          aria-controls="nav-menu"
+          onClick={() => setMenuOpen(prev => !prev)}
+        >
+          <span /><span /><span />
+        </button>
       </div>
 
-      <button
-        className={`nav-hamburger${menuOpen ? ' is-open' : ''}`}
-        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        aria-expanded={menuOpen}
-        aria-controls="nav-menu"
-        onClick={() => setMenuOpen(prev => !prev)}
-      >
-        <span /><span /><span />
-      </button>
+      {/* Mobile drawer — all 4 links, shown when hamburger open */}
+      <ul className={`nav-mobile-menu${menuOpen ? ' nav-open' : ''}`} id="nav-menu">
+        <li><Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link></li>
+        <li><Link href="/about" className={isActive('/about') ? 'active' : ''}>Our Story</Link></li>
+        <li><Link href="/blog" className={pathname.startsWith('/blog') ? 'active' : ''}>Journal</Link></li>
+        <li><Link href="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
+      </ul>
+
     </nav>
   )
 }

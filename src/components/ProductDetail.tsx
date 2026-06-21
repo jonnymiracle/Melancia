@@ -380,8 +380,14 @@ export default function ProductDetail({ product }: Props) {
           )}
 
           <p className="pdp-shipping-note">
-            <Link href="/shipping-policy">Free shipping on orders $80+&nbsp;·&nbsp;30-day returns</Link>
+            <Link href="/shipping-policy">Ships in 2–4 business days&nbsp;·&nbsp;30-day returns</Link>
           </p>
+
+          <div className="pdp-trust-strip">
+            <span>🔒 Secure Checkout</span>
+            <span>↩ Free Returns</span>
+            <span>📦 Ships in 2–4 Days</span>
+          </div>
 
           {/* Description */}
           {product.descriptionHtml ? (

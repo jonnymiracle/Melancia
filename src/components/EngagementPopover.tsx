@@ -7,14 +7,12 @@ import { NewsletterForm } from '@/components/NewsletterForm'
 const STORAGE_KEY = 'melancia-discount-modal-dismissed'
 const SCROLL_PX = 80
 
-/** Tanning-club timing: unlock after scrolling, then delay 5–10s before opening */
 function delayMs() {
   return 2000
 }
 
 export default function EngagementPopover() {
   const [open, setOpen] = useState(false)
-  const [step, setStep] = useState<'offer' | 'email'>('offer')
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const scheduledRef = useRef(false)
 
@@ -90,10 +88,6 @@ export default function EngagementPopover() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open, dismiss])
 
-  function handleReady() {
-    setStep('email')
-  }
-
   function handleBackdropClick(e: React.MouseEvent) {
     if (e.target === e.currentTarget) dismiss()
   }
@@ -131,33 +125,13 @@ export default function EngagementPopover() {
             </div>
 
             <h2 id="discount-modal-heading" className="discount-modal-title">
-              {step === 'offer' ? 'You have a 10% discount!' : 'Drop your email'}
+              You have a 10% discount!
             </h2>
 
-            {step === 'offer' && (
-              <>
-                <div className="discount-modal-actions">
-                  <button type="button" className="discount-modal-btn discount-modal-btn--primary" onClick={handleReady}>
-                    Claim my discount
-                  </button>
-                  <button type="button" className="discount-modal-btn discount-modal-btn--ghost" onClick={dismiss}>
-                    No thanks
-                  </button>
-                </div>
-              </>
-            )}
-
-            {step === 'email' && (
-              <>
-                <p className="discount-modal-lede">Enter your email and we&apos;ll send your 10% discount code — unsubscribe anytime.</p>
-                <div className="discount-modal-form-wrap">
-                  <NewsletterForm source="discount-popup" />
-                </div>
-                <button type="button" className="discount-modal-dismiss-link" onClick={dismiss}>
-                  Maybe later
-                </button>
-              </>
-            )}
+            <p className="discount-modal-lede">Enter your email and we&apos;ll send your 10% discount code — unsubscribe anytime.</p>
+            <div className="discount-modal-form-wrap">
+              <NewsletterForm source="discount-popup" buttonLabel="Get my discount code" />
+            </div>
           </div>
         </div>
       </div>

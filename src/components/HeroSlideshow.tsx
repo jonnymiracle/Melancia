@@ -54,9 +54,6 @@ export default function HeroSlideshow() {
         ))}
 
         <div className="hero-video-overlay">
-          <div className="hero-video-text">
-            <h1 className="hero-video-title">SOL de<br />IPANEMA</h1>
-          </div>
           <div className="hero-video-cta">
             <Link href="/shop" className="btn-hero-pill">
               SHOP COLLECTION
