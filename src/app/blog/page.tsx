@@ -23,6 +23,18 @@ function formatDate(iso: string) {
   })
 }
 
+function firstParagraph(html: string): string {
+  const match = html.match(/<p[^>]*>([\s\S]*?)<\/p>/)
+  const text = match ? match[1] : html
+  return text.replace(/<[^>]+>/g, '').trim()
+}
+
+const IMAGE_POSITION: Record<string, string> = {
+  'what-is-a-brazilian-cut-bikini': 'center 80%',
+  'how-to-tan-without-tan-lines': 'center 50%',
+  'how-to-care-for-your-bikini': 'center 40%',
+}
+
 export default async function BlogPage() {
   const articles = await fetchBlogArticles(24)
 
@@ -56,7 +68,7 @@ export default async function BlogPage() {
                       alt={article.image.altText ?? article.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 400px"
-                      style={{ objectFit: 'cover' }}
+                      style={{ objectFit: 'cover', objectPosition: IMAGE_POSITION[article.handle] ?? 'center bottom' }}
                       priority={i < 3}
                     />
                   ) : (
@@ -68,8 +80,8 @@ export default async function BlogPage() {
                     <span className="blog-card-tag">{article.tags[0]}</span>
                   )}
                   <h2 className="blog-card-title">{article.title}</h2>
-                  {article.excerpt && (
-                    <p className="blog-card-excerpt">{article.excerpt}</p>
+                  {article.contentHtml && (
+                    <p className="blog-card-excerpt">{firstParagraph(article.contentHtml)}</p>
                   )}
                   <div className="blog-card-meta">
                     <span>{formatDate(article.publishedAt)}</span>

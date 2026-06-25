@@ -2710,6 +2710,8 @@ a.size-btn:visited {
   /* Hide desktop link groups on mobile */
   .nav-links-container {
     visibility: hidden;
+    min-width: 0;
+    overflow: hidden;
   }
   .nav-links-right {
     display: none;
