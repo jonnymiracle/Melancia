@@ -2780,6 +2780,10 @@ a.size-btn:visited {
   .category-strip { padding: 16px 20px; gap: 24px; overflow-x: auto; }
   .instagram-grid { grid-template-columns: repeat(3, 1fr); }
   .testimonials-grid { grid-template-columns: 1fr; }
+  .section-featured .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
   .shop-layout { padding: 20px; }
   .cart-hero { height: 220px; padding: 0 20px; }
   .cart-layout { padding: 36px 20px 64px; gap: 28px; }
