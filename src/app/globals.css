@@ -2782,7 +2782,8 @@ a.size-btn:visited {
   .category-strip { padding: 16px 20px; gap: 24px; overflow-x: auto; }
   .instagram-grid { grid-template-columns: repeat(3, 1fr); }
   .testimonials-grid { grid-template-columns: 1fr; }
-  .section-featured .product-grid {
+  .section-featured .product-grid,
+  .shop-main .product-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
