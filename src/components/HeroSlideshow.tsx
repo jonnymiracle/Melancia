@@ -15,8 +15,8 @@ import Link from 'next/link'
 //   '30% center'    → shift left/right + center
 // ─────────────────────────────────────────────
 const SLIDES = [
-  { src: '/images/Fotos hero/image00002.jpg', position: 'center center', alt: 'Melancia Swim — Brazilian-style bikini designed for tanning' },
-  { src: '/images/Fotos hero/image00005.jpg', position: 'center center', alt: 'Small bikini swimwear by Melancia Swim — bold colors and minimal silhouettes' },
+  { src: '/images/Fotos hero/image00002.jpg', position: '40% center', alt: 'Melancia Swim — Brazilian-style bikini designed for tanning' },
+  { src: '/images/Fotos hero/image00005.jpg', position: '25% center', alt: 'Small bikini swimwear by Melancia Swim — bold colors and minimal silhouettes' },
   { src: '/images/Fotos hero/image00006.jpg', position: 'center top', alt: 'Brazilian bikini swimwear collection by Melancia Swim' },
   { src: '/images/Fotos hero/image00008.jpeg', position: 'center top', alt: 'Melancia Swim swimwear — tanning bikini from Puerto Rico' },
 ]
