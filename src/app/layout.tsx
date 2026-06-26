@@ -89,7 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   name: 'Puerto Rico',
                 },
                 sameAs: [
-                  'https://www.instagram.com/melanciaswim_/',
+                  'https://www.instagram.com/melanciaswim/',
                 ],
               },
               {
@@ -121,7 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 areaServed: 'US',
                 currenciesAccepted: 'USD',
                 paymentAccepted: 'Credit Card',
-                sameAs: ['https://www.instagram.com/melanciaswim_/'],
+                sameAs: ['https://www.instagram.com/melanciaswim/'],
               },
             ]),
           }}

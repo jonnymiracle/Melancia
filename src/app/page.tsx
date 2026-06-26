@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
 }
 
-const INSTAGRAM = 'https://www.instagram.com/melanciaswim_/'
+const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
 export const dynamic = 'force-dynamic'
 
@@ -92,7 +92,7 @@ export default async function HomePage() {
           className="btn btn-primary instagram-cta-btn"
         >
           <InstagramIcon size={18} />
-          @melanciaswim_
+          @melanciaswim
         </a>
       </section>
 

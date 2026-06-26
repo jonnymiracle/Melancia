@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { InstagramIcon } from './icons'
 import { SITE_EMAIL, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
 
-const INSTAGRAM = 'https://www.instagram.com/melanciaswim_/'
+const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
 export default function Footer() {
   return (
