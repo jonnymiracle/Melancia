@@ -92,10 +92,12 @@ export default function ShippingPolicyPage() {
           <ul>
             <li>Unworn and unwashed</li>
             <li>In original condition with all tags attached</li>
-            <li>Swimwear must have the hygiene liner intact</li>
+            <li>Hygiene liner intact (swimwear bottoms)</li>
           </ul>
+          <p><strong>Return shipping is paid by the customer.</strong> We recommend using a trackable shipping method — we are not responsible for packages lost in return transit.</p>
+          <p><strong>Size exchanges:</strong> We are happy to exchange for a different size. Email us first so we can confirm availability before you ship your item back.</p>
           <p><strong>Sale items are final sale</strong> and not eligible for return or exchange.</p>
-          <p>To start a return or exchange, email us at <a href={SITE_EMAIL_MAILTO}>{SITE_EMAIL}</a> with your order number.</p>
+          <p>To start a return or exchange, email us at <a href={SITE_EMAIL_MAILTO}>{SITE_EMAIL}</a> with your order number and reason.</p>
         </section>
 
         <section className="policy-section">
