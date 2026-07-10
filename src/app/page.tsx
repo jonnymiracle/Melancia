@@ -107,7 +107,7 @@ export default async function HomePage() {
         />
         <div className="newsletter-overlay" />
         <div className="newsletter-content">
-          <h2>Get 10% Off Your First Order</h2>
+          <h2>Get 15% Off Your First Order</h2>
           <p>Join the list for new drops, exclusive deals, and summer inspo.</p>
           <NewsletterForm source="home-footer" />
         </div>
