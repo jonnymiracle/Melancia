@@ -75,6 +75,12 @@ export default function VariantCard({
         <div className="product-footer">
           <span className="product-price">{fmt(priceAmount, priceCurrency)}</span>
         </div>
+        <Link
+          href={`/shop/${handle}${colorName ? `?color=${encodeURIComponent(colorName)}` : ''}`}
+          className="btn btn-primary product-mobile-cta"
+        >
+          Shop Now
+        </Link>
       </div>
     </div>
   )

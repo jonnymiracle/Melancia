@@ -1073,6 +1073,21 @@ button {
   color: var(--coral);
 }
 
+/* On touch devices hide the image overlay — the button moves below the image instead */
+@media (hover: none), (pointer: coarse) {
+  .product-quick-add { display: none; }
+}
+
+.product-mobile-cta {
+  display: none;
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+}
+@media (hover: none), (pointer: coarse) {
+  .product-mobile-cta { display: block; }
+}
+
 /* Touch / coarse pointer: keep “Add to cart” in the layout so taps are deliberate
    (hover-only slide can stick or sit under the finger on mobile). */
 .product-quick-add {
