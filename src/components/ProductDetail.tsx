@@ -226,7 +226,7 @@ export default function ProductDetail({ product, initialColor }: Props) {
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                   priority
-                  onError={() => setFailedUrls(prev => new Set([...prev, img.url]))}
+                  onError={() => setFailedUrls(prev => { const s = new Set(prev); s.add(img.url); return s })}
                   style={{
                     objectFit: 'cover',
                     opacity: i === activeImage ? 1 : 0,
