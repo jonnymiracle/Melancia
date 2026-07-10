@@ -991,6 +991,24 @@ button {
   overflow: hidden;
 }
 
+.product-card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #2a1f14;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
 .product-image-placeholder {
   width: 100%; height: 100%;
   display: flex;
@@ -3241,7 +3259,14 @@ a.size-btn:visited {
 
 .discount-modal-form-wrap {
   max-width: 420px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+.discount-modal-spam-note {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 16px;
+  line-height: 1.4;
 }
 
 .discount-modal-form-wrap .newsletter-form {
@@ -3267,6 +3292,11 @@ a.size-btn:visited {
 .discount-modal-form-wrap .newsletter-form button:hover {
   background: #9d3f22;
   border-color: #9d3f22;
+}
+
+.discount-modal-form-wrap .newsletter-form-msg {
+  color: #fff;
+  font-size: 0.9rem;
 }
 
 .discount-modal-dismiss-link {

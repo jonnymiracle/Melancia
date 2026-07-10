@@ -8,9 +8,9 @@ import { addToCart } from '@/lib/add-to-cart-client'
 import { getModelSizeNote } from '@/lib/model-size'
 import { buildImageAlt } from '@/lib/image-alt'
 import { classifyProduct } from '@/lib/collections'
-import PdpSizeChart from '@/components/PdpSizeChart'
+import { PRODUCT_LOCAL_IMAGES } from '@/lib/product-local-images'
 
-type Props = { product: ShopifyProductDetail }
+type Props = { product: ShopifyProductDetail; initialColor?: string }
 type Variant = ShopifyProductDetail['variants']['edges'][0]['node']
 
 function fmt(amount: string, currency: string) {
@@ -70,23 +70,37 @@ function getColorSwatch(name: string): string {
   return COLOR_MAP[key] ?? '#D0C8B8'
 }
 
-export default function ProductDetail({ product }: Props) {
+export default function ProductDetail({ product, initialColor }: Props) {
   const images = product.images.edges.map((e) => e.node)
   const variants = product.variants.edges.map((e) => e.node)
   const options = product.options ?? []
 
-  const firstAvailable = variants.find((v) => v.availableForSale) ?? variants[0] ?? null
+  // Pick the best available variant: prefer Medium, then Small, then Large, then any available, then first.
+  const SIZE_PREFERENCE = ['Medium', 'M', 'Small', 'S', 'Large', 'L']
+  function bestVariant(pool: Variant[]): Variant | null {
+    const available = pool.filter(v => v.availableForSale)
+    for (const size of SIZE_PREFERENCE) {
+      const found = available.find(v => v.selectedOptions?.some(o => o.name === 'Size' && o.value === size))
+      if (found) return found
+    }
+    return available[0] ?? pool[0] ?? null
+  }
 
-  // Build initial selection from firstAvailable.selectedOptions
+  const colorPool = initialColor
+    ? variants.filter(v => v.selectedOptions?.some(o => o.name === 'Color' && o.value === initialColor))
+    : variants
+  const seedVariant = (colorPool.length > 0 ? bestVariant(colorPool) : null) ?? bestVariant(variants)
+
   const initSelection: Record<string, string> = {}
-  if (firstAvailable?.selectedOptions) {
-    for (const opt of firstAvailable.selectedOptions) {
+  if (seedVariant?.selectedOptions) {
+    for (const opt of seedVariant.selectedOptions) {
       initSelection[opt.name] = opt.value
     }
   }
 
   const [selection, setSelection] = useState<Record<string, string>>(initSelection)
   const [activeImage, setActiveImage] = useState(0)
+  const [failedUrls, setFailedUrls] = useState<Set<string>>(new Set())
   const [pending, setPending] = useState(false)
   const [added, setAdded] = useState(false)
   const [compositionOpen, setCompositionOpen] = useState(true)
@@ -127,7 +141,12 @@ export default function ProductDetail({ product }: Props) {
         .map(v => ({ url: v.image!.url, altText: v.image?.altText ?? null }))
         .filter((img, i, arr) => arr.findIndex(x => x.url === img.url) === i)
     : []
-  const displayImages = variantImages.length > 0 ? variantImages : images
+  const colorKey = selection['Color'] ?? '__default__'
+  const localImageSet = PRODUCT_LOCAL_IMAGES[`${product.handle}:${colorKey}`]
+  const localImages = localImageSet?.images.map(img => ({ url: img.src, altText: img.altText })) ?? []
+  const baseImages = variantImages.length > 0 ? variantImages : images
+  const allImages = localImages.length > 0 ? [...localImages, ...baseImages] : baseImages
+  const displayImages = allImages.filter(img => !failedUrls.has(img.url))
 
   // Clamp activeImage if switching to a variant group with fewer images
   useEffect(() => {
@@ -207,8 +226,9 @@ export default function ProductDetail({ product }: Props) {
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
                   priority
+                  onError={() => setFailedUrls(prev => new Set([...prev, img.url]))}
                   style={{
-                    objectFit: 'contain',
+                    objectFit: 'cover',
                     opacity: i === activeImage ? 1 : 0,
                     transition: 'opacity 0.2s ease',
                   }}
@@ -400,9 +420,6 @@ export default function ProductDetail({ product }: Props) {
               <p>{product.description}</p>
             </div>
           ) : null}
-
-          {/* Inline size chart */}
-          <PdpSizeChart kind={classifyProduct(product)} />
 
           {/* Composition & Care */}
           <div className="pdp-composition">

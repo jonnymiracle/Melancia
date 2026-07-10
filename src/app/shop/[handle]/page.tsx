@@ -14,7 +14,7 @@ import ProductCard3 from '@/components/ProductCard3'
 
 export const dynamic = 'force-dynamic'
 
-type Props = { params: Promise<{ handle: string }> }
+type Props = { params: Promise<{ handle: string }>; searchParams: Promise<{ color?: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle } = await params
@@ -61,8 +61,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function ProductPage({ params }: Props) {
+export default async function ProductPage({ params, searchParams }: Props) {
   const { handle } = await params
+  const { color: initialColor } = await searchParams
   const product = await fetchProductByHandle(handle)
   if (!product) notFound()
 
@@ -101,7 +102,7 @@ export default async function ProductPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <ProductDetail product={product} />
+      <ProductDetail product={product} initialColor={initialColor} />
 
       {relatedProducts.length > 0 && (
         <section className="related-products-section">

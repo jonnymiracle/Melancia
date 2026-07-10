@@ -128,10 +128,11 @@ export default function EngagementPopover() {
               You have a 15% discount!
             </h2>
 
-            <p className="discount-modal-lede">Enter your email and we&apos;ll send your 15% discount code — unsubscribe anytime.</p>
+            <p className="discount-modal-lede">Enter your email and we&apos;ll send your 15% discount code. Unsubscribe anytime.</p>
             <div className="discount-modal-form-wrap">
               <NewsletterForm source="discount-popup" buttonLabel="Get my discount code" />
             </div>
+            <p className="discount-modal-spam-note">Don&apos;t see it? Check your spam folder.</p>
           </div>
         </div>
       </div>

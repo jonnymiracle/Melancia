@@ -9,7 +9,7 @@ import { SITE_WHATSAPP_HREF } from '@/lib/site-contact'
 
 const retailers = [
   { icon: <GlobeIcon />, name: 'Our Online Store', detail: 'Browse and shop the full Melancia collection.', badge: 'Shop Now', online: true, href: '/shop' },
-  { icon: <PhoneIcon />, name: 'WhatsApp', detail: 'Message us directly — we reply fast.', badge: 'Message Us', online: true, href: SITE_WHATSAPP_HREF },
+  { icon: <PhoneIcon />, name: 'WhatsApp', detail: 'Message us directly. We reply fast.', badge: 'Message Us', online: true, href: SITE_WHATSAPP_HREF },
   { icon: <InstagramIcon size={24} />, name: 'Instagram', detail: 'Slide into our DMs on @melanciaswim.', badge: 'Send a DM', online: true, href: 'https://ig.me/m/melanciaswim' },
 ]
 
@@ -63,7 +63,7 @@ export default function ContactPage() {
         />
         <div className="contact-hero-overlay" />
         <h1>Get in Touch</h1>
-        <p>We&apos;d love to hear from you — questions, collaborations, or just to say hi!</p>
+        <p>We&apos;d love to hear from you. Questions, collabs, or just to say hi.</p>
       </div>
 
       {/* Contact Layout */}
@@ -141,7 +141,7 @@ export default function ContactPage() {
             <div className="section-header" style={{ textAlign: 'left', marginBottom: 40 }}>
               <span className="eyebrow">Find Us</span>
               <h2>Ways to reach us</h2>
-              <p style={{ textAlign: 'left', margin: 0 }}>Shop online or reach out directly — we&apos;re always happy to help.</p>
+              <p style={{ textAlign: 'left', margin: 0 }}>Shop online or reach out. We&apos;re always happy to help.</p>
             </div>
             <div className="retailers-grid">
               {retailers.map(r => (
@@ -160,7 +160,7 @@ export default function ContactPage() {
             <span className="eyebrow">Newsletter</span>
             <h2 style={{ color: '#fff', marginBottom: 12 }}>Stay in the Loop</h2>
             <p style={{ color: 'rgba(255,255,255,0.85)', marginBottom: 32, maxWidth: 380 }}>
-              New drops, exclusive deals, and summer vibes — straight to your inbox.
+              New drops, exclusive deals, and summer vibes. Right to your inbox.
             </p>
             <NewsletterForm source="contact-page" />
           </div>

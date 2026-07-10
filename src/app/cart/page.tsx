@@ -51,12 +51,16 @@ export default function CartPage() {
       const body = await res.json()
       const c = body.data?.cart as ShopifyCart | null | undefined
       if (!c) {
-        clearStoredCartId()
+        // Only clear the stored ID when Shopify confirms the cart doesn't exist.
+        // A 5xx error means a temporary API failure — keep the ID so the user
+        // can retry without losing their bag.
+        if (res.ok) clearStoredCartId()
         setCart(null)
       } else {
         setCart(c)
       }
     } catch {
+      // Network error — don't clear the cart ID, cart still exists on Shopify.
       setCart(null)
     } finally {
       setLoading(false)
