@@ -26,6 +26,16 @@ export default function EngagementPopover() {
   }, [])
 
   useEffect(() => {
+    // /discount page sets this flag before redirecting here — open popup immediately.
+    try {
+      if (localStorage.getItem('melancia-open-discount')) {
+        localStorage.removeItem('melancia-open-discount')
+        sessionStorage.removeItem(STORAGE_KEY)
+        setOpen(true)
+        return
+      }
+    } catch { /* ignore */ }
+
     try {
       if (sessionStorage.getItem(STORAGE_KEY)) return
     } catch {
