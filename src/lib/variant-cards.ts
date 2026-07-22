@@ -47,6 +47,7 @@ export function expandToVariantCards(products: ShopifyProduct[]): VariantCardDat
 
   for (const product of products) {
     if (!product.handle) continue
+    if (product.tags?.includes('hidden-test')) continue
     const variants = product.variants?.edges.map(e => e.node) ?? []
     const seen = new Set<string>()
 
