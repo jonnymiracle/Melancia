@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { InstagramIcon } from './icons'
 import { SITE_EMAIL, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
+import { FREE_SHIPPING_ENABLED, FREE_SHIPPING_NOTE } from '@/lib/free-shipping'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
@@ -50,6 +51,20 @@ export default function Footer() {
             <li><Link href="/contact">Send a Message</Link></li>
           </ul>
         </div>
+      </div>
+
+      <div className="footer-trust">
+        {FREE_SHIPPING_ENABLED && (
+          <Link href="/shipping-policy" className="footer-trust-item">
+            <span aria-hidden="true">🚚</span> {FREE_SHIPPING_NOTE}
+          </Link>
+        )}
+        <Link href="/shipping-policy" className="footer-trust-item">
+          <span aria-hidden="true">↩</span> 30-Day Returns
+        </Link>
+        <span className="footer-trust-item">
+          <span aria-hidden="true">🔒</span> Secure Checkout
+        </span>
       </div>
 
       <div className="footer-bottom">

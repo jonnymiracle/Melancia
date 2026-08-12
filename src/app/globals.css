@@ -1009,6 +1009,14 @@ button {
   pointer-events: none;
 }
 
+/* Sits bottom-left so it never collides with the top-left "New Release" pill. */
+.product-card-badge.shipping {
+  top: auto;
+  bottom: 12px;
+  background: rgba(247, 161, 143, 0.92);
+  color: var(--white);
+}
+
 .product-image-placeholder {
   width: 100%; height: 100%;
   display: flex;
@@ -1830,6 +1838,28 @@ footer {
 }
 .footer-col ul li a:hover { color: var(--coral); }
 
+.footer-trust {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 36px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.footer-trust-item {
+  color: rgba(255,255,255,0.62);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a.footer-trust-item:hover {
+  color: var(--white);
+}
+
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.1);
   padding-top: 24px;
@@ -2648,6 +2678,12 @@ a.size-btn:visited {
   font-size: 0.82rem;
 }
 
+.cart-shipping-free {
+  color: #2e7d4f;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
 .cart-summary-note {
   font-size: 0.82rem;
   color: var(--mid);
@@ -2847,6 +2883,7 @@ a.size-btn:visited {
     justify-content: center;
   }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-trust { gap: 10px 20px; font-size: 0.7rem; }
   .newsletter-form { flex-direction: column; gap: 15px; }
   .newsletter-form input { border-radius: 50px; }
   .newsletter-form button { border-radius: 50px; }

@@ -16,7 +16,9 @@ export const dynamic = 'force-dynamic'
 
 type Props = { params: Promise<{ handle: string }>; searchParams: Promise<{ color?: string }> }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+// Metadata does not depend on the `?color=` deep link, so it takes only the
+// params half of Props — otherwise every caller has to pass an unused searchParams.
+export async function generateMetadata({ params }: Pick<Props, 'params'>): Promise<Metadata> {
   const { handle } = await params
   const product = await fetchProductByHandle(handle)
   if (!product) return { title: 'Product Not Found' }

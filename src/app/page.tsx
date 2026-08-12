@@ -11,14 +11,16 @@ import { fetchAllStorefrontProducts } from '@/lib/shopify-products'
 import { expandToVariantCards } from '@/lib/variant-cards'
 
 export const metadata: Metadata = {
-  title: 'Brazilian Bikinis & Swimwear Designed for Tanning',
-  description: 'Melancia Swim — Brazilian-style bikinis and swimwear made for tanning. Shop small bikinis, bold colors, and minimal silhouettes. Based in Puerto Rico, shipping within the USA.',
+  // Absolute so the root layout's "%s | Melancia Swim" template does not push
+  // the free-shipping hook past Google's ~60-character title cutoff.
+  title: { absolute: 'Brazilian Bikinis & Swimwear | Free U.S. Shipping' },
+  description: 'Melancia Swim — Brazilian-style bikinis and swimwear made for tanning. Free shipping on all U.S. orders. Shop small bikinis, bold colors, and minimal silhouettes.',
   alternates: {
     canonical: 'https://www.melanciaswim.com',
   },
   openGraph: {
-    title: 'Melancia Swim | Brazilian Bikinis & Swimwear Designed for Tanning',
-    description: 'Shop Brazilian-style bikinis and swimwear. Minimal silhouettes, bold colors — designed for tanning. Based in Puerto Rico, ships within the USA.',
+    title: 'Melancia Swim | Brazilian Bikinis — Free U.S. Shipping',
+    description: 'Shop Brazilian-style bikinis and swimwear. Minimal silhouettes, bold colors — designed for tanning. Free shipping on all U.S. orders.',
     url: 'https://www.melanciaswim.com',
   },
 }

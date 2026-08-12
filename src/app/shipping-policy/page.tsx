@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Shipping Policy',
-  description: 'Melancia Swim ships bikinis and swimwear within the USA. Learn about shipping times, international delivery, and our 30-day return policy.',
+  description: 'Melancia Swim ships bikinis and swimwear within the USA, free on every order. Learn about shipping times and our 30-day return policy.',
   alternates: {
     canonical: 'https://www.melanciaswim.com/shipping-policy',
   },
@@ -16,7 +16,7 @@ export default function ShippingPolicyPage() {
     <>
       <div className="contact-hero">
         <h1>Shipping Policy</h1>
-        <p>Last updated May 2026</p>
+        <p>Last updated August 2026</p>
       </div>
 
       <div className="policy-body">
@@ -28,6 +28,7 @@ export default function ShippingPolicyPage() {
 
         <section className="policy-section">
           <h2>Domestic Shipping (United States)</h2>
+          <p><strong>Shipping is free on every U.S. order — no minimum.</strong></p>
           <table className="policy-table">
             <thead>
               <tr>
@@ -40,34 +41,15 @@ export default function ShippingPolicyPage() {
               <tr>
                 <td>Standard Shipping</td>
                 <td>3–5 business days</td>
-                <td>Calculated at checkout</td>
+                <td>Free</td>
               </tr>
             </tbody>
           </table>
         </section>
 
         <section className="policy-section">
-          <h2>International Shipping</h2>
-          <p>We ship worldwide. International delivery typically takes <strong>7–14 business days</strong> depending on your location and local customs processing.</p>
-          <table className="policy-table">
-            <thead>
-              <tr>
-                <th>Order Total</th>
-                <th>Shipping Cost</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Under $120</td>
-                <td>Calculated at checkout</td>
-              </tr>
-              <tr>
-                <td>$120 and over</td>
-                <td>Free international shipping</td>
-              </tr>
-            </tbody>
-          </table>
-          <p><strong>Please note:</strong> The customer is responsible for any import duties, customs fees, or taxes charged by your country. These are not included in your order total and are collected by your local customs authority.</p>
+          <h2>Where We Ship</h2>
+          <p>We currently ship within the <strong>United States</strong> only. If you are outside the U.S. and would like to order, email us at <a href={SITE_EMAIL_MAILTO}>{SITE_EMAIL}</a> and we will see what we can arrange.</p>
         </section>
 
         <section className="policy-section">

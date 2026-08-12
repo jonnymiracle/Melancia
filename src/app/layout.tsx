@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     default: 'Melancia Swim | Brazilian Bikinis & Swimwear',
     template: '%s | Melancia Swim',
   },
-  description: 'Shop Brazilian-style bikinis and swimwear designed for tanning. Melancia Swim offers small bikinis, bold colors, and minimal silhouettes — shipped within the USA. Based in Puerto Rico & El Salvador.',
+  description: 'Shop Brazilian-style bikinis and swimwear designed for tanning. Melancia Swim offers small bikinis, bold colors, and minimal silhouettes — with free shipping on all U.S. orders.',
   openGraph: {
     type: 'website',
     siteName: SITE_NAME,

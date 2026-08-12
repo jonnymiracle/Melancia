@@ -45,8 +45,10 @@ describe('buildSitemapEntries', () => {
   const allUrls = urls(entries)
 
   // 1. Static pages
-  it('includes all 6 static page URLs (absolute)', () => {
-    const staticPages = ['', '/shop', '/about', '/contact', '/size-guide', '/shipping-policy']
+  // /size-guide is deliberately absent — there is no app/size-guide route, so
+  // listing it would put a 404 in the sitemap.
+  it('includes all 5 static page URLs (absolute)', () => {
+    const staticPages = ['', '/shop', '/about', '/contact', '/shipping-policy']
     for (const path of staticPages) {
       expect(allUrls).toContain(`${BASE}${path}`)
     }

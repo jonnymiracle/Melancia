@@ -3,7 +3,7 @@
  *
  * Accepts products + articles as plain data (no I/O), returns a
  * MetadataRoute.Sitemap array that covers:
- *   - Static indexable pages (home, /shop, /about, /contact, /size-guide, /shipping-policy)
+ *   - Static indexable pages (home, /shop, /about, /contact, /shipping-policy)
  *   - The two keyword-targeted collection pages (SETS_HREF / TOPS_HREF)
  *   - /blog index + every article in blogArticleHref format
  *   - Every product page that has a handle (null/undefined handles are skipped)

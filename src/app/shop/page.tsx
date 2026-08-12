@@ -5,8 +5,8 @@ import type { VariantCardData } from '@/components/VariantCard'
 import ShopCatalog from './ShopCatalog'
 
 export const metadata: Metadata = {
-  title: 'Brazilian Bikinis',
-  description: 'Shop Brazilian bikinis from Melancia Swim — cheeky, high-cut, minimal-coverage swimwear made in Brazil. Bold colors, sets and tops, ships within the USA. Browse the full collection.',
+  title: { absolute: 'Brazilian Bikinis | Free U.S. Shipping | Melancia Swim' },
+  description: 'Shop Brazilian bikinis from Melancia Swim — cheeky, high-cut, minimal-coverage swimwear made in Brazil. Free shipping on all U.S. orders. Browse the full collection.',
   alternates: {
     canonical: 'https://www.melanciaswim.com/shop',
   },

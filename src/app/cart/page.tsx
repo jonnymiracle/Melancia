@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getStoredCartId, clearStoredCartId } from '@/lib/cart-storage'
+import { FREE_SHIPPING_ENABLED } from '@/lib/free-shipping'
 
 type Money = { amount: string; currencyCode: string }
 
@@ -282,9 +283,11 @@ export default function CartPage() {
                     }).format(subtotal)}
                   </span>
                 </div>
-                <div className="cart-summary-row muted">
+                <div className={`cart-summary-row${FREE_SHIPPING_ENABLED ? '' : ' muted'}`}>
                   <span>Shipping</span>
-                  <span>Calculated at checkout</span>
+                  {FREE_SHIPPING_ENABLED
+                    ? <span className="cart-shipping-free">FREE</span>
+                    : <span>Calculated at checkout</span>}
                 </div>
                 <div className="cart-summary-row total">
                   <span>Estimated total</span>
