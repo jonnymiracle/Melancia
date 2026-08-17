@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FREE_SHIPPING_ENABLED, FREE_SHIPPING_SHORT } from '@/lib/free-shipping'
 
 export type VariantCardData = {
   id: string
@@ -61,9 +60,6 @@ export default function VariantCard({
           style={{ objectFit: 'cover', objectPosition: objectPosition ?? 'center center', transform: imageScale ? `scale(${imageScale})` : undefined }}
         />
         {badge && <span className="product-card-badge">{badge}</span>}
-        {FREE_SHIPPING_ENABLED && (
-          <span className="product-card-badge shipping">{FREE_SHIPPING_SHORT}</span>
-        )}
         <div className="product-quick-add" role="presentation">
           <Link href={`/shop/${handle}${colorName ? `?color=${encodeURIComponent(colorName)}` : ''}`} className="btn btn-primary">
             Shop Now
