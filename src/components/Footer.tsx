@@ -25,6 +25,8 @@ export default function Footer() {
               <InstagramIcon size={17} />
             </a>
           </div>
+
+          <PaymentMethods />
         </div>
 
         <div className="footer-col">
@@ -67,8 +69,6 @@ export default function Footer() {
           <span aria-hidden="true">🔒</span> Secure Checkout
         </span>
       </div>
-
-      <PaymentMethods />
 
       <div className="footer-bottom">
         <span>© 2026 Melancia Swimwear. All rights reserved.</span>

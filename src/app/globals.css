@@ -1886,18 +1886,17 @@ a.footer-trust-item:hover {
   border-radius: 4px;
 }
 
-/* ── Payment marks ── */
+/* ── Payment marks — live in the brand column, under the socials ── */
 .footer-payments {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 18px 0 22px;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 24px;
 }
 
 .footer-payments-label {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.4);
@@ -1906,8 +1905,7 @@ a.footer-trust-item:hover {
 .footer-payments-row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
+  gap: 7px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -2817,6 +2815,9 @@ a.size-btn:visited {
   }
   .cart-summary-card { position: static; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  /* The rest of the footer centres on mobile, so the marks follow it. */
+  .footer-payments { align-items: center; }
+  .footer-payments-row { justify-content: center; }
 }
 
 /* Hamburger → X animation */
