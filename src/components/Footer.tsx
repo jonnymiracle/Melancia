@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { InstagramIcon } from './icons'
 import { SITE_EMAIL, SITE_EMAIL_MAILTO } from '@/lib/site-contact'
 import { FREE_SHIPPING_ENABLED, FREE_SHIPPING_NOTE } from '@/lib/free-shipping'
+import PaymentMethods from './PaymentMethods'
 
 const INSTAGRAM = 'https://www.instagram.com/melanciaswim/'
 
@@ -66,6 +67,8 @@ export default function Footer() {
           <span aria-hidden="true">🔒</span> Secure Checkout
         </span>
       </div>
+
+      <PaymentMethods />
 
       <div className="footer-bottom">
         <span>© 2026 Melancia Swimwear. All rights reserved.</span>

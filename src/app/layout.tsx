@@ -9,6 +9,8 @@ import EngagementPopover from '@/components/EngagementPopover'
 import BackgroundDecor from '@/components/BackgroundDecor'
 import { brandTabIconHref } from '@/components/icons'
 import { SITE_NAME, LOGO_IMAGE } from '@/lib/site-config'
+import { IS_PREVIEW, DEPLOY_BRANCH } from '@/lib/site-env'
+import PreviewRibbon from '@/components/PreviewRibbon'
 
 const lora = Lora({
   subsets: ['latin'],
@@ -51,11 +53,17 @@ export const metadata: Metadata = {
     description: 'Shop Brazilian-style bikinis and swimwear designed for tanning. Bold colors, minimal silhouettes — shipped within the USA.',
     images: [LOGO_IMAGE],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
-  },
+  // Preview branches carry the same catalogue as the live store, so they are
+  // closed to crawlers. Canonicals still point at melanciaswim.com, which means
+  // anything that does slip through consolidates to production rather than
+  // competing with it.
+  robots: IS_PREVIEW
+    ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+    : {
+        index: true,
+        follow: true,
+        googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+      },
   icons: {
     icon: [{ url: brandTabIconHref, type: 'image/png' }],
     apple: brandTabIconHref,
@@ -155,6 +163,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             alt=""
           />
         </noscript>
+        <PreviewRibbon />
         <BackgroundDecor />
         <PageLoader />
         <Nav />
