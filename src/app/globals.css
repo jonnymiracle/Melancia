@@ -1857,6 +1857,41 @@ a.footer-trust-item:hover {
   color: var(--white);
 }
 
+/* Text-only hero for pages with no photo behind it. The base .contact-hero
+   sets white type because it expects an image plus the dark overlay; without
+   one the heading disappears into the page. */
+.contact-hero.plain {
+  height: auto;
+  padding: 88px 48px 72px;
+  border-bottom: 1px solid var(--border);
+}
+.contact-hero.plain h1 { color: var(--dark); }
+.contact-hero.plain p  { color: var(--mid); }
+
+/* ── FAQ ── */
+.faq-list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.faq-item dt {
+  font-family: var(--font-lora), 'Lora', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 7px;
+}
+
+.faq-item dd {
+  margin: 0;
+  /* Answers hold their own measure so a long one does not run the full width. */
+  max-width: 62ch;
+  color: var(--mid);
+  line-height: 1.75;
+}
+
 /* ── Preview deploy ribbon (never renders on production) ── */
 .preview-ribbon {
   position: fixed;

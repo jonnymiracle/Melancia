@@ -3,7 +3,7 @@
  *
  * Accepts products + articles as plain data (no I/O), returns a
  * MetadataRoute.Sitemap array that covers:
- *   - Static indexable pages (home, /shop, /about, /contact, /shipping-policy)
+ *   - Static indexable pages (home, /shop, /about, /contact, /faq, /shipping-policy)
  *   - The two keyword-targeted collection pages (SETS_HREF / TOPS_HREF)
  *   - /blog index + every article in blogArticleHref format
  *   - Every product page that has a handle (null/undefined handles are skipped)
@@ -47,6 +47,7 @@ const STATIC_PAGES: StaticEntry[] = [
   { path: '/about',           changeFrequency: 'monthly', priority: 0.7 },
   { path: '/contact',         changeFrequency: 'monthly', priority: 0.6 },
 
+  { path: '/faq',             changeFrequency: 'monthly', priority: 0.6 },
   { path: '/shipping-policy', changeFrequency: 'monthly', priority: 0.5 },
 ]
 

@@ -50,6 +50,7 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Support</h4>
           <ul>
+            <li><Link href="/faq">FAQ</Link></li>
             <li><a href={SITE_EMAIL_MAILTO}>{SITE_EMAIL}</a></li>
             <li><Link href="/contact">Send a Message</Link></li>
           </ul>

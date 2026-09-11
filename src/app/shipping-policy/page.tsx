@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function ShippingPolicyPage() {
   return (
     <>
-      <div className="contact-hero">
+      <div className="contact-hero plain">
         <h1>Shipping Policy</h1>
         <p>Last updated August 2026</p>
       </div>
