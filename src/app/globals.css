@@ -1878,53 +1878,32 @@ a.footer-trust-item:hover {
   margin-top: 4px;
 }
 
-.welcome-code-lede {
-  font-size: 0.94rem;
+/* The confirmation is the payoff, so it carries the weight the code chip used
+   to. Nothing here is meant to be copied. */
+.welcome-code-headline {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(1.35rem, 3.4vw, 1.75rem);
   font-weight: 600;
+  line-height: 1.2;
   color: #fff;
   text-align: center;
+  text-wrap: balance;
   margin: 0;
-}
-
-.welcome-code-chip {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  border: 1.5px dashed rgba(255,255,255,0.55);
-  border-radius: 10px;
-  background: rgba(255,255,255,0.12);
-  padding: 0;
-  cursor: pointer;
-  overflow: hidden;
-}
-.welcome-code-chip:hover { background: rgba(255,255,255,0.2); }
-
-.welcome-code-value {
-  font-family: ui-monospace, Menlo, Consolas, monospace;
-  font-size: 1.18rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: #fff;
-  padding: 11px 16px;
-}
-
-.welcome-code-action {
-  display: flex;
-  align-items: center;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--dark);
-  background: #fff;
-  padding: 0 14px;
 }
 
 .welcome-code-note {
-  font-size: 0.76rem;
-  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.78);
   text-align: center;
+  max-width: 38ch;
   margin: 0;
+}
+
+.welcome-code-note strong {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  letter-spacing: 0.06em;
+  color: #fff;
 }
 
 /* ── Size calculator (product pages with a paired picker) ── */

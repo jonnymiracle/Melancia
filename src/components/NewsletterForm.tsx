@@ -29,18 +29,13 @@ export function NewsletterForm({
   revealCode = false,
 }: Props) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'err'>('idle')
-  const [copied, setCopied] = useState(false)
-  const [applied, setApplied] = useState<'applied' | 'queued' | null>(null)
+  /**
+   * null while applyDiscount is still in flight, so the message never claims
+   * something that has not happened yet. 'failed' falls back to handing over
+   * the code, because a shopper with nothing is worse than one who types.
+   */
+  const [applied, setApplied] = useState<'applied' | 'queued' | 'failed' | null>(null)
 
-  async function copyCode() {
-    try {
-      await navigator.clipboard.writeText(WELCOME_CODE)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2400)
-    } catch {
-      /* Clipboard blocked. The code is on screen to type by hand. */
-    }
-  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -67,9 +62,9 @@ export function NewsletterForm({
       // it waits, and lands on her first add.
       if (revealCode) {
         const result = await applyDiscount(WELCOME_CODE)
-        if (result.state === 'applied' || result.state === 'queued') {
-          setApplied(result.state)
-        }
+        setApplied(
+          result.state === 'applied' || result.state === 'queued' ? result.state : 'failed',
+        )
       }
     } catch {
       setStatus('err')
@@ -97,19 +92,23 @@ export function NewsletterForm({
       </button>
       {status === 'ok' && revealCode ? (
         <div className="welcome-code" role="status">
-          <p className="welcome-code-lede">
-            Here&apos;s your {WELCOME_PERCENT}% off. Use it at checkout.
+          <p className="welcome-code-headline">
+            {applied === 'applied'
+              ? `Your ${WELCOME_PERCENT}% is on your bag`
+              : applied === 'queued'
+                ? `Your ${WELCOME_PERCENT}% is waiting on your bag`
+                : applied === 'failed'
+                  ? `Your ${WELCOME_PERCENT}% is yours`
+                  : `Your ${WELCOME_PERCENT}% is yours`}
           </p>
-          <button type="button" className="welcome-code-chip" onClick={copyCode}>
-            <span className="welcome-code-value">{WELCOME_CODE}</span>
-            <span className="welcome-code-action">{copied ? 'Copied' : 'Copy'}</span>
-          </button>
           <p className="welcome-code-note">
             {applied === 'applied'
-              ? 'Already on your bag. We emailed it to you as well.'
+              ? 'Nothing to type at checkout. We emailed it to you as well.'
               : applied === 'queued'
-                ? 'It applies by itself when you add your first piece. We emailed it to you as well.'
-                : 'We sent it to your email too, in case you lose it.'}
+                ? 'It comes off by itself the moment you add your first piece. We emailed it to you as well.'
+                : applied === 'failed'
+                  ? <>Use code <strong>{WELCOME_CODE}</strong> at checkout. We emailed it to you as well.</>
+                  : 'Setting it up…'}
           </p>
         </div>
       ) : null}
