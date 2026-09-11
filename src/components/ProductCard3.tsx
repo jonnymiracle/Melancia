@@ -7,7 +7,6 @@ import type {
   ShopifyProduct,
   ShopifyProductVariant,
 } from '@/types/shopify'
-import Link from 'next/link'
 import { resolveCatalogProductBadge, resolveShopifyProductBadge } from '@/lib/product-badge'
 import { ShirtIcon } from '@/components/icons'
 
@@ -129,7 +128,7 @@ export default function ProductCard3({ product }: ProductCard3Props) {
   return (
     <div className="product-card">
       {handle && (
-        <Link href={`/shop/${handle}`} className="product-card-link" aria-label={product.title} tabIndex={-1} />
+        <a href={`/shop/${handle}`} className="product-card-link" aria-label={product.title} tabIndex={-1} />
       )}
 
       <div className="product-image">
@@ -161,9 +160,7 @@ export default function ProductCard3({ product }: ProductCard3Props) {
 
         <div className="product-quick-add" role="presentation">
           {handle ? (
-            <Link href={`/shop/${handle}`} className="btn btn-primary">
-              Shop Now
-            </Link>
+            <a href={`/shop/${handle}`} className="btn btn-primary">Shop Now</a>
           ) : (
             <button type="button" className="btn btn-primary" disabled>
               Shop Now
@@ -174,9 +171,9 @@ export default function ProductCard3({ product }: ProductCard3Props) {
 
       <div className="product-info">
         {handle ? (
-          <Link href={`/shop/${handle}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <a href={`/shop/${handle}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <h3 className="product-name">{product.title}</h3>
-          </Link>
+          </a>
         ) : (
           <h3 className="product-name">{product.title}</h3>
         )}
