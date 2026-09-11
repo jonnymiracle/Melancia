@@ -8,6 +8,10 @@ frontend:
       commands:
         - echo "SHOPIFY_STORE_DOMAIN=$SHOPIFY_STORE_DOMAIN" >> .env.production
         - echo "SHOPIFY_STOREFRONT_ACCESS_TOKEN=$SHOPIFY_STOREFRONT_ACCESS_TOKEN" >> .env.production
+        # Amplify sets AWS_BRANCH on every build. Carrying it into the bundle is
+        # what lets a non-main branch serve noindex and show the preview ribbon,
+        # so a staging deploy never competes with melanciaswim.com in search.
+        - echo "NEXT_PUBLIC_DEPLOY_BRANCH=$AWS_BRANCH" >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next

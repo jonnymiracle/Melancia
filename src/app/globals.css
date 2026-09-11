@@ -1857,6 +1857,35 @@ a.footer-trust-item:hover {
   color: var(--white);
 }
 
+/* ── Preview deploy ribbon (never renders on production) ── */
+.preview-ribbon {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 7px 14px;
+  background: #B5761F;
+  color: #fff;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+}
+.preview-ribbon strong {
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.preview-ribbon code {
+  font-family: ui-monospace, Menlo, monospace;
+  background: rgba(255,255,255,0.18);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
 /* ── Payment marks ── */
 .footer-payments {
   display: flex;
