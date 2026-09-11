@@ -2011,6 +2011,19 @@ a.footer-trust-item:hover {
   }
 }
 
+/* ── Product reviews (Klaviyo widgets) ── */
+.pdp-reviews {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px 72px;
+}
+
+/* The star rating sits inline near the title area on Klaviyo's own layouts;
+   here it leads the section, so it gets room above the review list. */
+.pdp-reviews .klaviyo-star-rating-widget:not(:empty) {
+  margin-bottom: 18px;
+}
+
 /* ── FAQ ── */
 .faq-list {
   margin: 0;

@@ -14,6 +14,8 @@ import { findVariantByOptions, findPieceVariant, availableSizesFor, PIECES } fro
 import type { Piece } from '@/lib/piece-availability'
 import PieceSizePicker from './PieceSizePicker'
 import SizeCalculator from './SizeCalculator'
+import ProductReviews from './ProductReviews'
+import { legacyIdFromGid } from '@/lib/shopify-gid'
 
 type Props = { product: ShopifyProductDetail; initialColor?: string }
 type Variant = ShopifyProductDetail['variants']['edges'][0]['node']
@@ -562,6 +564,11 @@ export default function ProductDetail({ product, initialColor }: Props) {
           </div>
         </div>
       </div>
+
+      <ProductReviews
+        productId={legacyIdFromGid(product.id)}
+        productTitle={product.title}
+      />
     </>
   )
 }

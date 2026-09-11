@@ -135,6 +135,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ]),
           }}
         />
+        {/* Klaviyo onsite JS. Required on every page that renders a reviews
+            widget, and it also powers onsite tracking. The key is the public
+            one, meant to ship to the browser. */}
+        <Script
+          src="https://static.klaviyo.com/onsite/js/YjFckH/klaviyo.js"
+          strategy="afterInteractive"
+        />
+
         {/* Google Analytics */}
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-SCYSL2CVQS" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">{`
