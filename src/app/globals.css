@@ -2949,6 +2949,18 @@ a.size-btn:visited {
   font-size: 0.82rem;
 }
 
+.cart-discount-code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--coral);
+}
+
+.cart-discount-amount {
+  color: #2e7d4f;
+  font-weight: 600;
+}
+
 .cart-shipping-free {
   color: #2e7d4f;
   font-weight: 700;

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { WELCOME_CODE, WELCOME_PERCENT } from '@/lib/welcome-offer'
+import { applyDiscount } from '@/lib/apply-discount-client'
 
 type Props = {
   /** Identifies which form submitted (server logs / webhook payload). */
@@ -29,6 +30,7 @@ export function NewsletterForm({
 }: Props) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'err'>('idle')
   const [copied, setCopied] = useState(false)
+  const [applied, setApplied] = useState<'applied' | 'queued' | null>(null)
 
   async function copyCode() {
     try {
@@ -60,6 +62,15 @@ export function NewsletterForm({
       }
       setStatus('ok')
       form.reset()
+
+      // Put it on the bag so she never has to type it. If there is no cart yet
+      // it waits, and lands on her first add.
+      if (revealCode) {
+        const result = await applyDiscount(WELCOME_CODE)
+        if (result.state === 'applied' || result.state === 'queued') {
+          setApplied(result.state)
+        }
+      }
     } catch {
       setStatus('err')
     }
@@ -93,7 +104,13 @@ export function NewsletterForm({
             <span className="welcome-code-value">{WELCOME_CODE}</span>
             <span className="welcome-code-action">{copied ? 'Copied' : 'Copy'}</span>
           </button>
-          <p className="welcome-code-note">We sent it to your email too, in case you lose it.</p>
+          <p className="welcome-code-note">
+            {applied === 'applied'
+              ? 'Already on your bag. We emailed it to you as well.'
+              : applied === 'queued'
+                ? 'It applies by itself when you add your first piece. We emailed it to you as well.'
+                : 'We sent it to your email too, in case you lose it.'}
+          </p>
         </div>
       ) : null}
       {status === 'ok' && !revealCode ? (

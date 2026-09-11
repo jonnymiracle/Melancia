@@ -7,7 +7,12 @@ const CART_QUERY = `
       id
       checkoutUrl
       totalQuantity
+      discountCodes { code applicable }
       cost {
+        subtotalAmount {
+          amount
+          currencyCode
+        }
         totalAmount {
           amount
           currencyCode

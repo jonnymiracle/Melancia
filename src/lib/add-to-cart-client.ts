@@ -1,4 +1,5 @@
 import { getStoredCartId, setStoredCartId } from '@/lib/cart-storage'
+import { flushPendingDiscount } from '@/lib/apply-discount-client'
 
 export type AddToCartResult =
   | { ok: true; cartId: string; totalQuantity?: number }
@@ -28,6 +29,12 @@ export async function addToCart(
 
   if (body.cartId) {
     setStoredCartId(body.cartId)
+
+    // A code claimed from the popup before any cart existed has been waiting in
+    // localStorage. Now there is a cart to put it on. Deliberately not awaited:
+    // the shopper should not watch a spinner for a discount she already has.
+    void flushPendingDiscount()
+
     return {
       ok: true,
       cartId: body.cartId,

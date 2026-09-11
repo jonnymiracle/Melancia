@@ -24,7 +24,9 @@ type ShopifyCart = {
   id: string
   checkoutUrl: string
   totalQuantity: number
+  discountCodes?: { code: string; applicable: boolean }[]
   cost?: {
+    subtotalAmount?: Money
     totalAmount?: Money
   }
   lines: {
@@ -88,15 +90,31 @@ export default function CartPage() {
       .filter((n) => n.merchandise)
   }, [cart])
 
-  const subtotal = useMemo(() => {
+  /**
+   * What the pieces list for, before any code.
+   *
+   * Taken from the line prices rather than cost.subtotalAmount, which already
+   * has the discount removed and would make the saving look like zero. Cart
+   * level discountAllocations is no help either: a percentage code allocates
+   * onto the lines, so the cart array comes back empty.
+   */
+  const subtotal = useMemo(
+    () =>
+      lines.reduce((sum, line) => {
+        const p = line.merchandise?.price
+        if (!p) return sum
+        return sum + Number.parseFloat(p.amount) * line.quantity
+      }, 0),
+    [lines],
+  )
+
+  const estimatedTotal = useMemo(() => {
     const a = cart?.cost?.totalAmount
-    if (a) return Number.parseFloat(a.amount)
-    return lines.reduce((sum, line) => {
-      const p = line.merchandise?.price
-      if (!p) return sum
-      return sum + Number.parseFloat(p.amount) * line.quantity
-    }, 0)
-  }, [cart, lines])
+    return a ? Number.parseFloat(a.amount) : subtotal
+  }, [cart, subtotal])
+
+  const discountAmount = Math.max(0, subtotal - estimatedTotal)
+  const activeDiscount = cart?.discountCodes?.find(d => d.applicable)?.code ?? null
 
   const currency =
     cart?.cost?.totalAmount?.currencyCode ||
@@ -283,6 +301,19 @@ export default function CartPage() {
                     }).format(subtotal)}
                   </span>
                 </div>
+                {/* Shopify does the arithmetic. Showing the code without the
+                    money it saved reads like a label, not a discount. */}
+                {activeDiscount && discountAmount > 0 ? (
+                  <div className="cart-summary-row">
+                    <span className="cart-discount-code">{activeDiscount}</span>
+                    <span className="cart-discount-amount">
+                      −{new Intl.NumberFormat(undefined, {
+                        style: 'currency',
+                        currency,
+                      }).format(discountAmount)}
+                    </span>
+                  </div>
+                ) : null}
                 <div className={`cart-summary-row${FREE_SHIPPING_ENABLED ? '' : ' muted'}`}>
                   <span>Shipping</span>
                   {FREE_SHIPPING_ENABLED
@@ -295,7 +326,7 @@ export default function CartPage() {
                     {new Intl.NumberFormat(undefined, {
                       style: 'currency',
                       currency,
-                    }).format(subtotal)}
+                    }).format(estimatedTotal)}
                   </span>
                 </div>
                 <button
