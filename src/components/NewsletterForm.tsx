@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { WELCOME_CODE, WELCOME_PERCENT } from '@/lib/welcome-offer'
 
 type Props = {
   /** Identifies which form submitted (server logs / webhook payload). */
@@ -9,6 +10,13 @@ type Props = {
   placeholder?: string
   buttonLabel?: string
   showPhone?: boolean
+  /**
+   * Show the discount code on screen the moment the email lands, instead of
+   * only mailing it. Klaviyo takes about five minutes to deliver, which is long
+   * enough that people leave without ever using the offer they just gave an
+   * email for. The email still goes out, so they also have it later.
+   */
+  revealCode?: boolean
 }
 
 export function NewsletterForm({
@@ -17,8 +25,20 @@ export function NewsletterForm({
   placeholder = 'Your email address',
   buttonLabel = 'Subscribe',
   showPhone = false,
+  revealCode = false,
 }: Props) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'err'>('idle')
+  const [copied, setCopied] = useState(false)
+
+  async function copyCode() {
+    try {
+      await navigator.clipboard.writeText(WELCOME_CODE)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2400)
+    } catch {
+      /* Clipboard blocked. The code is on screen to type by hand. */
+    }
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -64,9 +84,21 @@ export function NewsletterForm({
       <button type="submit" disabled={status === 'loading'}>
         {status === 'loading' ? '…' : buttonLabel}
       </button>
-      {status === 'ok' ? (
+      {status === 'ok' && revealCode ? (
+        <div className="welcome-code" role="status">
+          <p className="welcome-code-lede">
+            Here&apos;s your {WELCOME_PERCENT}% off. Use it at checkout.
+          </p>
+          <button type="button" className="welcome-code-chip" onClick={copyCode}>
+            <span className="welcome-code-value">{WELCOME_CODE}</span>
+            <span className="welcome-code-action">{copied ? 'Copied' : 'Copy'}</span>
+          </button>
+          <p className="welcome-code-note">We sent it to your email too, in case you lose it.</p>
+        </div>
+      ) : null}
+      {status === 'ok' && !revealCode ? (
         <p className="newsletter-form-msg newsletter-form-msg--ok" role="status">
-          Thanks — you&apos;re on the list.
+          Thanks, you&apos;re on the list.
         </p>
       ) : null}
       {status === 'err' ? (

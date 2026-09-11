@@ -1868,6 +1868,65 @@ a.footer-trust-item:hover {
 .contact-hero.plain h1 { color: var(--dark); }
 .contact-hero.plain p  { color: var(--mid); }
 
+/* ── Welcome code, revealed in place after signup ── */
+.welcome-code {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.welcome-code-lede {
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+}
+
+.welcome-code-chip {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border: 1.5px dashed rgba(255,255,255,0.55);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.12);
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+.welcome-code-chip:hover { background: rgba(255,255,255,0.2); }
+
+.welcome-code-value {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 1.18rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #fff;
+  padding: 11px 16px;
+}
+
+.welcome-code-action {
+  display: flex;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark);
+  background: #fff;
+  padding: 0 14px;
+}
+
+.welcome-code-note {
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  margin: 0;
+}
+
 /* ── Size calculator (product pages with a paired picker) ── */
 .size-calc {
   position: fixed;
