@@ -305,8 +305,11 @@ export default function CartPage() {
                 >
                   Checkout
                 </button>
+                {/* The cart is where the card comes out, so this is where the
+                    reassurance has to be. Baymard puts card distrust behind
+                    19% of checkout abandonment. */}
                 <p className="cart-summary-trust">
-                  Secure checkout
+                  🔒 Secure checkout powered by Shopify. We never see your card number.
                 </p>
                 <Link href="/shop" className="cart-continue">
                   ← Continue shopping

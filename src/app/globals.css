@@ -1868,6 +1868,116 @@ a.footer-trust-item:hover {
 .contact-hero.plain h1 { color: var(--dark); }
 .contact-hero.plain p  { color: var(--mid); }
 
+/* ── Size calculator (product pages with a paired picker) ── */
+.size-calc {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1200;
+  width: 268px;
+  background: var(--white, #fff);
+  border: 1px solid #D8CCBE;
+  border-radius: 11px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px -8px rgba(42,33,28,.2), 0 22px 44px -24px rgba(42,33,28,.45);
+  animation: size-calc-in 0.42s cubic-bezier(.22,1,.36,1);
+}
+/* Slides in from the edge. No scale: it should arrive already built, not grow. */
+@keyframes size-calc-in {
+  from { transform: translate(calc(100% + 22px), -50%); }
+  to   { transform: translate(0, -50%); }
+}
+@keyframes size-calc-in-mobile {
+  from { transform: translateY(calc(100% + 22px)); }
+  to   { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .size-calc { animation: none; }
+}
+
+.size-calc-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 13px 15px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.size-calc-head h2 {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.66rem; font-weight: 600; letter-spacing: 0.13em;
+  margin: 0; color: var(--dark);
+}
+.size-calc-close {
+  width: 19px; height: 19px; flex: none; padding: 0;
+  border-radius: 50%; border: 1px solid #D8CCBE;
+  background: transparent; color: var(--mid); cursor: pointer;
+  font-size: 0.7rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.size-calc-close:hover { background: var(--cream, #F5EEE6); color: var(--dark); }
+
+/* Brassiere sits above Top, jean above Bottom. */
+.size-calc-ask {
+  padding: 9px 10px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 7px;
+}
+.size-calc-q { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.size-calc-qname {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.6rem; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: #A29486;
+}
+.size-calc-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.size-calc select {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.78rem; font-variant-numeric: tabular-nums;
+  width: 100%; min-width: 0; padding: 5px 4px 5px 6px; cursor: pointer;
+  border: 1px solid #D8CCBE; border-radius: 5px;
+  background: #FDFBF8; color: var(--dark);
+}
+.size-calc select:focus { outline: 2px solid var(--coral); outline-offset: 1px; border-color: transparent; }
+
+.size-calc-result {
+  background: #F5EEE6; border-top: 1px solid var(--border);
+  padding: 8px 10px 10px;
+}
+.size-calc-label {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.55rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #A29486;
+  display: block; margin-bottom: 6px;
+}
+.size-calc-pieces { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.size-calc-piece {
+  border: 1.5px solid var(--coral); border-radius: 7px;
+  padding: 6px 7px; background: var(--white, #fff);
+  display: flex; flex-direction: column; min-width: 0;
+}
+.size-calc-plabel {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.5rem; font-weight: 600; letter-spacing: 0.13em;
+  text-transform: uppercase; color: #A29486;
+}
+.size-calc-psize {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 0.92rem; font-weight: 600; line-height: 1.25; color: var(--dark);
+}
+.size-calc-apply {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  width: 100%; margin-top: 8px; padding: 7px;
+  border: 0; border-radius: 999px;
+  background: var(--dark); color: #fff; cursor: pointer;
+}
+.size-calc-apply:hover { background: var(--coral); color: var(--dark); }
+
+@media (max-width: 560px) {
+  .size-calc {
+    top: auto; bottom: 12px; right: 12px; left: 12px;
+    width: auto; transform: none;
+    animation-name: size-calc-in-mobile;
+  }
+}
+
 /* ── FAQ ── */
 .faq-list {
   margin: 0;
@@ -1919,6 +2029,13 @@ a.footer-trust-item:hover {
   background: rgba(255,255,255,0.18);
   padding: 1px 6px;
   border-radius: 4px;
+}
+
+.footer-origin {
+  font-size: 0.8rem !important;
+  line-height: 1.7 !important;
+  color: rgba(255,255,255,0.5);
+  max-width: 34ch;
 }
 
 /* ── Payment marks — live in the brand column, under the socials ── */

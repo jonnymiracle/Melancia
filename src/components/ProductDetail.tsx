@@ -13,6 +13,7 @@ import { FREE_SHIPPING_ENABLED, FREE_SHIPPING_NOTE } from '@/lib/free-shipping'
 import { findVariantByOptions, findPieceVariant, availableSizesFor, PIECES } from '@/lib/piece-availability'
 import type { Piece } from '@/lib/piece-availability'
 import PieceSizePicker from './PieceSizePicker'
+import SizeCalculator from './SizeCalculator'
 
 type Props = { product: ShopifyProductDetail; initialColor?: string }
 type Variant = ShopifyProductDetail['variants']['edges'][0]['node']
@@ -281,6 +282,14 @@ export default function ProductDetail({ product, initialColor }: Props) {
 
   return (
     <>
+      {/* Only on paired products: it recommends a size per piece, which needs
+          two pickers to land in. */}
+      {inStock && !pairedSoldOut && (
+        <SizeCalculator
+          onApply={(top, bottom) => { setTopSize(top); setBottomSize(bottom) }}
+        />
+      )}
+
       <p className="pdp-breadcrumb">
         <Link href="/">Home</Link>
         {' / '}

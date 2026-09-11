@@ -19,7 +19,13 @@ export default function Footer() {
             height={72}
             style={{ height: 52, width: 'auto', marginBottom: 12 }}
           />
+          {/* Naming the people and the place is a trust signal. Viera and Blue
+              Moves both lead with being from Puerto Rico; Melancia had it and
+              never said it. */}
           <p>Crafted in Brasil. Made for the Sun.</p>
+          <p className="footer-origin">
+            Run by two women in Puerto Rico and El Salvador. We answer our own emails.
+          </p>
           <div className="footer-socials">
             <a href={INSTAGRAM} target="_blank" rel="noopener" aria-label="Instagram">
               <InstagramIcon size={17} />
