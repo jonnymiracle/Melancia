@@ -55,17 +55,18 @@ export function NewsletterForm({
         setStatus('err')
         return
       }
-      setStatus('ok')
-      form.reset()
-
-      // Put it on the bag so she never has to type it. If there is no cart yet
-      // it waits, and lands on her first add.
+      // Put it on the bag so she never has to type it. Resolved before the
+      // success message appears, so the message is right the first time
+      // instead of correcting itself half a second later.
       if (revealCode) {
         const result = await applyDiscount(WELCOME_CODE)
         setApplied(
           result.state === 'applied' || result.state === 'queued' ? result.state : 'failed',
         )
       }
+
+      setStatus('ok')
+      form.reset()
     } catch {
       setStatus('err')
     }
@@ -97,18 +98,14 @@ export function NewsletterForm({
               ? `Your ${WELCOME_PERCENT}% is on your bag`
               : applied === 'queued'
                 ? `Your ${WELCOME_PERCENT}% is waiting on your bag`
-                : applied === 'failed'
-                  ? `Your ${WELCOME_PERCENT}% is yours`
-                  : `Your ${WELCOME_PERCENT}% is yours`}
+                : `Your ${WELCOME_PERCENT}% is on its way`}
           </p>
           <p className="welcome-code-note">
             {applied === 'applied'
               ? 'Nothing to type at checkout. We emailed it to you as well.'
               : applied === 'queued'
                 ? 'It comes off by itself the moment you add your first piece. We emailed it to you as well.'
-                : applied === 'failed'
-                  ? <>Use code <strong>{WELCOME_CODE}</strong> at checkout. We emailed it to you as well.</>
-                  : 'Setting it up…'}
+                : 'It lands on your bag in a moment. We emailed it to you as well.'}
           </p>
         </div>
       ) : null}

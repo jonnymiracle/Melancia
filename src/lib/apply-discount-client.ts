@@ -31,14 +31,26 @@ export async function applyDiscount(code: string): Promise<ApplyResult> {
       body: JSON.stringify({ cartId, code }),
     })
     const body = await res.json().catch(() => ({}))
-    if (!res.ok) return { state: 'error' }
+    if (!res.ok) return park(code)
     if (!body.applicable) return { state: 'rejected', code }
 
     try { localStorage.removeItem(PENDING_KEY) } catch { /* ignore */ }
     return { state: 'applied', code }
   } catch {
-    return { state: 'error' }
+    return park(code)
   }
+}
+
+/**
+ * Keeps the code for another try instead of giving up on it.
+ *
+ * A failure here is almost always a bad second from Shopify, not a bad code.
+ * Parking it means the next add to cart or cart visit applies it and the
+ * shopper never finds out anything went wrong.
+ */
+function park(code: string): ApplyResult {
+  try { localStorage.setItem(PENDING_KEY, code) } catch { /* private mode */ }
+  return { state: 'error' }
 }
 
 /**

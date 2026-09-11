@@ -1900,11 +1900,6 @@ a.footer-trust-item:hover {
   margin: 0;
 }
 
-.welcome-code-note strong {
-  font-family: ui-monospace, Menlo, Consolas, monospace;
-  letter-spacing: 0.06em;
-  color: #fff;
-}
 
 /* ── Size calculator (product pages with a paired picker) ── */
 .size-calc {

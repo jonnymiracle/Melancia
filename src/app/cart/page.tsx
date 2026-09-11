@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getStoredCartId, clearStoredCartId } from '@/lib/cart-storage'
 import { FREE_SHIPPING_ENABLED } from '@/lib/free-shipping'
+import { flushPendingDiscount } from '@/lib/apply-discount-client'
 
 type Money = { amount: string; currencyCode: string }
 
@@ -60,7 +61,18 @@ export default function CartPage() {
         if (res.ok) clearStoredCartId()
         setCart(null)
       } else {
-        setCart(c)
+        // A code claimed from the popup may still be parked, either because
+        // there was no cart yet or because Shopify had a bad second. This is
+        // the other place it can land: someone who signed up and came straight
+        // here without adding anything else.
+        const flushed = await flushPendingDiscount()
+        if (flushed?.state === 'applied') {
+          const again = await fetch(`/api/shopify/cart?cartId=${encodeURIComponent(id)}`)
+          const fresh = (await again.json()).data?.cart as ShopifyCart | null | undefined
+          setCart(fresh ?? c)
+        } else {
+          setCart(c)
+        }
       }
     } catch {
       // Network error — don't clear the cart ID, cart still exists on Shopify.
