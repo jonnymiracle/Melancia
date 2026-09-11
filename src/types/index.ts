@@ -25,11 +25,7 @@ export interface Testimonial {
   rating: number
 }
 
-/** Star rating must be between 1 and 5 */
-export interface CustomerReview {
-  id: number
-  name: string
-  year: number
-  rating: number
-  text: string
-}
+// Las reseñas reales llegarán desde una app de reviews (Judge.me / Loox), que
+// trae sus propios tipos. No definimos una forma local para evitar que alguien
+// vuelva a poblarla a mano: una reseña escrita por nosotros es un testimonio
+// fabricado bajo la regla de la FTC vigente desde el 21/10/2024.
