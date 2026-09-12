@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { GlobeIcon, InstagramIcon, PhoneIcon } from '@/components/icons'
 import { SITE_WHATSAPP_HREF } from '@/lib/site-contact'
+import PageLoader from '@/components/PageLoader'
 
 const retailers = [
   { icon: <GlobeIcon />, name: 'Our Online Store', detail: 'Browse and shop the full Melancia collection.', badge: 'Shop Now', online: true, href: '/shop' },
@@ -17,7 +18,18 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  // Holds the curtain until the hero photo has decoded, so arriving from the
+  // nav does not land on an empty banner.
+  const [heroReady, setHeroReady] = useState(false)
+  const heroRef = useRef<HTMLImageElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
+
+  // A cached photo can finish decoding before React hydrates, and `onLoad`
+  // never fires for a load that already happened. Ask the element instead.
+  useEffect(() => {
+    const img = heroRef.current
+    if (img?.complete) setHeroReady(true)
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -51,6 +63,8 @@ export default function ContactPage() {
 
   return (
     <>
+      <PageLoader ready={heroReady} maxMs={8000} />
+
       {/* Hero */}
       <div className="contact-hero">
         <Image
@@ -60,6 +74,9 @@ export default function ContactPage() {
           style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
           sizes="100vw"
           priority
+          ref={heroRef}
+          onLoad={() => setHeroReady(true)}
+          onError={() => setHeroReady(true)}
         />
         <div className="contact-hero-overlay" />
         <h1>Get in Touch</h1>
