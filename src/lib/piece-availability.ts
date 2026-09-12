@@ -43,16 +43,3 @@ export function availableSizesFor(
 ): string[] {
   return sizes.filter(size => findPieceVariant(variants, piece, size, color)?.availableForSale)
 }
-
-/**
- * A set is unbuyable when either piece has no size left in the chosen colour —
- * a customer cannot complete a top-and-bottom pair. Callers use this to swap the
- * Add Set button for the back-in-stock notify form.
- */
-export function isSetSoldOut(
-  variants: Variant[],
-  sizes: string[],
-  color?: string | null,
-): boolean {
-  return PIECES.some(piece => availableSizesFor(variants, sizes, piece, color).length === 0)
-}

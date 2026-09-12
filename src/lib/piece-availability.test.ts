@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { findPieceVariant, availableSizesFor, isSetSoldOut } from './piece-availability'
+import { findPieceVariant, availableSizesFor } from './piece-availability'
 import type { ShopifyProductDetail } from '@/types/shopify'
 
 type Variant = ShopifyProductDetail['variants']['edges'][0]['node']
@@ -62,28 +62,16 @@ describe('availableSizesFor', () => {
     const variants = colorway('Carioca', {})
     expect(availableSizesFor(variants, SIZES, 'Top', 'Carioca')).toEqual([])
   })
-})
 
-describe('isSetSoldOut', () => {
-  it('is false while both pieces still have a size', () => {
-    const variants = colorway('Ceu', {
-      'Small/Top': true, 'Large/Bottom': true,
-    })
-    expect(isSetSoldOut(variants, SIZES, 'Ceu')).toBe(false)
-  })
-
-  it('is true when every size of one piece is gone, even if the other has stock', () => {
-    // Tops fully sold out; bottoms still available. No complete set is buyable,
-    // so the page must fall through to the notify-me form.
+  it('empties one piece while the other still has stock', () => {
+    // Tops fully sold out, bottoms untouched. ProductDetail reads an empty list
+    // for either piece as "no complete set is buyable" and swaps the Add Set
+    // button for the notify-me form, so this is the case that flips the page.
     const variants = colorway('Ceu', {
       'Small/Bottom': true, 'Medium/Bottom': true, 'Large/Bottom': true,
     })
+    expect(availableSizesFor(variants, SIZES, 'Top', 'Ceu')).toEqual([])
     expect(availableSizesFor(variants, SIZES, 'Bottom', 'Ceu')).toHaveLength(3)
-    expect(isSetSoldOut(variants, SIZES, 'Ceu')).toBe(true)
-  })
-
-  it('is true when the whole colourway is sold out', () => {
-    expect(isSetSoldOut(colorway('Carioca', {}), SIZES, 'Carioca')).toBe(true)
   })
 
   it('judges each colourway separately', () => {
@@ -91,7 +79,7 @@ describe('isSetSoldOut', () => {
       ...colorway('Ceu', { 'Small/Top': true, 'Small/Bottom': true }),
       ...colorway('Carioca', {}),
     ]
-    expect(isSetSoldOut(catalog, SIZES, 'Ceu')).toBe(false)
-    expect(isSetSoldOut(catalog, SIZES, 'Carioca')).toBe(true)
+    expect(availableSizesFor(catalog, SIZES, 'Top', 'Ceu')).toEqual(['Small'])
+    expect(availableSizesFor(catalog, SIZES, 'Top', 'Carioca')).toEqual([])
   })
 })

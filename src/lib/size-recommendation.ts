@@ -11,9 +11,9 @@
  * knows the garments to fix them without knowing TypeScript.
  *
  * KNOWN GAP: no combination currently returns plain "Medium". These values were
- * derived from the bust and jean ranges in PdpSizeChart.tsx, where Medium spans
- * only two values, so everyone lands on one edge or the other. Worth fixing when
- * the real garment measurements land.
+ * derived from the bust and jean ranges of the old on-page size chart, where
+ * Medium spanned only two values, so everyone lands on one edge or the other.
+ * Worth fixing when the real garment measurements land.
  */
 
 export type SizeRange =

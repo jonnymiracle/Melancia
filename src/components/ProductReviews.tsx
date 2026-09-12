@@ -11,6 +11,10 @@
  *
  * `data-id` wants the numeric Shopify product id. The Storefront API returns a
  * GID, so the caller passes the tail of it.
+ *
+ * Every review rendered here comes from Klaviyo, written by a real buyer. Do
+ * not add a local list of reviews to this repo: a review we write ourselves is
+ * a fabricated testimonial under the FTC rule in force since 21/10/2024.
  */
 
 type Props = {

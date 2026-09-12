@@ -1,21 +1,4 @@
-import type { Product } from '@/types'
-
-export type CatalogProductBadge = NonNullable<Product['badge']>
-
-type CatalogBadgeInput = Pick<Product, 'badge' | 'tags'>
-
-/**
- * Badge shown on catalog product cards (`product-badge new` | `product-badge sale`).
- *
- * - If `product.badge` is set in data, that wins (manual override).
- * - Otherwise: same tag rules as Shopify (`badgeFromShopifyTags`) — add `sale` / `new` tags.
- */
-export function resolveCatalogProductBadge(
-  product: CatalogBadgeInput
-): CatalogProductBadge | undefined {
-  if (product.badge) return product.badge
-  return badgeFromShopifyTags(product.tags)
-}
+export type ProductBadge = 'new' | 'sale'
 
 function normalizeShopifyTag(raw: string): string {
   return raw
@@ -41,7 +24,7 @@ const SHOPIFY_NEW_TAGS = new Set([
  */
 export function badgeFromShopifyTags(
   tags: string[]
-): CatalogProductBadge | undefined {
+): ProductBadge | undefined {
   if (!tags?.length) return undefined
 
   let sale = false
@@ -56,11 +39,4 @@ export function badgeFromShopifyTags(
   if (sale) return 'sale'
   if (newest) return 'new'
   return undefined
-}
-
-/** Shopify card badge from Admin product tags only (e.g. `sale`, `new`). */
-export function resolveShopifyProductBadge(
-  tags: string[]
-): CatalogProductBadge | undefined {
-  return badgeFromShopifyTags(tags)
 }

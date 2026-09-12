@@ -1,23 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import type { Product } from '@/types'
-import type {
-  ProductCard3Product,
-  ShopifyProduct,
-  ShopifyProductVariant,
-} from '@/types/shopify'
-import { resolveCatalogProductBadge, resolveShopifyProductBadge } from '@/lib/product-badge'
+import type { ShopifyProduct, ShopifyProductVariant } from '@/types/shopify'
+import { badgeFromShopifyTags } from '@/lib/product-badge'
 import { ShirtIcon } from '@/components/icons'
 
 type ProductCard3Props = {
-  product: ProductCard3Product
+  product: ShopifyProduct
 }
-
-function isCatalogProduct(p: ProductCard3Product): p is Product {
-  return 'placeholderClass' in p
-}
-
 
 function formatVariantPrice(variant: ShopifyProductVariant) {
   const n = Number(variant.price.amount)
@@ -54,75 +44,12 @@ function shopifyCardImage(product: ShopifyProduct): {
 }
 
 export default function ProductCard3({ product }: ProductCard3Props) {
-  const isCatalog = isCatalogProduct(product)
-  const allVariants = !isCatalog ? (product.variants?.edges ?? []).map(e => e.node) : []
+  const allVariants = (product.variants?.edges ?? []).map(e => e.node)
   const variant = allVariants[0]
   const isCompletelyOutOfStock = allVariants.length > 0 && allVariants.every(v => !v.availableForSale)
 
-  if (isCatalog) {
-    const catalogBadge = resolveCatalogProductBadge(product)
-
-    return (
-      <div className="product-card">
-        <div className="product-image">
-          {product.image ? (
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              sizes="(max-width: 768px) 50vw, 400px"
-              style={{ objectFit: 'cover' }}
-            />
-          ) : (
-            <div className={`product-image-placeholder ${product.placeholderClass}`}>
-              <ShirtIcon />
-              <span className="placeholder-label">Product Photo</span>
-            </div>
-          )}
-
-          {catalogBadge && (
-            <span className={`product-badge ${catalogBadge}`}>
-              {catalogBadge === 'new' ? 'New' : 'Sale'}
-            </span>
-          )}
-
-          <div className="product-quick-add" role="presentation">
-            <button type="button" className="btn btn-primary">Shop Now</button>
-          </div>
-        </div>
-
-        <div className="product-info">
-          <h3 className="product-name">{product.name}</h3>
-          <div className="product-footer">
-            <span className="product-price">
-              {product.originalPrice && (
-                <span className="original">${product.originalPrice}.00</span>
-              )}
-              ${product.price}.00
-            </span>
-            <div className="product-colors">
-              {product.colors.map((color, i) => (
-                <span
-                  key={i}
-                  className="color-dot"
-                  style={{
-                    background: color,
-                    border: color === '#ffffff' ? '1px solid #ddd' : undefined,
-                  }}
-                  title={color}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   const handle = product.handle ?? ''
-  const shopifyPromoBadge = resolveShopifyProductBadge(product.tags ?? [])
-
-
+  const promoBadge = badgeFromShopifyTags(product.tags ?? [])
   const cardImage = shopifyCardImage(product)
 
   return (
@@ -151,9 +78,9 @@ export default function ProductCard3({ product }: ProductCard3Props) {
         {isCompletelyOutOfStock ? (
           <span className="product-badge sale">Sold Out</span>
         ) : (
-          shopifyPromoBadge && (
-            <span className={`product-badge ${shopifyPromoBadge}`}>
-              {shopifyPromoBadge === 'new' ? 'New' : 'Sale'}
+          promoBadge && (
+            <span className={`product-badge ${promoBadge}`}>
+              {promoBadge === 'new' ? 'New' : 'Sale'}
             </span>
           )
         )}

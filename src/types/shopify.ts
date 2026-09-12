@@ -1,5 +1,3 @@
-import type { Product } from '@/types'
-
 /** Single variant node from Storefront API `variants.edges[].node` */
 export type ShopifyProductVariant = {
   id: string
@@ -39,8 +37,6 @@ export type ShopifyProduct = {
     }[]
   }
 }
-
-export type ProductCard3Product = Product | ShopifyProduct
 
 /** Full product detail shape — used by /shop/[handle] page */
 export type ShopifyProductDetail = {
