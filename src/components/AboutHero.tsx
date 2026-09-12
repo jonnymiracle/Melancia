@@ -7,10 +7,15 @@ import PageLoader from '@/components/PageLoader'
 const HAVE_FUTURE_DATA = 3
 
 /**
- * The reel is a large file, so the curtain stays up until the browser has
- * buffered enough to paint a frame. `canplay` fires on that, well before the
- * whole file has arrived. A decode failure lands on `error`, which lifts the
- * curtain too: better a still hero than a stuck logo.
+ * The curtain stays up until the browser has buffered enough to paint a frame.
+ * `canplay` fires on that, well before the whole file has arrived. A decode
+ * failure lands on `error`, which lifts the curtain too: better a still hero
+ * than a stuck logo.
+ *
+ * The reel is encoded for the web: no audio track, since the element is muted,
+ * and the moov atom sits at the front so the browser can decode without first
+ * reading to the end of the file. Re-encode with those two properties intact if
+ * the footage is ever replaced.
  */
 export default function AboutHero() {
   const [ready, setReady] = useState(false)
@@ -42,11 +47,7 @@ export default function AboutHero() {
           onCanPlay={() => setReady(true)}
           onError={() => setReady(true)}
         >
-          {/* QuickTime container, H.264 inside. Chrome answers "no" to
-              video/quicktime and skips that source, so the type it does accept
-              goes first and the bare source stays as the fallback. */}
-          <source src="/videos/MELANCIA-REEL-01.MOV" type="video/mp4" />
-          <source src="/videos/MELANCIA-REEL-01.MOV" />
+          <source src="/videos/MELANCIA-REEL-01.mp4" type="video/mp4" />
         </video>
 
         {/* Dark overlay so text stays readable */}
